@@ -19,10 +19,10 @@ export class SettlementsService {
 }
 
 export interface Summary {
-  SettlementId: string;
-  SettlementDate: Date;
-  WeekNumber: number;
-  Year: number;
-  CompanyId: number;
-  CheckAmount: number;
+  settlementId: string;
+  settlementDate: Date;
+  weekNumber: number;
+  year: number;
+  companyId: number;
+  checkAmount: number;
 }

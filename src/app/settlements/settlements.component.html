@@ -10,6 +10,6 @@
 
 <ol>
 <li *ngFor="let summary of summaries">
-    <span>{{summary.SettlementId}}</span>{{summary.CheckAmount}}
+    {{summary.settlementDate}}: <span>{{summary.settlementId}}</span>, {{summary.checkAmount}}
 </li>   
 </ol>
