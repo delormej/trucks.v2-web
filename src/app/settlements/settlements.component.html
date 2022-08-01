@@ -7,3 +7,9 @@
         <td>Check Amount</td>
     </tr>
 </table>
+
+<ol>
+<li *ngFor="let summary of summaries">
+    <span>{{summary.SettlementId}}</span>{{summary.CheckAmount}}
+</li>   
+</ol>

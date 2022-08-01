@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SettlementsService, Summary } from '../settlements.service';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'settlements',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettlementsComponent implements OnInit {
 
-  constructor() { }
+  summaries: Summary[] = [];
+
+  constructor(private settlementsService: SettlementsService ) { }
 
   ngOnInit(): void {
+    this.getSummaries();
   }
 
+  getSummaries(): void {
+    this.settlementsService.getSettlementSummaries().subscribe(res => {
+      this.summaries = res;
+    });
+  }
 }
