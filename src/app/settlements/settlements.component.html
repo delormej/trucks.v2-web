@@ -10,6 +10,11 @@
 
 <ol>
 <li *ngFor="let summary of summaries">
-    {{summary.settlementDate}}: <span>{{summary.settlementId}}</span>, {{summary.checkAmount}}
+    {{summary.settlementDate}}: 
+    <a [routerLink]="['/settlement-detail']" 
+        [queryParams]="{companyId: summary.companyId, settlementId: summary.settlementId}">
+        {{summary.settlementId}}
+    </a>
+    , {{summary.checkAmount}}
 </li>   
 </ol>
