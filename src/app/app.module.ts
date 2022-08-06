@@ -8,6 +8,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { SettlementsComponent } from './settlements/settlements.component';
 import { DriversettlementComponent } from './driversettlement/driversettlement.component';
 import { SettlementDetailComponent } from './settlement-detail/settlement-detail.component';
+import { FuelUploadComponent } from './fuel-upload/fuel-upload.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { SettlementDetailComponent } from './settlement-detail/settlement-detail
     DashboardComponent,
     SettlementsComponent,
     DriversettlementComponent,
-    SettlementDetailComponent
+    SettlementDetailComponent,
+    FuelUploadComponent
   ],
   imports: [
     HttpClientModule,
