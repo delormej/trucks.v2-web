@@ -1,3 +1,5 @@
+<div *ngIf="driverSettlement!=null">
 {{driverSettlement.driver}}
-{{driverSettlement.credits[0].extendedAmount}}
+{{driverSettlement.deductions[0].amount}}
 <br/>Fuel: {{driverSettlement.fuel}}
+</div>

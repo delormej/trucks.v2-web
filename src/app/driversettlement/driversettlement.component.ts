@@ -26,6 +26,7 @@ export class DriversettlementComponent implements OnInit {
   getDriverSettlement(companyId: string, settlementId: string, driver: string): void {
     this.settlementsService.getDriverSettlement(companyId, settlementId, driver)
       .subscribe(res => {
+        console.log(res);
         this.driverSettlement = res;
       });
   }

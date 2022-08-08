@@ -45,14 +45,14 @@ export interface DriverSettlement {
   trucks: number[];
   driver: string;
   settlementDate: Date;
-  debits: Debit[];
+  deductions: Deduction[];
   credits: Credit[];
   fuel: number;
   occupationalInsurance: number;
   ignoreComchek: boolean;
 }
 
-export interface Debit {
+export interface Deduction {
   date: Date;
   driver: string;
   truckId: number;
