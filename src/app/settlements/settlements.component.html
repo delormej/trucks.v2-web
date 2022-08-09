@@ -6,15 +6,17 @@
         <td>Settlement Date</td>
         <td>Check Amount</td>
     </tr>
+    <tr *ngFor="let summary of summaries">
+        <td>{{summary.companyId}}</td>
+        <td>
+            <a [routerLink]="['/settlement-detail']" 
+            [queryParams]="{companyId: summary.companyId, settlementId: summary.settlementId}">
+            {{summary.settlementId}}
+            </a>
+        </td>
+        <td>{{summary.year}}, {{summary.weekNumber}}</td>
+        <td>{{summary.settlementDate}}</td>
+        <td>{{summary.checkAmount}}</td>
+    </tr>   
+    
 </table>
-
-<ol>
-<li *ngFor="let summary of summaries">
-    {{summary.settlementDate}}: 
-    <a [routerLink]="['/settlement-detail']" 
-        [queryParams]="{companyId: summary.companyId, settlementId: summary.settlementId}">
-        {{summary.settlementId}}
-    </a>
-    , {{summary.checkAmount}}
-</li>   
-</ol>
