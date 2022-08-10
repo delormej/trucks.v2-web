@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DriversettlementComponent } from '../driversettlement/driversettlement.component';
 import { SettlementsService, DriverSettlement } from '../settlements.service';
 
 @Component({
@@ -30,5 +31,20 @@ export class SettlementDetailComponent implements OnInit {
       .subscribe(res => {
         this.driverSettlements = res;
       });
+  }
+
+  public getMiles(driverSettlement: DriverSettlement): number {
+    let miles = driverSettlement.credits.reduce((partialSum, c) => partialSum + c.miles, 0);
+    return miles;
+  }
+
+  public getWorkbookLink(driverSettlement: DriverSettlement): string {
+    let link = SettlementsService.baseUrl + 
+      "/driversettlements/excel?companyId=" + driverSettlement.companyId +
+      "&year=" + driverSettlement.year + 
+      "&driver=" + driverSettlement.driver;
+
+    console.log(link);
+    return link;
   }
 }

@@ -1,12 +1,32 @@
-<ol>
-    <li *ngFor="let driverSettlement of driverSettlements">
-        {{driverSettlement.settlementDate}}: 
-        <a [routerLink]="['/driver-settlement']" 
-            [queryParams]="{companyId: driverSettlement.companyId, 
-                settlementId: driverSettlement.settlementId,
-                driver: driverSettlement.driver}">
-            {{driverSettlement.driver}}
-        </a>
-        , {{driverSettlement.week}}/{{driverSettlement.year}}
-    </li>   
-</ol>
+<div *ngIf="driverSettlements.length > 0; then driverSettlementsBlock else loadingBlock"></div>
+
+<ng-template #driverSettlementsBlock>
+    <h2>Settlement {{driverSettlements[0].settlementId}}, {{driverSettlements[0].settlementDate}}</h2>
+    <h3>{{driverSettlements[0].year}}, Week {{driverSettlements[0].week}}</h3>
+    <table>
+        <tr>
+            <td>Driver</td>
+            <td>Miles</td>
+            <td></td>
+        </tr>
+        <tr *ngFor="let driverSettlement of driverSettlements">
+            <td>
+                <a [routerLink]="['/driver-settlement']" 
+                    [queryParams]="{companyId: driverSettlement.companyId, 
+                        settlementId: driverSettlement.settlementId,
+                        driver: driverSettlement.driver}">
+                    {{driverSettlement.driver}}
+                </a>
+            </td>
+            <td>{{getMiles(driverSettlement)}}</td>
+            <td>
+                <a href={{getWorkbookLink(driverSettlement)}}>
+                    Download Workbook
+                </a>                
+            </td>
+        </tr>
+    </table>
+</ng-template>
+<ng-template #loadingBlock>
+    Loading... 
+</ng-template>

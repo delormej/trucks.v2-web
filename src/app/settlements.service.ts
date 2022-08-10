@@ -7,22 +7,21 @@ import { Observable, of } from 'rxjs';
 })
 export class SettlementsService {
 
-  // baseUrl: string = "https://trucks-api-tmco3bin6q-uc.a.run.app";
-  baseUrl: string = "http://localhost:5000";
-
+  // "https://trucks-api-tmco3bin6q-uc.a.run.app";
+  public static readonly baseUrl: string = "http://localhost:5000";
 
   constructor(private http: HttpClient) { }
 
   getSettlementSummaries(): Observable<Summary[]> {
-    return this.http.get<Summary[]>(this.baseUrl + "/settlements/summaries");
+    return this.http.get<Summary[]>(SettlementsService.baseUrl + "/settlements/summaries");
   }  
 
   getDriverSettlements(companyId: string, settlementId: string): Observable<DriverSettlement[]> {
-    return this.http.get<DriverSettlement[]>(this.baseUrl + "/driversettlements/" + companyId + "/" + settlementId);
+    return this.http.get<DriverSettlement[]>(SettlementsService.baseUrl + "/driversettlements/" + companyId + "/" + settlementId);
   }    
 
   getDriverSettlement(companyId: string, settlementId: string, driver: string): Observable<DriverSettlement> {
-    return this.http.get<DriverSettlement>(this.baseUrl + "/driversettlements/driver/" + 
+    return this.http.get<DriverSettlement>(SettlementsService.baseUrl + "/driversettlements/driver/" + 
       driver + "?companyId=" + companyId + "&settlementId=" + settlementId);
   }    
 }

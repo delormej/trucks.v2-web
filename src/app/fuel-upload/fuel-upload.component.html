@@ -1,5 +1,5 @@
 <!-- This should be a modal popup, with a close button after success or display error otherwise. -->
-<form class="col-xs-12" method="post" action="http://localhost:5000/fuel/upload" enctype="multipart/form-data">
+<form class="col-xs-12" method="post" action="{{getUploadUrl()}}" enctype="multipart/form-data">
 
     <div class="form-group">
        <input type="file" class="form-control" name="fuelCsv" />

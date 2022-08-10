@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SettlementsService } from '../settlements.service';
 
 @Component({
   selector: 'app-fuel-upload',
@@ -12,4 +13,7 @@ export class FuelUploadComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public getUploadUrl(): string {
+    return SettlementsService.baseUrl + "/fuel/upload";
+  }
 }
