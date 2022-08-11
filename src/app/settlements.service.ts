@@ -7,7 +7,7 @@ import { Observable, of } from 'rxjs';
 })
 export class SettlementsService {
 
-  public static readonly baseUrl: string = "https://trucks-api-tmco3bin6q-uc.a.run.app"; // "http://localhost:5000";
+  public static readonly baseUrl: string = "http://localhost:5000"; // "https://trucks-api-tmco3bin6q-uc.a.run.app"; // 
 
   constructor(private http: HttpClient) { }
 
@@ -22,7 +22,11 @@ export class SettlementsService {
   getDriverSettlement(companyId: string, settlementId: string, driver: string): Observable<DriverSettlement> {
     return this.http.get<DriverSettlement>(SettlementsService.baseUrl + "/driversettlements/driver/" + 
       driver + "?companyId=" + companyId + "&settlementId=" + settlementId);
-  }    
+  }
+  
+  getDriver(name: string) {
+    return this.http.get<Driver>(SettlementsService.baseUrl + "/driver?name=" + name);
+  }
 }
 
 export interface Summary {
@@ -86,4 +90,22 @@ export interface Credit {
   advanceNumber: string;
   advanceAmount: number;
   other: number;
+}
+
+export interface Driver {
+  id: string;
+  isAdmin: boolean;
+  email: string;
+  name: string;
+  pictureUrl: string; 
+  lastLogin: Date;
+  streetAddress: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  basePercent: number;
+  accessorialPercent: number;
+  ratePerMile: number;
+  socialSecurityNumber: string;
+  created: Date;
 }

@@ -9,6 +9,7 @@ import { SettlementsComponent } from './settlements/settlements.component';
 import { DriversettlementComponent } from './driversettlement/driversettlement.component';
 import { SettlementDetailComponent } from './settlement-detail/settlement-detail.component';
 import { FuelUploadComponent } from './fuel-upload/fuel-upload.component';
+import { DriverComponent } from './driver/driver.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { FuelUploadComponent } from './fuel-upload/fuel-upload.component';
     SettlementsComponent,
     DriversettlementComponent,
     SettlementDetailComponent,
-    FuelUploadComponent
+    FuelUploadComponent,
+    DriverComponent
   ],
   imports: [
     HttpClientModule,
