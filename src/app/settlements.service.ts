@@ -7,8 +7,7 @@ import { Observable, of } from 'rxjs';
 })
 export class SettlementsService {
 
-  // "https://trucks-api-tmco3bin6q-uc.a.run.app";
-  public static readonly baseUrl: string = "http://localhost:5000";
+  public static readonly baseUrl: string = "https://trucks-api-tmco3bin6q-uc.a.run.app"; // "http://localhost:5000";
 
   constructor(private http: HttpClient) { }
 
