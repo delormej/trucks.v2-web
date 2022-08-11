@@ -11,6 +11,8 @@ export class DriverComponent implements OnInit {
 
   driver!: Driver;
 
+  submitted: boolean = false;
+
   constructor(
     private settlementsService: SettlementsService,
     private route: ActivatedRoute) { }
@@ -18,9 +20,19 @@ export class DriverComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(
       params => {
-        this.getDriver(params['name']); 
+        let name: string = params['name'];
+        
+        if (name?.length > 0)
+          this.getDriver(params['name']); 
       }
     );
+  }
+
+  onSubmit() {
+    console.log('form submitted!');
+    this.submitted = true;
+    this.settlementsService.saveDriver(this.driver)
+      .subscribe(d => console.log(d))
   }
 
   getDriver(name: string): void {

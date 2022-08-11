@@ -11,10 +11,8 @@
         </tr>
         <tr *ngFor="let driverSettlement of driverSettlements">
             <td>
-                <a [routerLink]="['/driver-settlement']" 
-                    [queryParams]="{companyId: driverSettlement.companyId, 
-                        settlementId: driverSettlement.settlementId,
-                        driver: driverSettlement.driver}">
+                <a [routerLink]="['/driver']" 
+                    [queryParams]="{name: driverSettlement.driver}">
                     {{driverSettlement.driver}}
                 </a>
             </td>

@@ -1,7 +1,39 @@
-<p>
-    Driver: {{driver.name}} <br/>
-    Rate Per Mile: ${{driver.ratePerMile}} <br/>
-    Base Percent: {{driver.basePercent*100}}% <br/>
-    Accessorial Percent: {{driver.accessorialPercent*100}}% <br/>
-    Created Date: {{driver.created}} <br/>
-</p>
+<div class="container">
+    <div [hidden]="submitted">
+      <h1>Driver Form</h1>
+      <form (ngSubmit)="onSubmit()" #driverForm="ngForm">
+        <div *ngIf="driver != null">
+            <div class="form-group">
+                <label for="name">Driver</label>
+                <input type="text" class="form-control" id="name"
+                    required
+                    [(ngModel)]="driver.name" name="name">            
+            </div>
+            <div class="form-group">
+                <label for="name">Rate Per Mile</label>
+                <input type="number" class="form-control" id="ratePerMile"
+                    [(ngModel)]="driver.ratePerMile" name="ratePerMile">            
+            </div>
+            <div class="form-group">
+                <label for="name">Base %</label>
+                <input type="number" class="form-control" id="basePercent"
+                    [(ngModel)]="driver.basePercent" name="basePercent">            
+            </div>
+            <div class="form-group">
+                <label for="name">Accessorial %</label>
+                <input type="number" class="form-control" id="accessorialPercent"
+                    [(ngModel)]="driver.accessorialPercent" name="accessorialPercent">            
+            </div>
+            <div class="form-group">
+                <label for="name">SSN</label>
+                <input type="text" class="form-control" id="socialSecurityNumber"
+                    [(ngModel)]="driver.socialSecurityNumber" name="socialSecurityNumber">            
+            </div>
+
+            <button type="submit" class="btn btn-success" [disabled]="!driverForm.form.valid">Save</button>
+
+            id: {{driver.id}}
+        </div>
+      </form>
+    </div>
+</div>

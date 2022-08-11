@@ -27,6 +27,10 @@ export class SettlementsService {
   getDriver(name: string) {
     return this.http.get<Driver>(SettlementsService.baseUrl + "/driver?name=" + name);
   }
+
+  saveDriver(driver: Driver) {
+    return this.http.post<Driver>(SettlementsService.baseUrl + "/driver", driver);
+  }
 }
 
 export interface Summary {
