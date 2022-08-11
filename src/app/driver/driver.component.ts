@@ -32,7 +32,7 @@ export class DriverComponent implements OnInit {
     console.log('form submitted!');
     this.submitted = true;
     this.settlementsService.saveDriver(this.driver)
-      .subscribe(d => console.log(d))
+      .subscribe(d => console.log('saved', this.driver))
   }
 
   getDriver(name: string): void {
@@ -40,6 +40,12 @@ export class DriverComponent implements OnInit {
       .subscribe(res => {
         console.log(res);
         this.driver = res;
+      },
+      err => {
+        if (err.status === 404) {
+          // Create a new object
+          this.driver = { name: name } as Driver;
+        }
       });
   }
 }
