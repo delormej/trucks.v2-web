@@ -11,6 +11,10 @@
             <td>{{driverSettlement.week}}</td>
         </tr>
         <tr>
+            <th>Miles</th>
+            <td>{{driverSettlement.milesTotal}}</td>
+        </tr>        
+        <tr>
             <td>Base</td>
             <td>{{driverSettlement.baseTotal.toDisplay()}}</td>
         </tr>
@@ -49,8 +53,10 @@
         <tr>
             <td>Fuel</td>
             <td>{{driverSettlement.fuel.toDisplay()}}</td>
-        </tr>
+        </tr>        
     </table>
+
+    <hr />
 
     <table style="table-layout: auto; width: 100%;">
         <tr>
@@ -75,12 +81,12 @@
             <td>{{c.tolls.toDisplay()}}</td>
             <td>{{c.other.toDisplay()}}</td>
         </tr>
-        
-
     </table>
 
     <h4>Amount Due: {{driverSettlement.amountDue.toDisplay()}}</h4>
     <a href={{getWorkbookLink(driverSettlement)}}>
         Download Workbook
     </a>
+    <hr />
+    <app-driver-settlement-notes [driverSettlement]="driverSettlement"></app-driver-settlement-notes>
 </div>

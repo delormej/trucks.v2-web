@@ -74,6 +74,7 @@ export interface DriverSettlement {
   currentYtdIncome: number;
   securityDeposit: number;
   qualComm: number;
+  notes: string;
 }
 
 export interface Deduction {

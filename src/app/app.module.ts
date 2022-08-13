@@ -11,6 +11,7 @@ import { DriversettlementComponent } from './driversettlement/driversettlement.c
 import { SettlementDetailComponent } from './settlement-detail/settlement-detail.component';
 import { FuelUploadComponent } from './fuel-upload/fuel-upload.component';
 import { DriverComponent } from './driver/driver.component';
+import { DriverSettlementNotesComponent } from './driver-settlement-notes/driver-settlement-notes.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { DriverComponent } from './driver/driver.component';
     DriversettlementComponent,
     SettlementDetailComponent,
     FuelUploadComponent,
-    DriverComponent
+    DriverComponent,
+    DriverSettlementNotesComponent
   ],
   imports: [
     HttpClientModule,
