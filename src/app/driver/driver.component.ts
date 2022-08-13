@@ -20,10 +20,10 @@ export class DriverComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(
       params => {
-        let name: string = params['name'];
+        let name: string = params['driver'];
         
         if (name?.length > 0)
-          this.getDriver(params['name']); 
+          this.getDriver(params['driver']); 
       }
     );
   }

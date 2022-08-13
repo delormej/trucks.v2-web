@@ -1,5 +1,72 @@
 <div *ngIf="driverSettlement!=null">
-{{driverSettlement.driver}}
-{{driverSettlement.deductions[0].amount}}
-<br/>Fuel: {{driverSettlement.fuel}}
+    <h3>
+        <a [routerLink]="['/driver']" 
+            [queryParams]="{name: driverSettlement.driver}">
+            {{driverSettlement.driver}}
+        </a>
+    </h3>
+    <table>
+        <tr>
+            <th>Week</th>
+            <td>Base</td>
+            <td>FSC</td>
+            <td>Accesorials</td>
+            <td>Total Credits</td>
+            <td>Total Income</td>
+            <td>Total Deductions</td>
+            <td>Advances</td>
+            <td>Qualcomm</td>
+            <td>Occupational Ins</td>
+            <td>Previous Negative Balance</td>
+            <td>Fuel</td>
+            <td>Amount Due</td>
+        </tr>
+        <tr>
+            <td>{{driverSettlement.week}}</td>
+            <td>{{driverSettlement.baseTotal}}</td>
+            <td>{{driverSettlement.fscTotal}}</td>
+            <td>{{driverSettlement.accessorialTotal}}</td>
+            <td>{{driverSettlement.creditsTotal}}</td>
+            <td>{{driverSettlement.income}}</td>
+            <td>{{driverSettlement.deductionsTotal}}</td>
+            <td>{{driverSettlement.advancesTotal}}</td>
+            <td>{{driverSettlement.qualComm}}</td>
+            <td>{{driverSettlement.occupationalInsurance}}</td>
+            <td>{{driverSettlement.previousNegativeBalance}}</td>
+            <td>{{driverSettlement.fuel}}</td>
+            <td>{{driverSettlement.amountDue}}</td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <th>Load</th>
+            <th>Miles</th>
+            <th>Revenue</th>
+            <th>Base</th>
+            <th>FSC</th>
+            <th>Advance</th>
+            <th>Deadhead</th>
+            <th>Empty</th>
+            <th>Tolls</th>
+            <th>Other</th>
+        </tr>
+        <tr *ngFor="let c of driverSettlement.credits">
+            <td>{{c.proNumber}}</td>
+            <td>{{c.miles}}</td>
+            <td>{{c.extendedAmount}}</td>
+            <td>{{c.creditAmount}}</td>
+            <td>{{c.advanceAmount}}</td>
+            <td>{{c.deadHead}}</td>
+            <td>{{c.empty}}</td>
+            <td>{{c.tolls}}</td>
+            <td>{{c.other}}</td>
+        </tr>
+        
+
+    </table>
+
+    <a href={{getWorkbookLink(driverSettlement)}}>
+        Download Workbook
+    </a>
 </div>

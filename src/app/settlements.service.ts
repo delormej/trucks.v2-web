@@ -20,8 +20,8 @@ export class SettlementsService {
   }    
 
   getDriverSettlement(companyId: string, settlementId: string, driver: string): Observable<DriverSettlement> {
-    return this.http.get<DriverSettlement>(SettlementsService.baseUrl + "/driversettlements/driver/" + 
-      driver + "?companyId=" + companyId + "&settlementId=" + settlementId);
+    return this.http.get<DriverSettlement>(SettlementsService.baseUrl + "/driversettlements?driverName=" + 
+      driver + "&companyId=" + companyId + "&settlementId=" + settlementId);
   }
   
   getDriver(name: string) {
@@ -56,6 +56,25 @@ export interface DriverSettlement {
   fuel: number;
   occupationalInsurance: number;
   ignoreComchek: boolean;
+  basePercent: number;
+  accessorialPercent: number;
+  ratePerMile: number;
+  lastUpdated: Date;
+  amountDue: number;
+  baseTotal: number; 
+  fscTotal: number;
+  accessorialTotal: number; 
+  creditsTotal: number;
+  deductionsTotal: number;
+  advancesTotal: number;
+  milesTotal: number;
+  income: number;
+  previousNegativeBalance: number;
+  paidMilesYtd: number;
+  previousYtdIncome: number;
+  currentYtdIncome: number;
+  securityDeposit: number;
+  qualComm: number;
 }
 
 export interface Deduction {
@@ -111,5 +130,6 @@ export interface Driver {
   accessorialPercent: number;
   ratePerMile: number;
   socialSecurityNumber: string;
+  ignoreComchek: boolean;
   created: Date;
 }

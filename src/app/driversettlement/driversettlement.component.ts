@@ -31,4 +31,12 @@ export class DriversettlementComponent implements OnInit {
       });
   }
 
+  public getWorkbookLink(driverSettlement: DriverSettlement): string {
+    let link = SettlementsService.baseUrl + 
+      "/driversettlements/excel?companyId=" + driverSettlement.companyId +
+      "&year=" + driverSettlement.year + 
+      "&driver=" + driverSettlement.driver;
+
+    return link;
+  }
 }
