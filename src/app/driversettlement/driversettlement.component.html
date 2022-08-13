@@ -5,47 +5,60 @@
             {{driverSettlement.driver}}
         </a>
     </h3>
-    <table>
+    <table style="table-layout: auto; width: 25%;">
         <tr>
             <th>Week</th>
-            <td>Base</td>
-            <td>FSC</td>
-            <td>Accesorials</td>
-            <td>Total Credits</td>
-            <td>Total Income</td>
-            <td>Total Deductions</td>
-            <td>Advances</td>
-            <td>Qualcomm</td>
-            <td>Occupational Ins</td>
-            <td>Previous Negative Balance</td>
-            <td>Fuel</td>
-            <td>Amount Due</td>
+            <td>{{driverSettlement.week}}</td>
         </tr>
         <tr>
-            <td>{{driverSettlement.week}}</td>
-            <td>{{driverSettlement.baseTotal}}</td>
-            <td>{{driverSettlement.fscTotal}}</td>
-            <td>{{driverSettlement.accessorialTotal}}</td>
+            <td>Base</td>
+            <td>{{driverSettlement.baseTotal.toDisplay()}}</td>
+        </tr>
+        <tr>
+            <td>FSC</td>            
+            <td>{{driverSettlement.fscTotal.toDisplay()}}</td>
+        </tr>
+        <tr>
+            <td>Accesorials</td>
+            <td>{{driverSettlement.accessorialTotal.toDisplay()}}</td>
+        </tr>
+        <tr>
+            <td>Total Credits</td>
             <td>{{driverSettlement.creditsTotal}}</td>
-            <td>{{driverSettlement.income}}</td>
+        </tr>
+        <tr>
+            <td>Total Income</td>
+            <td>{{driverSettlement.income.toDisplay()}}</td>
+        </tr>
+        <tr>
+            <td>Total Deductions</td>
             <td>{{driverSettlement.deductionsTotal}}</td>
-            <td>{{driverSettlement.advancesTotal}}</td>
+        </tr>
+        <tr>
+            <td>Qualcomm</td>
             <td>{{driverSettlement.qualComm}}</td>
+        </tr>
+        <tr>
+            <td>Occupational Ins</td>
             <td>{{driverSettlement.occupationalInsurance}}</td>
+        </tr>
+        <tr>
+            <td>Previous Negative Balance</td>
             <td>{{driverSettlement.previousNegativeBalance}}</td>
-            <td>{{driverSettlement.fuel}}</td>
-            <td>{{driverSettlement.amountDue}}</td>
+        </tr>
+        <tr>
+            <td>Fuel</td>
+            <td>{{driverSettlement.fuel.toDisplay()}}</td>
         </tr>
     </table>
 
-    <table>
+    <table style="table-layout: auto; width: 100%;">
         <tr>
             <th>Load</th>
             <th>Miles</th>
             <th>Revenue</th>
             <th>Base</th>
             <th>FSC</th>
-            <th>Advance</th>
             <th>Deadhead</th>
             <th>Empty</th>
             <th>Tolls</th>
@@ -53,19 +66,20 @@
         </tr>
         <tr *ngFor="let c of driverSettlement.credits">
             <td>{{c.proNumber}}</td>
-            <td>{{c.miles}}</td>
-            <td>{{c.extendedAmount}}</td>
-            <td>{{c.creditAmount}}</td>
-            <td>{{c.advanceAmount}}</td>
-            <td>{{c.deadHead}}</td>
-            <td>{{c.empty}}</td>
-            <td>{{c.tolls}}</td>
-            <td>{{c.other}}</td>
+            <td>{{c.miles > 0 ? c.miles : ""}}</td>
+            <td>{{c.extendedAmount.toDisplay()}}</td>
+            <td>{{c.creditAmount.toDisplay()}}</td>
+            <td>{{c.advanceAmount.toDisplay()}}</td>
+            <td>{{c.deadHead.toDisplay()}}</td>
+            <td>{{c.empty.toDisplay()}}</td>
+            <td>{{c.tolls.toDisplay()}}</td>
+            <td>{{c.other.toDisplay()}}</td>
         </tr>
         
 
     </table>
 
+    <h4>Amount Due: {{driverSettlement.amountDue.toDisplay()}}</h4>
     <a href={{getWorkbookLink(driverSettlement)}}>
         Download Workbook
     </a>

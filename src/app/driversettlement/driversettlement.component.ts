@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SettlementsService, DriverSettlement } from '../settlements.service';
+import '../../number.extensions';
 
 @Component({
   selector: 'app-driversettlement',

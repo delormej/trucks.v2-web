@@ -66,7 +66,6 @@ export interface DriverSettlement {
   accessorialTotal: number; 
   creditsTotal: number;
   deductionsTotal: number;
-  advancesTotal: number;
   milesTotal: number;
   income: number;
   previousNegativeBalance: number;
