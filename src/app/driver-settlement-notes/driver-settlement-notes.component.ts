@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DriverSettlement } from '../settlements.service';
+import { DriverSettlement, SettlementsService } from '../settlements.service';
 
 @Component({
   selector: 'app-driver-settlement-notes',
@@ -9,10 +9,15 @@ import { DriverSettlement } from '../settlements.service';
 export class DriverSettlementNotesComponent implements OnInit {
   @Input() driverSettlement!: DriverSettlement;
 
-  constructor() { }
+  constructor(
+    private settlementsService: SettlementsService
+  ) { }
 
   ngOnInit(): void {
   }
 
-  onSubmit(): void {}
+  onSubmit(): void {
+    this.settlementsService.saveDriverSettlement(this.driverSettlement)
+      .subscribe(d => console.log('saved', this.driverSettlement));
+  }
 }

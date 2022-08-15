@@ -23,7 +23,12 @@ export class SettlementsService {
     return this.http.get<DriverSettlement>(SettlementsService.baseUrl + "/driversettlements?driverName=" + 
       driver + "&companyId=" + companyId + "&settlementId=" + settlementId);
   }
-  
+
+  saveDriverSettlement(driverSettlement: DriverSettlement) {
+    console.log('saving driverSettlement:', driverSettlement);
+    return this.http.post<Driver>(SettlementsService.baseUrl + "/driversettlements", driverSettlement);
+  }
+
   getDriver(name: string) {
     return this.http.get<Driver>(SettlementsService.baseUrl + "/driver?name=" + name);
   }
