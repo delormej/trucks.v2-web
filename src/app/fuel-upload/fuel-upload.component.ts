@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { SettlementsService } from '../settlements.service';
 
@@ -8,7 +9,30 @@ import { SettlementsService } from '../settlements.service';
 })
 export class FuelUploadComponent implements OnInit {
 
-  constructor() { }
+  fileName = '';
+  message = '';
+
+  constructor(private http: HttpClient) {}
+
+  onFileSelected(event: any) {
+
+      const file:File = event.target.files[0];
+
+      if (file) {
+
+          this.fileName = file.name;
+
+          const formData = new FormData();
+
+          formData.append("fuelCsv", file);
+
+          const upload$ = this.http.post(this.getUploadUrl(), formData, {responseType: 'text'});
+
+          upload$.subscribe(
+            d => this.message = d,
+            error => this.message = error.message);
+      }
+  }
 
   ngOnInit(): void {
   }

@@ -1,11 +1,10 @@
-<!-- This should be a modal popup, with a close button after success or display error otherwise. -->
-<form class="col-xs-12" method="post" action="{{getUploadUrl()}}" enctype="multipart/form-data">
+<input type="file" class="file-input"
+       (change)="onFileSelected($event)" #fileUpload>
 
-    <div class="form-group">
-       <input type="file" class="form-control" name="fuelCsv" />
-    </div>
+<div class="file-upload" *ngIf="message === ''">
 
-    <div class="form-group">
-       <button type="submit" class="btn btn-primary col-xs-12">Upload</button>
-    </div>
- </form>
+   {{fileName || "Please select fuel csv  file."}}
+
+</div>
+
+{{message}}
