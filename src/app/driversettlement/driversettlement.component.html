@@ -1,7 +1,7 @@
 <div *ngIf="driverSettlement!=null">
     <h3>
         <a [routerLink]="['/driver']" 
-            [queryParams]="{name: driverSettlement.driver}">
+            [queryParams]="{driver: driverSettlement.driver}">
             {{driverSettlement.driver}}
         </a>
     </h3>
