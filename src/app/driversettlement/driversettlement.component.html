@@ -7,6 +7,16 @@
     </h3>
     <table style="table-layout: auto; width: 25%;">
         <tr>
+            <th>Settlement</th>
+            <td>
+                <a [routerLink]="['/settlement-detail']" 
+                    [queryParams]="{companyId: driverSettlement.companyId, 
+                                    settlementId: driverSettlement.settlementId}">
+                {{driverSettlement.settlementId}}
+                </a>                
+            </td>
+        </tr>
+        <tr>
             <th>Week</th>
             <td>{{driverSettlement.week}}</td>
         </tr>
