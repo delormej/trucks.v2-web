@@ -7,7 +7,7 @@ import { Observable, of } from 'rxjs';
 })
 export class SettlementsService {
 
-  public static readonly baseUrl: string =  "http://localhost:5000"; //"https://trucks.jasondel.com"; //  
+  public static readonly baseUrl: string =  "http://localhost:5000/api"; //  "https://trucks.jasondel.com/api"; //
 
   constructor(private http: HttpClient) { }
 
