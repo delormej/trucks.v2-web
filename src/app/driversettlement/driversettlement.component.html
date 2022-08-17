@@ -13,12 +13,18 @@
                     [queryParams]="{companyId: driverSettlement.companyId, 
                                     settlementId: driverSettlement.settlementId}">
                 {{driverSettlement.settlementId}}
-                </a>                
+                </a>
+                &nbsp;&nbsp; 
+                <button type="submit" class="btn btn-success" (click)="recreate()">Recreate</button>
             </td>
         </tr>
         <tr>
             <th>Week</th>
             <td>{{driverSettlement.week}}</td>
+        </tr>
+        <tr>
+            <th>Truck</th>
+            <td>{{formatTrucks(driverSettlement.trucks)}}</td>
         </tr>
         <tr>
             <th>Miles</th>
@@ -46,7 +52,7 @@
         </tr>
         <tr>
             <td>Total Deductions</td>
-            <td>{{driverSettlement.deductionsTotal}}</td>
+            <td>{{driverSettlement.deductionsTotal.toDisplay()}}</td>
         </tr>
         <tr>
             <td>Qualcomm</td>

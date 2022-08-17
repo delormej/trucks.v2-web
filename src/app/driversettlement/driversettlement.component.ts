@@ -19,20 +19,32 @@ export class DriversettlementComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(
       params => {
-        this.getDriverSettlement(params['companyId'], params['settlementId'], params['driver']); 
+        this.getDriverSettlement(params['companyId'], params['settlementId'], params['driver'], false); 
       }
     );
   }
 
-  getDriverSettlement(companyId: string, settlementId: string, driver: string): void {
-    this.settlementsService.getDriverSettlement(companyId, settlementId, driver)
+  getDriverSettlement(companyId: string, settlementId: string, driver: string, force: boolean): void {
+    this.settlementsService.getDriverSettlement(companyId, settlementId, driver, force)
       .subscribe(res => {
         console.log(res);
         this.driverSettlement = res;
       });
   }
 
-  public getWorkbookLink(driverSettlement: DriverSettlement): string {
+  public recreate(): void {
+    this.settlementsService.getDriverSettlement(
+        this.driverSettlement.companyId, 
+        this.driverSettlement.settlementId, 
+        this.driverSettlement.driver, 
+        true)
+      .subscribe(res => {
+        console.log(res);
+        this.driverSettlement = res;
+      });    
+  }
+
+  getWorkbookLink(driverSettlement: DriverSettlement): string {
     let link = SettlementsService.baseUrl + 
       "/driversettlements/excel?companyId=" + driverSettlement.companyId +
       "&year=" + driverSettlement.year + 
@@ -40,4 +52,21 @@ export class DriversettlementComponent implements OnInit {
 
     return link;
   }
+
+  formatTrucks(trucks: number[]): string {
+    if (trucks?.length == 0)
+      return "";
+
+    if (trucks.length == 1)
+      return trucks[0].toString();
+
+    let formatted = '';
+    trucks.forEach( (truck, index, trucks) => { 
+      formatted += truck.toString();
+      if (index < trucks.length-1)
+        formatted += ', ';
+    });
+
+    return formatted;
+  }  
 }

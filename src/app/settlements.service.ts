@@ -7,7 +7,7 @@ import { Observable, of } from 'rxjs';
 })
 export class SettlementsService {
 
-  public static readonly baseUrl: string = "http://localhost:5000"; // "https://trucks-api-tmco3bin6q-uc.a.run.app"; // 
+  public static readonly baseUrl: string =  "http://localhost:5000"; // "https://trucks.jasondel.com"; // 
 
   constructor(private http: HttpClient) { }
 
@@ -19,9 +19,9 @@ export class SettlementsService {
     return this.http.get<DriverSettlement[]>(SettlementsService.baseUrl + "/driversettlements/" + companyId + "/" + settlementId);
   }    
 
-  getDriverSettlement(companyId: string, settlementId: string, driver: string): Observable<DriverSettlement> {
+  getDriverSettlement(companyId: string, settlementId: string, driver: string, force: boolean = false): Observable<DriverSettlement> {
     return this.http.get<DriverSettlement>(SettlementsService.baseUrl + "/driversettlements?driverName=" + 
-      driver + "&companyId=" + companyId + "&settlementId=" + settlementId);
+      driver + "&companyId=" + companyId + "&settlementId=" + settlementId + "&forceRecreate=" + force);
   }
 
   saveDriverSettlement(driverSettlement: DriverSettlement) {
@@ -134,6 +134,7 @@ export interface Driver {
   basePercent: number;
   accessorialPercent: number;
   ratePerMile: number;
+  driverPromptId: number;
   socialSecurityNumber: string;
   ignoreComchek: boolean;
   created: Date;
