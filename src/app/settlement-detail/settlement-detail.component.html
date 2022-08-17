@@ -1,7 +1,7 @@
 <div *ngIf="driverSettlements.length > 0; then driverSettlementsBlock else loadingBlock"></div>
 
 <ng-template #driverSettlementsBlock>
-    <h2>Settlement {{driverSettlements[0].settlementId}}, {{driverSettlements[0].settlementDate}}</h2>
+    <h2>Settlement {{driverSettlements[0].settlementId}}, {{driverSettlements[0].settlementDate | date}}</h2>
     <h3>{{driverSettlements[0].year}}, Week {{driverSettlements[0].week}}</h3>
     <table>
         <tr>
