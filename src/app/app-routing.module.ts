@@ -12,6 +12,10 @@ const routes: Routes = [
   { path: 'driver-settlement', component: DriversettlementComponent },
   { path: 'fuel-upload', component: FuelUploadComponent },
   { path: 'driver', component: DriverComponent },
+  { path: '',
+     redirectTo: '/settlements',
+     pathMatch: 'full' 
+  }
 ];
 
 @NgModule({
