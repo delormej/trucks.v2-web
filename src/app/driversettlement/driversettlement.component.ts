@@ -19,39 +19,53 @@ export class DriversettlementComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(
       params => {
-        this.getDriverSettlement(params['companyId'], params['settlementId'], params['driver'], false); 
+        var week = params['week'];
+        var year = params['year'];
+        var companyId = params['companyId'];
+        var settlementId = params['settlementId']
+        var driver = params['driver'];
+
+        this.getDriverSettlement(companyId, driver, false, settlementId, year, week);; 
       }
     );
   }
 
-  getDriverSettlement(companyId: string, settlementId: string, driver: string, force: boolean): void {
-    this.settlementsService.getDriverSettlement(companyId, settlementId, driver, force)
+  public recreate(): void {
+    this.getDriverSettlement(
+        this.driverSettlement.companyId, 
+        this.driverSettlement.driver,
+        true,
+        this.driverSettlement.settlementId);
+  }
+
+  getDriverSettlement(companyId: string, 
+      driver: string, 
+      force: boolean,
+      settlementId?: string, 
+      year?: number,
+      week?: number):void {
+    this.settlementsService.getDriverSettlement(companyId, driver, force, settlementId, year, week)
       .subscribe(res => {
         console.log(res);
         this.driverSettlement = res;
       });
   }
 
-  public recreate(): void {
-    this.settlementsService.getDriverSettlement(
-        this.driverSettlement.companyId, 
-        this.driverSettlement.settlementId, 
-        this.driverSettlement.driver, 
-        true)
-      .subscribe(res => {
-        console.log(res);
-        this.driverSettlement = res;
-      });    
-  }
-
   getWorkbookLink(driverSettlement: DriverSettlement): string {
     let link = SettlementsService.baseUrl + 
       "/driversettlements/excel?companyId=" + driverSettlement.companyId +
       "&year=" + driverSettlement.year + 
-      "&driver=" + driverSettlement.driver +
-      "&forceRecreate=true";
+      "&driver=" + driverSettlement.driver;
 
     return link;
+  }
+
+  getPreviousWeek(week: number): number {
+    return week == 1 ? 52 : week - 1;
+  }
+  
+  getNextWeek(week: number): number {
+    return week == 52 ? 1 : week + 1;
   }
 
   formatTrucks(trucks: number[]): string {

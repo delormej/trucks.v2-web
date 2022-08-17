@@ -7,7 +7,7 @@ import { Observable, of } from 'rxjs';
 })
 export class SettlementsService {
 
-  public static readonly baseUrl: string =  "http://localhost:5000"; // "https://trucks.jasondel.com"; // 
+  public static readonly baseUrl: string =  "http://localhost:5000"; //"https://trucks.jasondel.com"; //  
 
   constructor(private http: HttpClient) { }
 
@@ -19,9 +19,27 @@ export class SettlementsService {
     return this.http.get<DriverSettlement[]>(SettlementsService.baseUrl + "/driversettlements/" + companyId + "/" + settlementId);
   }    
 
-  getDriverSettlement(companyId: string, settlementId: string, driver: string, force: boolean = false): Observable<DriverSettlement> {
-    return this.http.get<DriverSettlement>(SettlementsService.baseUrl + "/driversettlements?driverName=" + 
-      driver + "&companyId=" + companyId + "&settlementId=" + settlementId + "&forceRecreate=" + force);
+  getDriverSettlement(companyId: string, 
+        driver: string, 
+        force: boolean = false,
+        settlementId?: string, 
+        year?: number,
+        week?: number  
+      ): Observable<DriverSettlement> {
+    
+    var url = SettlementsService.baseUrl;
+    
+    if (settlementId != null) {
+      url += "/driversettlements?driverName=" + driver + "&companyId=" + companyId + 
+        "&settlementId=" + settlementId + "&forceRecreate=" + force;
+    }
+    else {
+      url += "/driversettlements/byweek?driverName=" + driver + "&companyId=" + companyId + 
+        "&year=" + year + "&week=" + week;
+
+    }
+    
+    return this.http.get<DriverSettlement>(url);
   }
 
   saveDriverSettlement(driverSettlement: DriverSettlement) {

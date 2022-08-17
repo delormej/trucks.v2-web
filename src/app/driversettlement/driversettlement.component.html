@@ -5,7 +5,7 @@
             {{driverSettlement.driver}}
         </a>
     </h3>
-    <table style="table-layout: auto; width: 25%;">
+    <table style="table-layout: auto; width: 50%;">
         <tr>
             <th>Settlement</th>
             <td>
@@ -18,7 +18,27 @@
         </tr>
         <tr>
             <th>Week</th>
-            <td>{{driverSettlement.week}}</td>
+            <td>
+                <button>
+                    <a [routerLink]="['/driver-settlement']" 
+                    [queryParams]="{companyId: driverSettlement.companyId, 
+                                    year: driverSettlement.year,
+                                    week: getPreviousWeek(driverSettlement.week),
+                                    driver: driverSettlement.driver}">
+                        << Previous
+                    </a>
+                </button>
+                &nbsp;<b>{{driverSettlement.week}}</b>&nbsp;
+                <button>
+                    <a [routerLink]="['/driver-settlement']" 
+                    [queryParams]="{companyId: driverSettlement.companyId, 
+                                    year: driverSettlement.year,
+                                    week: getNextWeek(driverSettlement.week),
+                                    driver: driverSettlement.driver}">
+                        Next >>
+                    </a>    
+                </button>            
+            </td>
         </tr>
         <tr>
             <th>Truck</th>
