@@ -48,7 +48,8 @@ export class DriversettlementComponent implements OnInit {
     let link = SettlementsService.baseUrl + 
       "/driversettlements/excel?companyId=" + driverSettlement.companyId +
       "&year=" + driverSettlement.year + 
-      "&driver=" + driverSettlement.driver;
+      "&driver=" + driverSettlement.driver +
+      "&forceRecreate=true";
 
     return link;
   }

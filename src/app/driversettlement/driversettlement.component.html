@@ -14,8 +14,6 @@
                                     settlementId: driverSettlement.settlementId}">
                 {{driverSettlement.settlementId}}
                 </a>
-                &nbsp;&nbsp; 
-                <button type="submit" class="btn btn-success" (click)="recreate()">Recreate</button>
             </td>
         </tr>
         <tr>
@@ -99,7 +97,9 @@
         </tr>
     </table>
 
-    <h4>Amount Due: {{driverSettlement.amountDue.toDisplay()}}</h4>
+    <h4>Amount Due: {{driverSettlement.amountDue.toDisplay()}}</h4> 
+    <button type="submit" class="btn btn-secondary" (click)="recreate()">Recreate</button>    
+    <br/>
     <a href={{getWorkbookLink(driverSettlement)}}>
         Download Workbook
     </a>
