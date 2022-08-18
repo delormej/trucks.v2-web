@@ -50,43 +50,43 @@
         </tr>        
         <tr>
             <td>Base</td>
-            <td>{{driverSettlement.baseTotal.toDisplay()}}</td>
+            <td>{{driverSettlement.baseTotal | number:'0.2-2'}}</td>
         </tr>
         <tr>
             <td>FSC</td>            
-            <td>{{driverSettlement.fscTotal.toDisplay()}}</td>
+            <td>{{driverSettlement.fscTotal | number:'0.2-2'}}</td>
         </tr>
         <tr>
             <td>Accesorials</td>
-            <td>{{driverSettlement.accessorialTotal.toDisplay()}}</td>
+            <td>{{driverSettlement.accessorialTotal | number:'0.2-2'}}</td>
         </tr>
         <tr>
             <td>Total Credits</td>
-            <td>{{driverSettlement.creditsTotal}}</td>
+            <td>{{driverSettlement.creditsTotal | number:'0.2-2'}}</td>
         </tr>
         <tr>
             <td>Total Income</td>
-            <td>{{driverSettlement.income.toDisplay()}}</td>
+            <td>{{driverSettlement.income | number:'0.2-2'}}</td>
         </tr>
         <tr>
             <td>Total Deductions</td>
-            <td>{{driverSettlement.deductionsTotal.toDisplay()}}</td>
+            <td>{{driverSettlement.deductionsTotal | number:'0.2-2'}}</td>
         </tr>
         <tr>
             <td>Qualcomm</td>
-            <td>{{driverSettlement.qualComm}}</td>
+            <td>{{driverSettlement.qualComm | number:'0.2-2'}}</td>
         </tr>
         <tr>
             <td>Occupational Ins</td>
-            <td>{{driverSettlement.occupationalInsurance}}</td>
+            <td>{{driverSettlement.occupationalInsurance | number:'0.2-2'}}</td>
         </tr>
         <tr>
             <td>Previous Negative Balance</td>
-            <td>{{driverSettlement.previousNegativeBalance}}</td>
+            <td>{{driverSettlement.previousNegativeBalance | number:'0.2-2'}}</td>
         </tr>
         <tr>
             <td>Fuel</td>
-            <td>{{driverSettlement.fuel.toDisplay()}}</td>
+            <td>{{driverSettlement.fuel | number:'0.2-2'}}</td>
         </tr>        
     </table>
 
@@ -107,13 +107,13 @@
         <tr *ngFor="let c of driverSettlement.credits">
             <td>{{c.proNumber}}</td>
             <td>{{c.miles > 0 ? c.miles : ""}}</td>
-            <td>{{c.extendedAmount.toDisplay()}}</td>
-            <td>{{c.creditAmount.toDisplay()}}</td>
-            <!--<td>{{c.advanceAmount.toDisplay()}}</td>-->
-            <td>{{c.deadHead.toDisplay()}}</td>
-            <td>{{c.empty.toDisplay()}}</td>
-            <td>{{c.tolls.toDisplay()}}</td>
-            <td>{{c.other.toDisplay()}}</td>
+            <td>{{c.extendedAmount > 0 ? (c.extendedAmount | number:'0.2-2') : ""}}</td>
+            <td>{{c.creditAmount > 0 ? (c.creditAmount | number:'0.2-2') : ""}}</td>
+            <!--<td>{{c.advanceAmount | number:'0.2-2'}}</td>-->
+            <td>{{c.deadHead > 0 ? (c.deadHead | number:'0.2-2') : ""}}</td>
+            <td>{{c.empty > 0 ? (c.empty | number:'0.2-2') : ""}}</td>
+            <td>{{c.tolls > 0 ? (c.tolls | number:'0.2-2') : ""}}</td>
+            <td>{{c.other > 0 ? (c.other | number:'0.2-2') : ""}}</td>
         </tr>
     </table>
 
