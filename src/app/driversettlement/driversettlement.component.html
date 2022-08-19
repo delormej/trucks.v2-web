@@ -117,6 +117,8 @@
         </tr>
     </table>
 
+    <app-manual-credits [driverSettlement]="driverSettlement"></app-manual-credits>
+    
     <app-settlement-entry (newCreditEvent)="addCredit($event)"></app-settlement-entry>
 
     <h4>Amount Due: {{driverSettlement.amountDue.toDisplay()}}</h4> 
