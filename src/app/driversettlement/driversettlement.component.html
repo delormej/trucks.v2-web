@@ -117,6 +117,8 @@
         </tr>
     </table>
 
+    <app-settlement-entry (newCreditEvent)="addCredit($event)"></app-settlement-entry>
+
     <h4>Amount Due: {{driverSettlement.amountDue.toDisplay()}}</h4> 
     <button type="submit" class="btn btn-secondary" (click)="recreate()">Recreate</button>    
     <br/>

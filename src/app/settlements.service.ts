@@ -55,6 +55,18 @@ export class SettlementsService {
   saveDriver(driver: Driver) {
     return this.http.post<Driver>(SettlementsService.baseUrl + "/driver", driver);
   }
+
+  saveManualEntry(entry: ManualEntry) {
+    return this.http.post<DriverSettlement>(
+      SettlementsService.baseUrl + "/driversettlements/manual", entry);
+  }
+}
+
+export interface ManualEntry {
+  driverSettlementId: string, 
+  description: string,
+  creditAmount?: number, 
+  deductionAmount?: number  
 }
 
 export interface Summary {
@@ -102,15 +114,18 @@ export interface DriverSettlement {
 }
 
 export interface Deduction {
+  id: string;
   date: Date;
   driver: string;
   truckId: number;
   description: string;
   amount: number;
   totalDeductions: number;
+  manualDeduction: number;
 }
 
 export interface Credit {
+  id: string;
   proNumber: string;
   deliveryDate: Date;
   driver: string;
@@ -137,6 +152,8 @@ export interface Credit {
   advanceNumber: string;
   advanceAmount: number;
   other: number;
+  base: number;
+  manualCredit: number;
 }
 
 export interface Driver {

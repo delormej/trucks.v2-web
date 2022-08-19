@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SettlementsService, DriverSettlement } from '../settlements.service';
+import { SettlementsService, DriverSettlement, Credit, ManualEntry } from '../settlements.service';
 import '../../number.extensions';
 
 @Component({
@@ -84,4 +84,17 @@ export class DriversettlementComponent implements OnInit {
 
     return formatted;
   }  
+
+  addCredit(credit: Partial<Credit>): void {
+    console.log('adding credit', credit.manualCredit);
+    let entry: ManualEntry = { 
+      driverSettlementId: this.driverSettlement.driverSettlementId,
+      description: credit.creditDescriptions ?? '',
+      creditAmount: credit.manualCredit }
+
+    this.settlementsService.saveManualEntry(entry)
+      .subscribe(res => {
+        this.driverSettlement = res;
+      });
+  }
 }
