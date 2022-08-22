@@ -17,7 +17,7 @@
             </td>
             <td>{{summary.year}}, {{summary.weekNumber}}</td>
             <td>{{summary.settlementDate | date:'mediumDate'}}</td>
-            <td>{{summary.checkAmount}}</td>
+            <td>{{summary.checkAmount | number: '0.2-2'}}</td>
         </tr>   
     </table>
 </div>
