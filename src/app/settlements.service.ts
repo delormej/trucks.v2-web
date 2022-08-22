@@ -62,10 +62,10 @@ export class SettlementsService {
   }
 }
 
-export interface ManualEntry {
-  driverSettlementId: string, 
-  description: string,
-  creditAmount?: number, 
+export class ManualEntry {
+  driverSettlementId?: string; 
+  description?: string;
+  creditAmount?: number; 
   deductionAmount?: number  
 }
 

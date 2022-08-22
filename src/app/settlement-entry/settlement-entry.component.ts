@@ -1,21 +1,25 @@
-import { Component, Output, EventEmitter } from '@angular/core';
-import { Credit, Deduction } from '../settlements.service';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { ManualEntry } from '../settlements.service';
 
 @Component({
   selector: 'app-settlement-entry',
   templateUrl: './settlement-entry.component.html',
   styleUrls: ['./settlement-entry.component.css']
 })
-export class SettlementEntryComponent {
-  @Output() newCreditEvent = new EventEmitter<Partial<Credit>>();
+export class SettlementEntryComponent implements OnInit {
+  @Output() newManualEntryEvent = new EventEmitter<ManualEntry>();
 
-  constructor() { }
+  entry!: ManualEntry;
 
-  addNewCredit(description: string, amount: string) {
-    let credit: Partial<Credit> = {
-      creditDescriptions: description, 
-      manualCredit: Number.parseFloat(amount) };
+  constructor() { 
+  }
 
-    this.newCreditEvent.emit(credit);
+  onSubmit(): void {
+    this.newManualEntryEvent.emit(this.entry);
+    this.entry = new ManualEntry();
+  }
+
+  ngOnInit(): void {
+    this.entry = new ManualEntry();
   }
 }

@@ -85,13 +85,10 @@ export class DriversettlementComponent implements OnInit {
     return formatted;
   }  
 
-  addCredit(credit: Partial<Credit>): void {
-    console.log('adding credit', credit.manualCredit);
-    let entry: ManualEntry = { 
-      driverSettlementId: this.driverSettlement.driverSettlementId,
-      description: credit.creditDescriptions ?? '',
-      creditAmount: credit.manualCredit }
-
+  addManualEntry(entry: Partial<ManualEntry>): void {
+    entry.driverSettlementId = this.driverSettlement.driverSettlementId;
+    console.log('adding entry', entry);
+    
     this.settlementsService.saveManualEntry(entry)
       .subscribe(res => {
         this.driverSettlement = res;
