@@ -1,12 +1,18 @@
 <form (ngSubmit)="onSubmit()" #addEntryForm="ngForm">
-    <div class="form-group">
-        <label for="description">Description</label>
-        <input type="text" class="form-control" id="description"
-            [(ngModel)]="entry.description" name="description">            
-    </div>
-    <div class="form-group">
-        <label for="amount">Amount</label>
-        <input type="number" [(ngModel)]="entry.creditAmount" name="amount">
+    <div class="form-row">
+        <div class="col">
+            <label for="description">Description</label>
+            <input type="text" class="form-control" id="description"
+                [(ngModel)]="entry.description" name="description">            
+        </div>
+        <div class="col">
+            <label for="credit">Credit</label>
+            <input type="number" class="form-control" [(ngModel)]="entry.creditAmount" name="credit">
+        </div>
+        <div class="col">
+            <label for="deduction">Deduction</label>
+            <input type="number" class="form-control" [(ngModel)]="entry.deductionAmount" name="deduction">
+        </div>
     </div>
     <button type="submit" class="btn btn-success" [disabled]="!addEntryForm.form.valid">
         Add Credit
