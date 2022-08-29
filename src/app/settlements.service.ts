@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -60,6 +60,13 @@ export class SettlementsService {
     return this.http.post<DriverSettlement>(
       SettlementsService.baseUrl + "/driversettlements/manual", entry);
   }
+
+  deleteManualEntry(driverSettlementId: string, itemId: string) {
+    return this.http.delete<DriverSettlement>(
+      SettlementsService.baseUrl + "/driversettlements/manual", { params: new HttpParams()
+          .set('driverSettlementId', driverSettlementId)
+          .set('itemId', itemId) });
+  }  
 }
 
 export class ManualEntry {

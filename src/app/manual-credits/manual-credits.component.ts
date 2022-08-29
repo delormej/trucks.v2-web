@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DriverSettlement, Credit } from '../settlements.service';
 
 @Component({
@@ -13,6 +13,14 @@ export class ManualCreditsComponent {
   set driverSettlement(value: DriverSettlement) {
     this.manualCredits = 
       value.credits.filter(c => c.manualCredit > 0);
+  }
+
+  @Output() 
+  deleteManualEntryEvent = new EventEmitter<string>();
+
+  onDeleteEntry(itemId: string): void {
+    console.log('deleting item:', itemId);
+    this.deleteManualEntryEvent.emit(itemId);
   }
 
   constructor() { }

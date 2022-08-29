@@ -119,7 +119,9 @@
 
     <div>
         <h4>Credits</h4>
-        <app-manual-credits [driverSettlement]="driverSettlement"></app-manual-credits>
+        <app-manual-credits 
+            (deleteManualEntryEvent)="deleteManualEntry($event)" 
+            [driverSettlement]="driverSettlement"></app-manual-credits>
         <app-settlement-entry (newManualEntryEvent)="addManualEntry($event)"></app-settlement-entry>    
     </div>
 

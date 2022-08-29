@@ -94,4 +94,14 @@ export class DriversettlementComponent implements OnInit {
         this.driverSettlement = res;
       });
   }
+
+  deleteManualEntry(itemId: string): void {
+    let driverSettlementId = this.driverSettlement.driverSettlementId;
+    console.log('deleting entry', itemId);
+    
+    this.settlementsService.deleteManualEntry(driverSettlementId, itemId)
+      .subscribe(res => {
+        this.driverSettlement = res;
+      });
+  }
 }
