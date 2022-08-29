@@ -118,11 +118,14 @@
     </table>
 
     <div>
-        <h4>Credits</h4>
-        <app-manual-credits 
+        <h4>Manual Credit / Deductions</h4>
+        <app-manual-entries 
             (deleteManualEntryEvent)="deleteManualEntry($event)" 
-            [driverSettlement]="driverSettlement"></app-manual-credits>
-        <app-settlement-entry (newManualEntryEvent)="addManualEntry($event)"></app-settlement-entry>    
+            [driverSettlement]="driverSettlement">
+        </app-manual-entries>
+        <app-settlement-entry 
+            (newManualEntryEvent)="addManualEntry($event)">
+        </app-settlement-entry>
     </div>
 
     <h4>Amount Due: {{driverSettlement.amountDue.toDisplay()}}</h4> 

@@ -1,18 +1,22 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { DriverSettlement, Credit } from '../settlements.service';
+import { DriverSettlement, Credit, Deduction } from '../settlements.service';
 
 @Component({
-  selector: 'app-manual-credits',
-  templateUrl: './manual-credits.component.html',
-  styleUrls: ['./manual-credits.component.css']
+  selector: 'app-manual-entries',
+  templateUrl: './manual-entries.component.html',
+  styleUrls: ['./manual-entries.component.css']
 })
-export class ManualCreditsComponent {
+export class ManualEntriesComponent {
   public manualCredits!: Credit[];
+  public manualDeductions!: Deduction[];
   
   @Input() 
   set driverSettlement(value: DriverSettlement) {
     this.manualCredits = 
       value.credits.filter(c => c.manualCredit > 0);
+    
+    this.manualDeductions = 
+      value.deductions.filter(c => c.manualDeduction > 0);      
   }
 
   @Output() 

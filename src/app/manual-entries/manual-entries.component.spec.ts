@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ManualCreditsComponent } from './manual-credits.component';
+import { ManualEntriesComponent } from './manual-entries.component';
 
 describe('ManualCreditsComponent', () => {
-  let component: ManualCreditsComponent;
-  let fixture: ComponentFixture<ManualCreditsComponent>;
+  let component: ManualEntriesComponent;
+  let fixture: ComponentFixture<ManualEntriesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ManualCreditsComponent ]
+      declarations: [ ManualEntriesComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ManualCreditsComponent);
+    fixture = TestBed.createComponent(ManualEntriesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

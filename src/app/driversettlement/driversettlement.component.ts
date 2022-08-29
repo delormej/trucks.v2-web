@@ -88,6 +88,10 @@ export class DriversettlementComponent implements OnInit {
   addManualEntry(entry: Partial<ManualEntry>): void {
     entry.driverSettlementId = this.driverSettlement.driverSettlementId;
     console.log('adding entry', entry);
+
+    if (entry.creditAmount != null && entry.creditAmount > 0 &&
+        entry.deductionAmount != null && entry.deductionAmount > 0)
+      return; // raise an error of some sort
     
     this.settlementsService.saveManualEntry(entry)
       .subscribe(res => {

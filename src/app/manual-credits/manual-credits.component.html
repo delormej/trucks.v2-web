@@ -1,8 +1,0 @@
-
-<table>
-    <tr *ngFor="let credit of manualCredits">
-        <td><button (click)="onDeleteEntry(credit.id)">Delete</button></td>
-        <td>{{credit.creditDescriptions}}</td>
-        <td>{{credit.manualCredit | number:'0.2-2'}}</td>
-    </tr>
-</table>

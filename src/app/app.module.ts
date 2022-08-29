@@ -13,7 +13,7 @@ import { FuelUploadComponent } from './fuel-upload/fuel-upload.component';
 import { DriverComponent } from './driver/driver.component';
 import { DriverSettlementNotesComponent } from './driver-settlement-notes/driver-settlement-notes.component';
 import { SettlementEntryComponent } from './settlement-entry/settlement-entry.component';
-import { ManualCreditsComponent } from './manual-credits/manual-credits.component';
+import { ManualEntriesComponent } from './manual-entries/manual-entries.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,7 @@ import { ManualCreditsComponent } from './manual-credits/manual-credits.componen
     DriverComponent,
     DriverSettlementNotesComponent,
     SettlementEntryComponent,
-    ManualCreditsComponent
+    ManualEntriesComponent
   ],
   imports: [
     HttpClientModule,
