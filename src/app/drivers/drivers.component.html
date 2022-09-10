@@ -1,0 +1,20 @@
+<div *ngIf="drivers != null && drivers.length > 0; else loadingBlock">
+    <table>
+        <tr>
+            <td>Driver</td>
+            <td>SS#</td>
+        </tr>
+        <tr *ngFor="let driver of drivers">
+            <td>
+                <a [routerLink]="['/driver']" 
+                [queryParams]="{driver: driver.name}">
+                {{driver.name}}
+                </a>
+            </td>
+            <td>{{driver.socialSecurityNumber}}</td>
+        </tr>   
+    </table>
+</div>
+<ng-template #loadingBlock>
+    Loading ...
+</ng-template>

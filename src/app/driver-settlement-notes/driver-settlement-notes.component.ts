@@ -17,7 +17,9 @@ export class DriverSettlementNotesComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.settlementsService.saveDriverSettlement(this.driverSettlement)
+    this.settlementsService.saveDriverSettlementNotes(
+        this.driverSettlement.driverSettlementId,
+        this.driverSettlement.notes)
       .subscribe(d => console.log('saved', this.driverSettlement));
   }
 }

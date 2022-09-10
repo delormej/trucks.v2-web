@@ -43,13 +43,18 @@ export class SettlementsService {
     return this.http.get<DriverSettlement>(url);
   }
 
-  saveDriverSettlement(driverSettlement: DriverSettlement) {
-    console.log('saving driverSettlement:', driverSettlement);
-    return this.http.post<Driver>(SettlementsService.baseUrl + "/driversettlements", driverSettlement);
+  saveDriverSettlementNotes(driverSettlementId: string, notes: string) {
+    console.log('saving notes for driverSettlement:', driverSettlementId);
+    return this.http.post<Driver>(SettlementsService.baseUrl + "/driversettlements/notes", 
+      { driverSettlementId: driverSettlementId, notes: notes } );
   }
 
   getDriver(name: string) {
     return this.http.get<Driver>(SettlementsService.baseUrl + "/driver?name=" + name);
+  }
+
+  getAllDrivers() : Observable<Driver[]> {
+    return this.http.get<Driver[]>(SettlementsService.baseUrl + "/driver/list");
   }
 
   saveDriver(driver: Driver) {
@@ -116,7 +121,7 @@ export interface DriverSettlement {
   previousYtdIncome: number;
   currentYtdIncome: number;
   securityDeposit: number;
-  qualComm: number;
+  qualcomm: number;
   notes: string;
 }
 

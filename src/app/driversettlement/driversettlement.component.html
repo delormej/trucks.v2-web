@@ -73,10 +73,6 @@
             <td>{{driverSettlement.deductionsTotal | number:'0.2-2'}}</td>
         </tr>
         <tr>
-            <td>Qualcomm</td>
-            <td>{{driverSettlement.qualComm | number:'0.2-2'}}</td>
-        </tr>
-        <tr>
             <td>Occupational Ins</td>
             <td>{{driverSettlement.occupationalInsurance | number:'0.2-2'}}</td>
         </tr>
@@ -108,7 +104,7 @@
             <td>{{c.proNumber}}</td>
             <td>{{c.miles > 0 ? c.miles : ""}}</td>
             <td>{{c.extendedAmount > 0 ? (c.extendedAmount | number:'0.2-2') : ""}}</td>
-            <td>{{c.creditAmount > 0 ? (c.creditAmount | number:'0.2-2') : ""}}</td>
+            <td>{{c.base > 0 ? (c.base | number:'0.2-2') : ""}}</td>
             <!--<td>{{c.advanceAmount | number:'0.2-2'}}</td>-->
             <td>{{c.deadHead > 0 ? (c.deadHead | number:'0.2-2') : ""}}</td>
             <td>{{c.empty > 0 ? (c.empty | number:'0.2-2') : ""}}</td>
