@@ -98,6 +98,7 @@
             <th>Deadhead</th>
             <th>Empty</th>
             <th>Tolls</th>
+            <th>Bonus</th>            
             <th>Other</th>
         </tr>
         <tr *ngFor="let c of driverSettlement.credits">
@@ -109,6 +110,7 @@
             <td>{{c.deadHead > 0 ? (c.deadHead | number:'0.2-2') : ""}}</td>
             <td>{{c.empty > 0 ? (c.empty | number:'0.2-2') : ""}}</td>
             <td>{{c.tolls > 0 ? (c.tolls | number:'0.2-2') : ""}}</td>
+            <td>{{c.bonus > 0 ? (c.bonus | number:'0.2-2') : ""}}</td>
             <td>{{c.other > 0 ? (c.other | number:'0.2-2') : ""}}</td>
         </tr>
     </table>
