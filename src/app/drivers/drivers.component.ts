@@ -19,4 +19,12 @@ export class DriversComponent implements OnInit {
       this.drivers = res;
     });
   }
+
+  // getLastPayment(driverName: string) : number {
+  //   var driver = this.drivers.filter(d => d.name == driverName);
+  //   if (driver == null || driver.length < 1)
+  //     return 0;
+
+  //   driver[0]
+  // }
 }
