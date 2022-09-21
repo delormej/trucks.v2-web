@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { VersionComponent } from '../version/version.component';
 
 @Component({
   selector: 'dashboard',
