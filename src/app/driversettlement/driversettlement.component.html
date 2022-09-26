@@ -82,14 +82,23 @@
         </tr>
         <tr>
             <td>Fuel</td>
-            <td>{{driverSettlement.fuel | number:'0.2-2'}}</td>
-        </tr>        
+            <td>
+                <a [routerLink]="['/fuel']" 
+                    [queryParams]="{ 
+                        year: driverSettlement.year,
+                        week: driverSettlement.week,
+                        driverPromptId: driver.driverPromptId}">
+                    {{driverSettlement.fuel | number:'0.2-2'}}
+                </a>    
+            </td>
+        </tr>
     </table>
 
     <hr />
 
     <table style="table-layout: auto; width: 100%;">
         <tr>
+            <th>Delivery Date</th>
             <th>Load</th>
             <th>Miles</th>
             <th>Revenue</th>
@@ -102,6 +111,7 @@
             <th>Other</th>
         </tr>
         <tr *ngFor="let c of driverSettlement.credits">
+            <td>{{c.deliveryDate}}</td>
             <td>{{c.proNumber}}</td>
             <td>{{c.miles > 0 ? c.miles : ""}}</td>
             <td>{{c.extendedAmount > 0 ? (c.extendedAmount | number:'0.2-2') : ""}}</td>

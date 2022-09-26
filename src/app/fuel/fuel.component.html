@@ -1,1 +1,21 @@
-<p>fuel works!</p>
+<div *ngIf="fuel != null && fuel.length > 0; else loadingBlock">
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>City</th>
+            <th>Charge</th>
+        </tr>
+        <tr *ngFor="let charge of fuel">
+            <td>{{charge.transactionDate}}</td>
+            <td>{{charge.merchantCity}}</td>
+            <td>{{charge.netCost | number:'0.2-2'}}</td>
+        </tr>
+        <tr>
+            <td></td><td></td>
+            <td><strong>{{fuelTotal}}</strong></td>
+        </tr>
+    </table>
+</div>
+<ng-template #loadingBlock>
+    Loading ...
+</ng-template>

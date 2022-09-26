@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { FuelCharge, SettlementsService } from '../settlements.service';
 
 @Component({
   selector: 'app-fuel',
@@ -7,9 +9,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FuelComponent implements OnInit {
 
-  constructor() { }
+    fuel: FuelCharge[] = [];
+    fuelTotal: number = 0;
+  
+    constructor(
+      private settlementsService: SettlementsService,
+      private route: ActivatedRoute) { }
+  
+    ngOnInit(): void {
+      this.route.queryParams.subscribe(
+        params => {
+          var year = params['year'];
+          var week = params['week'];
+          var driverPromptId = params['driverPromptId'];
+  
+          this.settlementsService.getFuel(year, week, driverPromptId)
+          .subscribe(res => {
+            console.log(res);
+            this.fuel = res;
 
-  ngOnInit(): void {
-  }
-
+            this.fuelTotal = this.fuel.reduce( (partialSum, charge) => 
+              partialSum + charge.netCost, 0)
+          });          
+        }
+      );
+    }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SettlementsService, DriverSettlement, Credit, ManualEntry } from '../settlements.service';
+import { SettlementsService, DriverSettlement, ManualEntry, Driver } from '../settlements.service';
 import '../../number.extensions';
 
 @Component({
@@ -11,6 +11,7 @@ import '../../number.extensions';
 export class DriversettlementComponent implements OnInit {
 
   driverSettlement!: DriverSettlement;
+  driver!: Driver;
 
   constructor(
     private settlementsService: SettlementsService,
@@ -25,7 +26,8 @@ export class DriversettlementComponent implements OnInit {
         var settlementId = params['settlementId']
         var driver = params['driver'];
 
-        this.getDriverSettlement(companyId, driver, false, settlementId, year, week);; 
+        this.getDriver(driver);
+        this.getDriverSettlement(companyId, driver, false, settlementId, year, week);
       }
     );
   }
@@ -48,6 +50,13 @@ export class DriversettlementComponent implements OnInit {
       .subscribe(res => {
         console.log(res);
         this.driverSettlement = res;
+      });
+  }
+
+  getDriver(name: string): void {
+    this.settlementsService.getDriver(name)
+      .subscribe(res => {
+        this.driver = res;
       });
   }
 
