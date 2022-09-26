@@ -15,6 +15,7 @@ import { DriverSettlementNotesComponent } from './driver-settlement-notes/driver
 import { SettlementEntryComponent } from './settlement-entry/settlement-entry.component';
 import { ManualEntriesComponent } from './manual-entries/manual-entries.component';
 import { DriversComponent } from './drivers/drivers.component';
+import { VersionComponent } from './version/version.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { DriversComponent } from './drivers/drivers.component';
     DriverSettlementNotesComponent,
     SettlementEntryComponent,
     ManualEntriesComponent,
-    DriversComponent
+    DriversComponent,
+    VersionComponent
   ],
   imports: [
     HttpClientModule,
