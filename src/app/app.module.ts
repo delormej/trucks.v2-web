@@ -16,6 +16,7 @@ import { SettlementEntryComponent } from './settlement-entry/settlement-entry.co
 import { ManualEntriesComponent } from './manual-entries/manual-entries.component';
 import { DriversComponent } from './drivers/drivers.component';
 import { VersionComponent } from './version/version.component';
+import { FuelComponent } from './fuel/fuel.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { VersionComponent } from './version/version.component';
     SettlementEntryComponent,
     ManualEntriesComponent,
     DriversComponent,
-    VersionComponent
+    VersionComponent,
+    FuelComponent
   ],
   imports: [
     HttpClientModule,

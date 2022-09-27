@@ -43,6 +43,15 @@ export class SettlementsService {
     return this.http.get<DriverSettlement>(url);
   }
 
+  getFuel(year: number, week: number, driverPromptId: number) : Observable<FuelCharge[]> {
+    return this.http.get<FuelCharge[]>(SettlementsService.baseUrl + "/fuel",
+      { params: new HttpParams()
+        .set('year', year)
+        .set('week', week)
+        .set('driverPromptId', driverPromptId) 
+      });
+  }
+
   saveDriverSettlementNotes(driverSettlementId: string, notes: string) {
     console.log('saving notes for driverSettlement:', driverSettlementId);
     return this.http.post<Driver>(SettlementsService.baseUrl + "/driversettlements/notes", 
@@ -186,4 +195,24 @@ export interface Driver {
   socialSecurityNumber: string;
   ignoreComchek: boolean;
   created: Date;
+}
+
+export interface FuelCharge {
+  id:	string;
+  weekNumber:	number;
+  year:	number;
+  driverPromptId: number;
+  transactionDate:	string;
+  transactionTime:	string;
+  transactionTicketNumber:	string;
+  netCost:	number;
+  truckId:	string;
+  product:	string;
+  units:	number;
+  unitCost:	number;
+  merchantName:	string;
+  merchantAddress:	string;
+  merchantCity:	string;
+  merchantState: string;
+  merchantPostal:	string;
 }
