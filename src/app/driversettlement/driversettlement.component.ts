@@ -57,6 +57,7 @@ export class DriversettlementComponent implements OnInit {
     this.settlementsService.getDriver(name)
       .subscribe(res => {
         this.driver = res;
+        console.log(res);
       });
   }
 
