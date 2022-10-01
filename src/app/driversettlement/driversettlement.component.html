@@ -83,13 +83,16 @@
         <tr>
             <td>Fuel</td>
             <td>
-                <a [routerLink]="['/fuel']" 
-                    [queryParams]="{ 
-                        year: driverSettlement.year,
-                        week: driverSettlement.week,
-                        driverPromptId: driver.driverPromptId}">
-                    {{driverSettlement.fuel | number:'0.2-2'}}
-                </a>    
+                <div *ngIf="(driver.driverPromptId || 0) > 0; else noDriverPrompt">
+                    <a [routerLink]="['/fuel']" 
+                        [queryParams]="{ 
+                            year: driverSettlement.year,
+                            week: driverSettlement.week,
+                            driverPromptId: driver.driverPromptId}">
+                        {{driverSettlement.fuel | number:'0.2-2'}}
+                    </a>
+                </div>
+                <ng-template #noDriverPrompt>{{driverSettlement.fuel | number:'0.2-2'}}</ng-template>
             </td>
         </tr>
     </table>
