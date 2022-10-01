@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -16,31 +16,42 @@ export class SettlementsService {
     return this.http.get<Summary[]>(SettlementsService.baseUrl + "/settlements/summaries");
   }  
 
-  getDriverSettlements(companyId: string, settlementId: string): Observable<DriverSettlement[]> {
-    return this.http.get<DriverSettlement[]>(SettlementsService.baseUrl + "/driversettlements/" + companyId + "/" + settlementId);
+  getDriverSettlements(companyId: string, settlementId: string, forceRecreate: boolean = false): Observable<DriverSettlement[]> {
+    return this.http.get<DriverSettlement[]>(SettlementsService.baseUrl + "/driversettlements/" + companyId + "/" + settlementId,
+      { params: new HttpParams().set('forceRecreate', forceRecreate)});
   }    
 
-  getDriverSettlement(companyId: string, 
-        driver: string, 
-        force: boolean = false,
-        settlementId?: string, 
-        year?: number,
-        week?: number  
-      ): Observable<DriverSettlement> {
+  getDriverSettlement(
+      companyId: string, 
+      driver: string, 
+      force: boolean = false,
+      settlementId?: string, 
+      year?: number,
+      week?: number  
+    ): Observable<DriverSettlement> {
     
     var url = SettlementsService.baseUrl;
+    var params = new HttpParams()
+        .append('companyId', companyId)
+        .append('forceRecreate', force);
     
     if (settlementId != null) {
-      url += "/driversettlements?driverName=" + driver + "&companyId=" + companyId + 
-        "&settlementId=" + settlementId + "&forceRecreate=" + force;
+      console.log('settlementId', settlementId);
+      url += "/driversettlements";
+      params = params.append('settlementId', settlementId);
+    }
+    else if (year != null && week != null) {
+      url += "/driversettlements/byweek";
+      params = params.append('year', year)
+        .append('week', week);
     }
     else {
-      url += "/driversettlements/byweek?driverName=" + driver + "&companyId=" + companyId + 
-        "&year=" + year + "&week=" + week;
-
+      throwError(() => new Error("No settlement id, year or week provided."));
     }
-    
-    return this.http.get<DriverSettlement>(url);
+
+    params = params.append('driverName', driver);
+
+    return this.http.get<DriverSettlement>(url, { params: params });
   }
 
   getFuel(year: number, week: number, driverPromptId: number) : Observable<FuelCharge[]> {
