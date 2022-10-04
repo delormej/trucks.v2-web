@@ -92,6 +92,10 @@ export class SettlementsService {
           .set('driverSettlementId', driverSettlementId)
           .set('itemId', itemId) });
   }  
+
+  getVersion() : Observable<VerisonInfo> {
+    return this.http.get<VerisonInfo>(SettlementsService.baseUrl + "/version")
+  };
 }
 
 export class ManualEntry {
@@ -226,4 +230,12 @@ export interface FuelCharge {
   merchantCity:	string;
   merchantState: string;
   merchantPostal:	string;
+}
+
+export interface VerisonInfo
+{
+    projectId: string;
+    version: string;
+    computeInstanceId: string;
+    serviceRevision: string;
 }
