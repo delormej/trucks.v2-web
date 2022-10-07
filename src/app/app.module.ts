@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { MatSliderModule } from '@angular/material/slider';
+import { MaterialModules } from './material.modules';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +19,8 @@ import { ManualEntriesComponent } from './manual-entries/manual-entries.componen
 import { DriversComponent } from './drivers/drivers.component';
 import { VersionComponent } from './version/version.component';
 import { FuelComponent } from './fuel/fuel.component';
+import { MysampleComponent } from './mysample/mysample.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -32,13 +36,16 @@ import { FuelComponent } from './fuel/fuel.component';
     ManualEntriesComponent,
     DriversComponent,
     VersionComponent,
-    FuelComponent
+    FuelComponent,
+    MysampleComponent
   ],
   imports: [
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    MaterialModules,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [ AppComponent ]
