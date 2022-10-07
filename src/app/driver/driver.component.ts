@@ -10,6 +10,8 @@ import { SettlementsService, Driver } from '../settlements.service';
 export class DriverComponent implements OnInit {
 
   driver!: Driver;
+  teamLeaders!: Driver[];
+  selectedTeammate!: Driver;
 
   submitted: boolean = false;
 
@@ -26,6 +28,7 @@ export class DriverComponent implements OnInit {
           this.getDriver(params['driver']); 
       }
     );
+    this.getTeamLeaders();
   }
 
   onSubmit() {
@@ -46,6 +49,14 @@ export class DriverComponent implements OnInit {
           // Create a new object
           this.driver = { name: name } as Driver;
         }
+      });
+  }
+
+  getTeamLeaders(): void {
+    this.settlementsService.getAllDrivers()
+      .subscribe(res => {
+        this.teamLeaders = res.filter(d => (d.isTeamLeader === true));
+        console.log('leaders', this.teamLeaders.length);
       });
   }
 }
