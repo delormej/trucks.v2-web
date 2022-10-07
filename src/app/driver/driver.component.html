@@ -33,16 +33,11 @@
             <input type="checkbox" class="form-control" id="isTeamLeader"
                 [(ngModel)]="driver.isTeamLeader" name="isTeamLeader">            
         </div>
-        <div class="form-group">
-            <label for="teammate">Teammate</label>
-            <input type="string" class="form-control" id="teammate"
-                [(ngModel)]="driver.teammateDriverId" name="teammate">            
-        </div>
-
         <div>
             <mat-form-field appearance="fill">
                 <mat-label>Teammate</mat-label>
                 <mat-select [(value)]="driver.teammateDriverId">
+                  <mat-option>None</mat-option>
                   <mat-option *ngFor="let d of teamLeaders" [value]="d.id">{{d.name}}</mat-option>
                 </mat-select>
               </mat-form-field>                 
@@ -54,5 +49,4 @@
     </div>
     </form>
 
-    <app-mysample></app-mysample>
 </div>

@@ -55,7 +55,7 @@ export class DriverComponent implements OnInit {
   getTeamLeaders(): void {
     this.settlementsService.getAllDrivers()
       .subscribe(res => {
-        this.teamLeaders = res.filter(d => (d.isTeamLeader === true));
+        this.teamLeaders = res;
         console.log('leaders', this.teamLeaders.length);
       });
   }

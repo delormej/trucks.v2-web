@@ -19,7 +19,6 @@ import { ManualEntriesComponent } from './manual-entries/manual-entries.componen
 import { DriversComponent } from './drivers/drivers.component';
 import { VersionComponent } from './version/version.component';
 import { FuelComponent } from './fuel/fuel.component';
-import { MysampleComponent } from './mysample/mysample.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
@@ -36,8 +35,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ManualEntriesComponent,
     DriversComponent,
     VersionComponent,
-    FuelComponent,
-    MysampleComponent
+    FuelComponent
   ],
   imports: [
     HttpClientModule,

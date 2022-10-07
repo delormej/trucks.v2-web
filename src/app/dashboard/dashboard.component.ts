@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { VersionComponent } from '../version/version.component';
-import { MysampleComponent } from '../mysample/mysample.component';
 
 @Component({
   selector: 'dashboard',
