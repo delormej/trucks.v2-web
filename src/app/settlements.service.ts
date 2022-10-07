@@ -210,6 +210,8 @@ export interface Driver {
   socialSecurityNumber: string;
   ignoreComchek: boolean;
   created: Date;
+  isTeamLeader: Boolean;
+  teammateDriverId: string;
 }
 
 export interface FuelCharge {
