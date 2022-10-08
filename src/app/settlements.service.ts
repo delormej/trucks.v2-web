@@ -77,6 +77,11 @@ export class SettlementsService {
     return this.http.get<Driver[]>(SettlementsService.baseUrl + "/driver/list");
   }
 
+  getTeammateSuggestion(driver: string) : Observable<Driver[]> {
+    return this.http.get<Driver[]>(SettlementsService.baseUrl + "/driver/suggest-teammate",
+      { params: new HttpParams().set('driver', driver) } );
+  }
+
   saveDriver(driver: Driver) {
     return this.http.post<Driver>(SettlementsService.baseUrl + "/driver", driver);
   }

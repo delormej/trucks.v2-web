@@ -48,7 +48,11 @@ export class DriverComponent implements OnInit {
 
   onSuggestTeammate() {
     console.log('clicked');
-    this.teammateSelect.open();
+    this.settlementsService.getTeammateSuggestion(this.driver.name)
+      .subscribe(drivers => {
+        this.teamLeaders = drivers;
+        this.teammateSelect.open();
+      });
   }
 
   getDriver(name: string): void {
