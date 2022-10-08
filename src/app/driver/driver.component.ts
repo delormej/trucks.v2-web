@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SettlementsService, Driver } from '../settlements.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSelect } from '@angular/material/select';
 
 @Component({
   selector: 'app-driver',
@@ -20,6 +21,8 @@ export class DriverComponent implements OnInit {
     private settlementsService: SettlementsService,
     private route: ActivatedRoute,
     private snack: MatSnackBar) { }
+
+  @ViewChild('teammateDriverId') teammateSelect! : MatSelect;
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(
@@ -41,6 +44,11 @@ export class DriverComponent implements OnInit {
         console.log('saved', this.driver);
         this.snack.open("Saved", 'CLOSE', { duration: 3000 });
       })
+  }
+
+  onSuggestTeammate() {
+    console.log('clicked');
+    this.teammateSelect.open();
   }
 
   getDriver(name: string): void {
