@@ -40,13 +40,21 @@ export class DriverComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('form submitted!');
     this.submitted = true;
+    this.saveDriver();
+  }
+
+  showError(error: Error, message: string) {
+    this.snack.open(message, 'CLOSE', { panelClass: 'errorSnack' } );
+    console.log(error);
+  }
+
+  saveDriver() {
     this.settlementsService.saveDriver(this.driver)
-      .subscribe(d => {
-        console.log('saved', this.driver);
-        this.snack.open("Saved", 'CLOSE', { duration: this.snackLength });
-      })
+      .subscribe({
+        next: (res) => this.snack.open("Saved", 'CLOSE', { duration: this.snackLength }),
+        error: (error) => { this.showError(error, "ERROR: Unable to save"); } 
+      });
   }
 
   updateTeammateSuggestions(drivers: Driver[]) {
@@ -61,33 +69,23 @@ export class DriverComponent implements OnInit {
     this.settlementsService.getTeammateSuggestion(this.driver.name)
       .subscribe({
         next: (drivers) => this.updateTeammateSuggestions(drivers),
-        error: (error) => {
-          this.snack.open("No teammate suggestions found", 'CLOSE', 
-            { duration: this.snackLength });
-        }
+        error: (error) => this.showError(error, "No teammate suggestions found")
       });
   }
 
   getDriver(name: string): void {
     this.settlementsService.getDriver(name)
-      .subscribe(res => {
-        console.log(res);
-        this.driver = res;
-      },
-      err => {
-        if (err.status === 404) {
-          // Create a new object
-          this.driver = { name: name } as Driver;
-        }
+      .subscribe({
+        next: (driver) => this.driver = driver,
+        error: (error) => this.showError(error, "Unable to load driver")
       });
   }
 
   getTeamLeaders(): void {
     this.settlementsService.getAllDrivers()
-      .subscribe(res => {
-        this.teamLeaders = res;
-        console.log('leaders', this.teamLeaders.length);
-        this.teammateSuggested = false;
+      .subscribe({
+        next: (drivers) => { this.teamLeaders = drivers; this.teammateSuggested = false; },
+        error: (error) => this.showError(error, "Unable to load teammates.")
       });
   }
 }

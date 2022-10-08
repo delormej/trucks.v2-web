@@ -21,3 +21,7 @@
 .driver-container .mat-radio-button {
     margin: 0 12px;
 }
+
+.errorSnack {
+    color: red;
+}
