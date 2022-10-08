@@ -56,12 +56,20 @@
                     [(ngModel)]="driver.accessorialPercent">
             </mat-form-field>
         </div>
-        <mat-form-field appearance="fill">
-            <mat-label>Driver Prompt</mat-label>
-            <input matInput type="number" id="driverPromptId" name="driverPromptId" 
-                [(ngModel)]="driver.driverPromptId">
-        </mat-form-field>
-
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Driver Prompt</mat-label>
+                <input matInput type="number" id="driverPromptId" name="driverPromptId" 
+                    [(ngModel)]="driver.driverPromptId">
+            </mat-form-field>
+            &nbsp;
+            <button mat-raised-button color="accent"
+                [disabled]="driver.driverPromptId != null && driver.driverPromptId > 0"
+                (click)="getDriverPin()"
+                type="button" >
+            Suggest
+            </button>
+        </div>
         <div>
             <button mat-raised-button color="primary" type="submit"
                     [disabled]="!driverForm.dirty || !driverForm.valid">

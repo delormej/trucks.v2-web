@@ -88,4 +88,12 @@ export class DriverComponent implements OnInit {
         error: (error) => this.showError(error, "Unable to load teammates.")
       });
   }
+
+  getDriverPin(): void {
+    this.settlementsService.getDriverPin(this.driver.name)
+      .subscribe({
+        next: (pin) => { this.driver.driverPromptId = pin; this.snack.open("Found pin suggestion") },
+        error: (error) => { this.showError(error, 'No pin found') }
+      });
+  }
 }

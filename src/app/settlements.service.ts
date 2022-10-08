@@ -82,6 +82,11 @@ export class SettlementsService {
       { params: new HttpParams().set('driver', driver) } );
   }
 
+  getDriverPin(driver: string) : Observable<number> {
+    return this.http.get<number>(SettlementsService.baseUrl + "/driver/pin",
+      { params: new HttpParams().set('driver', driver) } );
+  }
+
   saveDriver(driver: Driver) {
     return this.http.post<Driver>(SettlementsService.baseUrl + "/driver", driver);
   }
