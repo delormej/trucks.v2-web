@@ -1,4 +1,4 @@
-<div [hidden]="submitted" *ngIf="driver != null">
+<div *ngIf="driver != null">
     <div class="driver-container">
 
     <h1>{{driver.name}}</h1>
@@ -19,33 +19,33 @@
         <mat-form-field appearance="fill">
             <mat-label>Base Percent</mat-label>
             <input matInput type="number" id="basePercent" name="basePercent" 
-            [(ngModel)]="driver.basePercent">
+                [(ngModel)]="driver.basePercent">
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Accessorial Percent</mat-label>
             <input matInput type="number" id="accessorialPercent" name="accessorialPercent" 
-            [(ngModel)]="driver.accessorialPercent">
+                [(ngModel)]="driver.accessorialPercent">
         </mat-form-field>
         <mat-form-field appearance="fill">
-            <mat-label>Accessorial Percent</mat-label>
+            <mat-label>Driver Prompt</mat-label>
             <input matInput type="number" id="driverPromptId" name="driverPromptId" 
-            [(ngModel)]="driver.driverPromptId">
+                [(ngModel)]="driver.driverPromptId">
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Social Security Number</mat-label>
             <input matInput type="password" id="socialSecurityNumber" name="socialSecurityNumber" 
-            [(ngModel)]="driver.socialSecurityNumber">
+                [(ngModel)]="driver.socialSecurityNumber">
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Teammate</mat-label>
-            <mat-select [(value)]="driver.teammateDriverId">
+            <mat-select [(ngModel)]="driver.teammateDriverId" name="teammateDriverId" id="teammateDriverId">
                 <mat-option>None</mat-option>
                 <mat-option *ngFor="let d of teamLeaders" [value]="d.id">{{d.name}}</mat-option>
             </mat-select>
         </mat-form-field>
 
         <div>
-            <button type="submit" class="btn btn-success" [disabled]="!driverForm.form.valid">Save</button>
+            <button type="submit" class="btn btn-success" [disabled]="!driverForm.dirty || !driverForm.valid">Save</button>
         </div>
     
     </form>

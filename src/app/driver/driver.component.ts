@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SettlementsService, Driver } from '../settlements.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-driver',
@@ -17,7 +18,8 @@ export class DriverComponent implements OnInit {
 
   constructor(
     private settlementsService: SettlementsService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private snack: MatSnackBar) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(
@@ -35,7 +37,10 @@ export class DriverComponent implements OnInit {
     console.log('form submitted!');
     this.submitted = true;
     this.settlementsService.saveDriver(this.driver)
-      .subscribe(d => console.log('saved', this.driver))
+      .subscribe(d => {
+        console.log('saved', this.driver);
+        this.snack.open("Saved", 'CLOSE', { duration: 3000 });
+      })
   }
 
   getDriver(name: string): void {
