@@ -1,3 +1,23 @@
 .checkbox-margin {
     margin: 0 12px;
-  }
+}
+
+.driver-container .mat-form-field + .mat-form-field {
+    margin-left: 8px;
+}
+
+.driver-container .mat-form-field {
+    width: 220px;
+}
+
+.driver-container form {
+    margin-bottom: 20px;
+}
+
+.driver-container form > * {
+    margin: 5px 0;
+}
+
+.driver-container .mat-radio-button {
+    margin: 0 12px;
+}

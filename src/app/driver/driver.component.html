@@ -1,64 +1,53 @@
 <div [hidden]="submitted" *ngIf="driver != null">
+    <div class="driver-container">
+
     <h1>{{driver.name}}</h1>
 
     <form (ngSubmit)="onSubmit()" #driverForm="ngForm">
-    <div>
-        <div class="form-group">
-            <mat-form-field appearance="fill">
-                <mat-hint>If blank default will be used.</mat-hint>
-                <mat-label>Rate Per Mile</mat-label>
-                <input matInput type="number" id="ratePerMile" name="ratePerMilej" 
-                    [(ngModel)]="driver.ratePerMile">
-              </mat-form-field>
-        </div>
-        <div class="form-group">
-            <mat-form-field appearance="fill">
-                <mat-label>Base Percent</mat-label>
-                <input matInput type="number" id="basePercent" name="basePercent" 
-                [(ngModel)]="driver.basePercent">
-            </mat-form-field>
-        </div>
-        <div class="form-group">
-            <mat-form-field appearance="fill">
-                <mat-label>Accessorial Percent</mat-label>
-                <input matInput type="number" id="accessorialPercent" name="accessorialPercent" 
-                [(ngModel)]="driver.accessorialPercent">
-            </mat-form-field>
-        </div>
-        <div class="form-group">
-            <mat-form-field appearance="fill">
-                <mat-label>Accessorial Percent</mat-label>
-                <input matInput type="number" id="driverPromptId" name="driverPromptId" 
-                [(ngModel)]="driver.driverPromptId">
-            </mat-form-field>
-        </div>
-        <div class="form-group">
-            <mat-form-field appearance="fill">
-                <mat-label>Social Security Number</mat-label>
-                <input matInput type="password" id="socialSecurityNumber" name="socialSecurityNumber" 
-                [(ngModel)]="driver.socialSecurityNumber">
-            </mat-form-field>
-        </div>
         <div>
-            <mat-form-field appearance="fill">
-                <mat-label>Teammate</mat-label>
-                <mat-select [(value)]="driver.teammateDriverId">
-                    <mat-option>None</mat-option>
-                    <mat-option *ngFor="let d of teamLeaders" [value]="d.id">{{d.name}}</mat-option>
-                </mat-select>
+            <mat-checkbox class="checkbox-margin" name="isTeamLeader" id="isTeamLeader" 
+                [disabled]="driver.teammateDriverId == null"
+                [(ngModel)]="driver.isTeamLeader">Team Leader
+            </mat-checkbox>
+        </div>
+        <mat-form-field appearance="fill">
+            <mat-hint>If blank default will be used.</mat-hint>
+            <mat-label>Rate Per Mile</mat-label>
+            <input matInput type="number" id="ratePerMile" name="ratePerMilej" 
+                [(ngModel)]="driver.ratePerMile">
             </mat-form-field>
-        </div>
+        <mat-form-field appearance="fill">
+            <mat-label>Base Percent</mat-label>
+            <input matInput type="number" id="basePercent" name="basePercent" 
+            [(ngModel)]="driver.basePercent">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Accessorial Percent</mat-label>
+            <input matInput type="number" id="accessorialPercent" name="accessorialPercent" 
+            [(ngModel)]="driver.accessorialPercent">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Accessorial Percent</mat-label>
+            <input matInput type="number" id="driverPromptId" name="driverPromptId" 
+            [(ngModel)]="driver.driverPromptId">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Social Security Number</mat-label>
+            <input matInput type="password" id="socialSecurityNumber" name="socialSecurityNumber" 
+            [(ngModel)]="driver.socialSecurityNumber">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Teammate</mat-label>
+            <mat-select [(value)]="driver.teammateDriverId">
+                <mat-option>None</mat-option>
+                <mat-option *ngFor="let d of teamLeaders" [value]="d.id">{{d.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
         <div>
-                <mat-checkbox class="checkbox-margin" name="isTeamLeader" id="isTeamLeader" 
-                    [(ngModel)]="driver.isTeamLeader">
-                </mat-checkbox>
-                <mat-label>Team Leader</mat-label>            
+            <button type="submit" class="btn btn-success" [disabled]="!driverForm.form.valid">Save</button>
         </div>
-
-        <button type="submit" class="btn btn-success" [disabled]="!driverForm.form.valid">Save</button>
-
-        id: {{driver.id}}
-    </div>
+    
     </form>
-
+    </div>
 </div>
