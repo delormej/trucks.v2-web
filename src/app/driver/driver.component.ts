@@ -16,6 +16,9 @@ export class DriverComponent implements OnInit {
   selectedTeammate!: Driver;
 
   submitted: boolean = false;
+  teammateSuggested: boolean = false;
+
+  readonly snackLength: number = 3000;
 
   constructor(
     private settlementsService: SettlementsService,
@@ -42,16 +45,26 @@ export class DriverComponent implements OnInit {
     this.settlementsService.saveDriver(this.driver)
       .subscribe(d => {
         console.log('saved', this.driver);
-        this.snack.open("Saved", 'CLOSE', { duration: 3000 });
+        this.snack.open("Saved", 'CLOSE', { duration: this.snackLength });
       })
   }
 
+  updateTeammateSuggestions(drivers: Driver[]) {
+    if (drivers?.length > 0) {
+      this.teamLeaders = drivers;
+      this.teammateSuggested = true;
+      this.teammateSelect.open();
+    }
+  }
+
   onSuggestTeammate() {
-    console.log('clicked');
     this.settlementsService.getTeammateSuggestion(this.driver.name)
-      .subscribe(drivers => {
-        this.teamLeaders = drivers;
-        this.teammateSelect.open();
+      .subscribe({
+        next: (drivers) => this.updateTeammateSuggestions(drivers),
+        error: (error) => {
+          this.snack.open("No teammate suggestions found", 'CLOSE', 
+            { duration: this.snackLength });
+        }
       });
   }
 
@@ -74,6 +87,7 @@ export class DriverComponent implements OnInit {
       .subscribe(res => {
         this.teamLeaders = res;
         console.log('leaders', this.teamLeaders.length);
+        this.teammateSuggested = false;
       });
   }
 }

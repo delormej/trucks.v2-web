@@ -23,6 +23,13 @@
                     type="button" >
                 Suggest
             </button>
+            &nbsp;
+            <button mat-raised-button color="basic"
+                    [disabled]="!teammateSuggested"
+                    (click)="getTeamLeaders()"
+                    type="button" >
+                Reset
+            </button>
         </div>
         <div>
             <mat-form-field appearance="fill">
