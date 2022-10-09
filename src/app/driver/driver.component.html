@@ -17,7 +17,7 @@
                 </mat-select>
             </mat-form-field>
             &nbsp;
-            <button mat-raised-button color="accent"
+            <button mat-raised-button color="basic"
                     [disabled]="driver.teammateDriverId != null"
                     (click)="onSuggestTeammate()"
                     type="button" >
@@ -63,7 +63,7 @@
                     [(ngModel)]="driver.driverPromptId">
             </mat-form-field>
             &nbsp;
-            <button mat-raised-button color="accent"
+            <button mat-raised-button color="basic"
                 [disabled]="driver.driverPromptId != null && driver.driverPromptId > 0"
                 (click)="getDriverPin()"
                 type="button" >
