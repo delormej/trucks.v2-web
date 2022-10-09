@@ -222,6 +222,13 @@ export interface Driver {
   created: Date;
   isTeamLeader: Boolean;
   teammateDriverId: string;
+  paymentHistory: Payment[];
+}
+
+export interface Payment { 
+  settlementId: string;
+  settlementDate: Date;
+  amount: number;
 }
 
 export interface FuelCharge {

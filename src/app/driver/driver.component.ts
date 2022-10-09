@@ -92,7 +92,10 @@ export class DriverComponent implements OnInit {
   getDriverPin(): void {
     this.settlementsService.getDriverPin(this.driver.name)
       .subscribe({
-        next: (pin) => { this.driver.driverPromptId = pin; this.snack.open("Found pin suggestion") },
+        next: (pin) => { 
+          this.driver.driverPromptId = pin; 
+          this.snack.open("Found pin suggestion", "CLOSE", { duration: 1500 }); 
+        },
         error: (error) => { this.showError(error, 'No pin found') }
       });
   }
