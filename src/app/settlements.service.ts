@@ -228,6 +228,7 @@ export interface Driver {
 export interface Payment { 
   settlementId: string;
   settlementDate: Date;
+  companyId: string;
   amount: number;
 }
 

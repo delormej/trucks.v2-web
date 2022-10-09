@@ -1,5 +1,31 @@
-<ol>
-    <li *ngFor="let payment of sortedPayments">
-        {{payment.settlementDate}}, {{payment.settlementId}}, {{payment.amount}}
-    </li>
-</ol>
+
+<table mat-table [dataSource]="sortedPayments">
+    <ng-container matColumnDef="settlementDate">
+        <th mat-header-cell *matHeaderCellDef> Settlement Date </th>
+        <td mat-cell *matCellDef="let payment"> 
+            <a [routerLink]="['/driver-settlement']" 
+            [queryParams]="{companyId: payment.companyId,
+                        settlementId: payment.settlementId, 
+                        driver: driverName}">
+                {{payment.settlementDate | date}} 
+            </a>    
+        </td>
+    </ng-container>    
+    <ng-container matColumnDef="settlementId">
+        <th mat-header-cell *matHeaderCellDef> Settlement ID </th>
+        <td mat-cell *matCellDef="let payment"> 
+            <a [routerLink]="['/settlement-detail']" 
+                [queryParams]="{companyId: payment.companyId,
+                            settlementId: payment.settlementId}">
+                {{payment.settlementId}} 
+            </a>    
+        </td>
+    </ng-container>        
+    <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef> Amount </th>
+        <td mat-cell *matCellDef="let payment"> {{payment.amount | number:'0.2-2'}} </td>
+    </ng-container>        
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>    
+</table>

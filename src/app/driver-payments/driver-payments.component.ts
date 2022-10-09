@@ -8,12 +8,15 @@ import { Driver, Payment } from '../settlements.service';
 })
 export class DriverPaymentsComponent implements OnInit {
 
+  displayedColumns: string[] = [ "settlementDate", "settlementId", "amount" ];
   sortedPayments!: Payment[];
+  driverName!: string;
 
   @Input()
   set driver(value: Driver) {
     this.sortedPayments = value.paymentHistory.sort( (a, b) => 
       (a.settlementDate <= b.settlementDate ? 1 : -1) );
+    this.driverName = value.name;
   }
 
   constructor() { }
