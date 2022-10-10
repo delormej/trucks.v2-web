@@ -1,3 +1,42 @@
+<div>
+    <table mat-table [dataSource]="fuel">
+        <ng-container matColumnDef="transactionDate">
+            <th mat-header-cell *matHeaderCellDef> Date </th>
+            <td mat-cell *matCellDef="let charge"> {{charge.transactionDate}}, {{charge.transactionTime}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="weekNumber">
+            <th mat-header-cell *matHeaderCellDef> Week </th>
+            <td mat-cell *matCellDef="let charge"> {{charge.weekNumber}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="merchantName">
+            <th mat-header-cell *matHeaderCellDef> Merchant </th>
+            <td mat-cell *matCellDef="let charge"> {{charge.merchantName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="merchantLocation">
+            <th mat-header-cell *matHeaderCellDef> Location </th>
+            <td mat-cell *matCellDef="let charge"> {{charge.merchantCity}}, {{charge.merchantState}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="netCost">
+            <th mat-header-cell *matHeaderCellDef> Net </th>
+            <td mat-cell *matCellDef="let charge"> {{charge.netCost | number:'0.2-2'}} </td>
+            <td mat-footer-cell *matFooterCellDef> {{fuelTotal | number:'0.2-2'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="driverPromptId">
+            <th mat-header-cell *matHeaderCellDef> Driver PIN </th>
+            <td mat-cell *matCellDef="let charge"> {{charge.driverPromptId}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>    
+        <tr mat-footer-row *matFooterRowDef="footerColumns"></tr>
+    </table>
+</div>
+<!--
 <div *ngIf="fuel != null && fuel.length > 0; else loadingBlock">
     <table>
         <tr>
@@ -19,3 +58,4 @@
 <ng-template #loadingBlock>
     Loading ...
 </ng-template>
+-->
