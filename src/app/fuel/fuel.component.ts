@@ -30,4 +30,16 @@ export class FuelComponent {
     public get fuel() { return this._fuel; }
     
     constructor() { }  
+
+/*
+      this.route.queryParams.subscribe(
+        params => {
+          var year = params['year'];
+          var week = params['week'];
+          var driverPromptId = params['driverPromptId'];
+  
+          this.settlementsService.getFuel(year, week, driverPromptId)
+          .subscribe(res => {
+            console.log(res);
+*/
 }

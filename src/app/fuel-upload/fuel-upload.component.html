@@ -1,10 +1,12 @@
-<input type="file" class="file-input"
-       (change)="onFileSelected($event)" #fileUpload>
+<mat-card>
+   <mat-card-title>Upload Fuel CSV</mat-card-title>
+   <mat-card-subtitle>{{fileName || "Please select fuel csv file."}}</mat-card-subtitle>
+   <mat-card-actions>
+     <input [hidden]="saved" type="file" class="file-input"
+        (change)="onFileSelected($event)" #fileUpload>
+   </mat-card-actions>
+   <mat-progress-bar [hidden]="!saving && !saved" [mode]="uploadProgress" value="100"></mat-progress-bar>
 
-<div class="file-upload" *ngIf="message === ''">
-
-   {{fileName || "Please select fuel csv  file."}}
-
-</div>
+ </mat-card>
 
 <app-fuel *ngIf="fuel != null && fuel.length > 0" [fuel]="fuel"></app-fuel>
