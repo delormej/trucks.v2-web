@@ -1,6 +1,11 @@
 <mat-card>
     <mat-card-title>Drivers</mat-card-title>
-    <table mat-table [dataSource]="drivers">
+
+    <div class="centered-spinner">
+        <mat-spinner [hidden]="!loading" mode="indeterminate"></mat-spinner>
+    </div>
+
+    <table [hidden]="loading" mat-table [dataSource]="drivers">
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Name </th>
             <td mat-cell *matCellDef="let driver"> 
