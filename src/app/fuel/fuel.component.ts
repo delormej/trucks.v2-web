@@ -1,4 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { FuelCharge } from '../settlements.service';
 
 @Component({
@@ -6,7 +8,7 @@ import { FuelCharge } from '../settlements.service';
   templateUrl: './fuel.component.html',
   styleUrls: ['./fuel.component.css']
 })
-export class FuelComponent {
+export class FuelComponent implements AfterViewInit {
     displayColumns: string[] = [
       "transactionDate", 
       "weekNumber", 
@@ -16,13 +18,19 @@ export class FuelComponent {
       "netCost" ];
     footerColumns: string[] = ["netCost"];
     fuelTotal: number = 0;
-    
+    dataSource = new MatTableDataSource<FuelCharge>();
     private _fuel: FuelCharge[] = [];
+
+    @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+    ngAfterViewInit() {
+      this.dataSource.paginator = this.paginator;
+    }
 
     @Input()
     public set fuel(value: FuelCharge[]) {
-      console.log('setting fuel;');
       this._fuel = value;
+      this.dataSource.data = this._fuel;      
       this.fuelTotal = this._fuel.reduce( (partialSum, charge) => 
         partialSum + charge.netCost, 0)
     }
