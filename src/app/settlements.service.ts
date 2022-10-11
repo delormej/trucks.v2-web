@@ -106,6 +106,11 @@ export class SettlementsService {
   getVersion() : Observable<VerisonInfo> {
     return this.http.get<VerisonInfo>(SettlementsService.baseUrl + "/version")
   };
+
+  saveFuelCsv(formData: FormData) : Observable<FuelCharge[]> {
+    return this.http.post<FuelCharge[]>(SettlementsService.baseUrl + "/fuel/upload",
+      formData, {responseType: 'json'});
+  }
 }
 
 export class ManualEntry {

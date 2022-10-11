@@ -1,43 +1,34 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { SettlementsService } from '../settlements.service';
+import { Component } from '@angular/core';
+import { FuelCharge, SettlementsService } from '../settlements.service';
 
 @Component({
   selector: 'app-fuel-upload',
   templateUrl: './fuel-upload.component.html',
   styleUrls: ['./fuel-upload.component.css']
 })
-export class FuelUploadComponent implements OnInit {
-
+export class FuelUploadComponent {
   fileName = '';
   message = '';
+  fuel!: FuelCharge[];
 
-  constructor(private http: HttpClient) {}
+  constructor(    
+    private settlementsService: SettlementsService) {}
 
   onFileSelected(event: any) {
+    const file:File = event.target.files[0];
 
-      const file:File = event.target.files[0];
+    if (file) {
+        this.fileName = file.name;
 
-      if (file) {
+        const formData = new FormData();
+        formData.append("fuelCsv", file);
 
-          this.fileName = file.name;
-
-          const formData = new FormData();
-
-          formData.append("fuelCsv", file);
-
-          const upload$ = this.http.post(this.getUploadUrl(), formData, {responseType: 'text'});
-
-          upload$.subscribe(
-            d => this.message = d,
-            error => this.message = error.message);
-      }
-  }
-
-  ngOnInit(): void {
-  }
-
-  public getUploadUrl(): string {
-    return SettlementsService.baseUrl + "/fuel/upload";
+        this.settlementsService.saveFuelCsv(formData)
+          .subscribe({
+            next: (fuel) => this.fuel = fuel,
+            error: (error) => console.log(error)
+          });
+    }
   }
 }

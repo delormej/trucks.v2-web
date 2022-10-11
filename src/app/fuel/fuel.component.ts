@@ -1,14 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { FuelCharge, SettlementsService } from '../settlements.service';
-import {MatTableDataSource} from '@angular/material/table';
+import { Component, Input } from '@angular/core';
+import { FuelCharge } from '../settlements.service';
 
 @Component({
   selector: 'app-fuel',
   templateUrl: './fuel.component.html',
   styleUrls: ['./fuel.component.css']
 })
-export class FuelComponent implements OnInit {
+export class FuelComponent {
     displayColumns: string[] = [
       "transactionDate", 
       "weekNumber", 
@@ -17,32 +15,19 @@ export class FuelComponent implements OnInit {
       "merchantLocation", 
       "netCost" ];
     footerColumns: string[] = ["netCost"];
-    fuel: FuelCharge[] = [];
     fuelTotal: number = 0;
-    public dataSource = new MatTableDataSource<FuelCharge>();
+    
+    private _fuel: FuelCharge[] = [];
 
-    constructor(
-      private settlementsService: SettlementsService,
-      private route: ActivatedRoute) { }
-  
-    ngOnInit(): void {
-      this.route.queryParams.subscribe(
-        params => {
-          var year = params['year'];
-          var week = params['week'];
-          var driverPromptId = params['driverPromptId'];
-  
-          this.settlementsService.getFuel(year, week, driverPromptId)
-          .subscribe(res => {
-            console.log(res);
-            this.fuel = res;
-
-            this.dataSource.data = this.fuel;
-
-            this.fuelTotal = this.fuel.reduce( (partialSum, charge) => 
-              partialSum + charge.netCost, 0)
-          });          
-        }
-      );
+    @Input()
+    public set fuel(value: FuelCharge[]) {
+      console.log('setting fuel;');
+      this._fuel = value;
+      this.fuelTotal = this._fuel.reduce( (partialSum, charge) => 
+        partialSum + charge.netCost, 0)
     }
+
+    public get fuel() { return this._fuel; }
+    
+    constructor() { }  
 }
