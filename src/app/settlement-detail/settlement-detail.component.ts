@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DriversettlementComponent } from '../driversettlement/driversettlement.component';
 import { SettlementsService, DriverSettlement } from '../settlements.service';
 
 @Component({
