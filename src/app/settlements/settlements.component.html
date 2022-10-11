@@ -1,4 +1,6 @@
-<div>
+<mat-card>    
+    <mat-card-title>Settlement History</mat-card-title>
+
     <mat-spinner [hidden]="!loading" [mode]="loadingProgressMode"></mat-spinner>
 
     <table mat-table [dataSource]="dataSource">
@@ -40,4 +42,4 @@
         showFirstLastButtons 
         aria-label="Select page of settlements">
     </mat-paginator>
-</div>
+</mat-card>

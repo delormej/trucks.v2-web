@@ -1,83 +1,82 @@
-<div *ngIf="driver != null">
+<mat-card>
+    <mat-card-title>{{driver.name}}</mat-card-title>
+
     <div class="driver-container">
-
-    <h1>{{driver.name}}</h1>
-
-    <form (ngSubmit)="onSubmit()" #driverForm="ngForm">
-        <div>
-            <mat-checkbox class="checkbox-margin" name="isTeamLeader" id="isTeamLeader" 
-                [disabled]="driver.teammateDriverId == null"
-                [(ngModel)]="driver.isTeamLeader">Team Leader
-            </mat-checkbox>
-            <mat-form-field appearance="fill">
-                <mat-label>Teammate</mat-label>
-                <mat-select #teammateDriverId [(ngModel)]="driver.teammateDriverId" name="teammateDriverId" id="teammateDriverId">
-                    <mat-option>None</mat-option>
-                    <mat-option *ngFor="let d of teamLeaders" [value]="d.id">{{d.name}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            &nbsp;
-            <button mat-raised-button color="basic"
-                    [disabled]="driver.teammateDriverId != null"
-                    (click)="onSuggestTeammate()"
+        <form (ngSubmit)="onSubmit()" #driverForm="ngForm">
+            <div>
+                <mat-checkbox class="checkbox-margin" name="isTeamLeader" id="isTeamLeader" 
+                    [disabled]="driver.teammateDriverId == null"
+                    [(ngModel)]="driver.isTeamLeader">Team Leader
+                </mat-checkbox>
+                <mat-form-field appearance="fill">
+                    <mat-label>Teammate</mat-label>
+                    <mat-select #teammateDriverId [(ngModel)]="driver.teammateDriverId" name="teammateDriverId" id="teammateDriverId">
+                        <mat-option>None</mat-option>
+                        <mat-option *ngFor="let d of teamLeaders" [value]="d.id">{{d.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                &nbsp;
+                <button mat-raised-button color="basic"
+                        [disabled]="driver.teammateDriverId != null"
+                        (click)="onSuggestTeammate()"
+                        type="button" >
+                    Suggest
+                </button>
+                &nbsp;
+                <button mat-raised-button color="basic"
+                        [disabled]="!teammateSuggested"
+                        (click)="getTeamLeaders()"
+                        type="button" >
+                    Reset
+                </button>
+            </div>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Social Security Number</mat-label>
+                    <input matInput type="password" id="socialSecurityNumber" name="socialSecurityNumber" 
+                        [(ngModel)]="driver.socialSecurityNumber">
+                </mat-form-field>            
+            </div>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-hint>If blank default RPM will be used.</mat-hint>
+                    <mat-label>Rate Per Mile</mat-label>
+                    <input matInput type="number" id="ratePerMile" name="ratePerMilej" 
+                        [(ngModel)]="driver.ratePerMile">
+                    </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Base Percent</mat-label>
+                    <input matInput type="number" id="basePercent" name="basePercent" 
+                        [(ngModel)]="driver.basePercent">
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Accessorial Percent</mat-label>
+                    <input matInput type="number" id="accessorialPercent" name="accessorialPercent" 
+                        [(ngModel)]="driver.accessorialPercent">
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Driver Prompt</mat-label>
+                    <input matInput type="number" id="driverPromptId" name="driverPromptId" 
+                        [(ngModel)]="driver.driverPromptId">
+                </mat-form-field>
+                &nbsp;
+                <button mat-raised-button color="basic"
+                    [disabled]="driver.driverPromptId != null && driver.driverPromptId > 0"
+                    (click)="getDriverPin()"
                     type="button" >
                 Suggest
-            </button>
-            &nbsp;
-            <button mat-raised-button color="basic"
-                    [disabled]="!teammateSuggested"
-                    (click)="getTeamLeaders()"
-                    type="button" >
-                Reset
-            </button>
-        </div>
-        <div>
-            <mat-form-field appearance="fill">
-                <mat-label>Social Security Number</mat-label>
-                <input matInput type="password" id="socialSecurityNumber" name="socialSecurityNumber" 
-                    [(ngModel)]="driver.socialSecurityNumber">
-            </mat-form-field>            
-        </div>
-        <div>
-            <mat-form-field appearance="fill">
-                <mat-hint>If blank default RPM will be used.</mat-hint>
-                <mat-label>Rate Per Mile</mat-label>
-                <input matInput type="number" id="ratePerMile" name="ratePerMilej" 
-                    [(ngModel)]="driver.ratePerMile">
-                </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Base Percent</mat-label>
-                <input matInput type="number" id="basePercent" name="basePercent" 
-                    [(ngModel)]="driver.basePercent">
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Accessorial Percent</mat-label>
-                <input matInput type="number" id="accessorialPercent" name="accessorialPercent" 
-                    [(ngModel)]="driver.accessorialPercent">
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field appearance="fill">
-                <mat-label>Driver Prompt</mat-label>
-                <input matInput type="number" id="driverPromptId" name="driverPromptId" 
-                    [(ngModel)]="driver.driverPromptId">
-            </mat-form-field>
-            &nbsp;
-            <button mat-raised-button color="basic"
-                [disabled]="driver.driverPromptId != null && driver.driverPromptId > 0"
-                (click)="getDriverPin()"
-                type="button" >
-            Suggest
-            </button>
-        </div>
-        <div>
-            <button mat-raised-button color="primary" type="submit"
-                    [disabled]="!driverForm.dirty || !driverForm.valid">
-                Save
-            </button>
-        </div>
-    
-    </form>
+                </button>
+            </div>
+            <div>
+                <button mat-raised-button color="primary" type="submit"
+                        [disabled]="!driverForm.dirty || !driverForm.valid">
+                    Save
+                </button>
+            </div>
+        
+        </form>
     </div>
 
     <mat-expansion-panel>
@@ -86,9 +85,9 @@
         </mat-expansion-panel-header>
       
         <ng-template matExpansionPanelContent>
-          <app-driver-payments
-            [driver]="driver">
-        </app-driver-payments>
+            <app-driver-payments
+                [driver]="driver">
+            </app-driver-payments>
         </ng-template>
-      </mat-expansion-panel>
-</div>
+    </mat-expansion-panel>
+</mat-card>

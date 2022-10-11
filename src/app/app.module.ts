@@ -7,7 +7,6 @@ import { MaterialModules } from './material.modules';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { SettlementsComponent } from './settlements/settlements.component';
 import { DriversettlementComponent } from './driversettlement/driversettlement.component';
 import { SettlementDetailComponent } from './settlement-detail/settlement-detail.component';
@@ -25,7 +24,6 @@ import { DriverPaymentsComponent } from './driver-payments/driver-payments.compo
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,
     SettlementsComponent,
     DriversettlementComponent,
     SettlementDetailComponent,

@@ -1,20 +1,23 @@
-<div *ngIf="drivers != null && drivers.length > 0; else loadingBlock">
-    <table>
-        <tr>
-            <td>Driver</td>
-            <td>Prompt Id</td>
-        </tr>
-        <tr *ngFor="let driver of drivers">
-            <td>
-                <a [routerLink]="['/driver']" 
-                [queryParams]="{driver: driver.name}">
-                {{driver.name}}
-                </a>
-            </td>
-            <td>{{driver.driverPromptId}}</td>
-        </tr>   
-    </table>
-</div>
+<mat-card>
+    <mat-card-title>Drivers</mat-card-title>
+    <div *ngIf="drivers != null && drivers.length > 0; else loadingBlock">
+        <table>
+            <tr>
+                <td>Driver</td>
+                <td>Prompt Id</td>
+            </tr>
+            <tr *ngFor="let driver of drivers">
+                <td>
+                    <a [routerLink]="['/driver']" 
+                    [queryParams]="{driver: driver.name}">
+                    {{driver.name}}
+                    </a>
+                </td>
+                <td>{{driver.driverPromptId}}</td>
+            </tr>   
+        </table>
+    </div>
+</mat-card>
 <ng-template #loadingBlock>
     Loading ...
 </ng-template>
