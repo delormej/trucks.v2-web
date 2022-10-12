@@ -11,7 +11,7 @@ export class SettlementDetailComponent implements OnInit {
   loading: boolean = false;
   settlement!: SettlementSummary;
   driverSettlements: DriverSettlement[] = [];
-  selectedDriverSettlement!: DriverSettlement;
+  selectedDriver: string = '';
   showFiller = false;
 
   constructor(
@@ -23,6 +23,7 @@ export class SettlementDetailComponent implements OnInit {
     this.route.queryParams.subscribe(
       params => {
         this.getDriverSettlements(params['companyId'], params['settlementId']); 
+        this.selectedDriver = params['driver'];
       }
     );
   } 
@@ -33,7 +34,7 @@ export class SettlementDetailComponent implements OnInit {
     // Replace existing element with the updated version.
     this.driverSettlements[index] = driverSettlement;
     // Set currently selected.
-    this.selectedDriverSettlement = driverSettlement;
+    this.selectedDriver = driverSettlement.driver;
   }
 
   getDriverSettlement(driverSettlementId: string): DriverSettlement {

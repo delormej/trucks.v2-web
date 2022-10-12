@@ -17,7 +17,7 @@
                 <mat-selection-list #driverSettlementSelection [multiple]="false">
                   <mat-list-option class="driver-list-option" 
                     *ngFor="let d of driverSettlements" 
-                      [value]="d" [selected]="d.driverSettlementId === selectedDriverSettlement?.driverSettlementId">
+                      [value]="d" [selected]="d.driver === selectedDriver">
                     {{d.driver}}
                   </mat-list-option>
                 </mat-selection-list>                
