@@ -1,27 +1,34 @@
-<div *ngIf="driverSettlements.length > 0; then driverSettlementsBlock else loadingBlock"></div>
+<mat-card>
+    <div class="centered-spinner">
+      <mat-spinner [hidden]="!loading" mode="indeterminate"></mat-spinner>
+    </div>
 
-<ng-template #driverSettlementsBlock>
-    <h2>Settlement {{driverSettlements[0].settlementId}}, {{driverSettlements[0].settlementDate | date}}</h2>
-    <h3>{{driverSettlements[0].year}}, Week {{driverSettlements[0].week}}</h3>
-    <table>
-        <tr>
-            <td>Driver</td>
-            <td>Miles</td>
-            <td></td>
-        </tr>
-        <tr *ngFor="let driverSettlement of driverSettlements">
-            <td>
-                <a [routerLink]="['/driver-settlement']" 
-                [queryParams]="{companyId: driverSettlement.companyId, 
-                        settlementId: driverSettlement.settlementId,
-                        driver: driverSettlement.driver}">
-                    {{driverSettlement.driver}}
-                </a>
-            </td>
-            <td>{{getMiles(driverSettlement)| number: '0.0-0'}}</td>
-        </tr>
-    </table>
-</ng-template>
-<ng-template #loadingBlock>
-    Loading... 
-</ng-template>
+    <div [hidden]="loading">
+        <mat-card-title>Settlement {{settlementId}}</mat-card-title>
+        <mat-card-subtitle>
+            Company {{companyId}} | {{settlementDate | date}} 
+        </mat-card-subtitle>
+        <mat-card-content>
+            <div><a href=""> &lt;&lt; Previous </a> Week {{weekNumber}} <a href=""> Next &gt;&gt; </a></div>
+        </mat-card-content>
+        <mat-drawer-container class="settlement-container" autosize>
+            <mat-drawer #drawer class="settlement-sidenav" mode="side" disableClose="true" opened>
+              <div>
+                <mat-selection-list #driverSettlementSelection [multiple]="false">
+                  <mat-list-option class="driver-list-option" 
+                    *ngFor="let driverSettlement of driverSettlements" 
+                      [value]="driverSettlement">
+                    {{driverSettlement.driver}}, {{driverSettlement.credits.length}}
+                  </mat-list-option>
+                </mat-selection-list>                
+              </div>
+            </mat-drawer>
+          
+            <div class="settlement-sidenav-content">
+              <app-driversettlement 
+                [driverSettlement]="getDriverSettlement(driverSettlementSelection.selectedOptions.selected[0]?.value.driverSettlementId)">
+              </app-driversettlement>
+            </div>          
+          </mat-drawer-container>
+    </div>
+</mat-card>

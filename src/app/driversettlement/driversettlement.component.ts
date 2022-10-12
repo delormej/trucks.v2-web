@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { SettlementsService, DriverSettlement, ManualEntry, Driver } from '../settlements.service';
 import '../../number.extensions';
 
@@ -8,28 +7,20 @@ import '../../number.extensions';
   templateUrl: './driversettlement.component.html',
   styleUrls: ['./driversettlement.component.css']
 })
-export class DriversettlementComponent implements OnInit {
-
-  driverSettlement!: DriverSettlement;
+export class DriversettlementComponent implements OnInit, OnChanges {
+  @Input() driverSettlement!: DriverSettlement;
   driver!: Driver;
 
   constructor(
-    private settlementsService: SettlementsService,
-    private route: ActivatedRoute) { }
+    private settlementsService: SettlementsService) { }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(
-      params => {
-        var week = params['week'];
-        var year = params['year'];
-        var companyId = params['companyId'];
-        var settlementId = params['settlementId']
-        var driver = params['driver'];
+  }
 
-        this.getDriver(driver);
-        this.getDriverSettlement(companyId, driver, false, settlementId, year, week);
-      }
-    );
+  ngOnChanges(changes: SimpleChanges): void {
+    this.driverSettlement = changes['driverSettlement'].currentValue;
+    if (this.driverSettlement)
+      this.getDriver(this.driverSettlement.driver);
   }
 
   public recreate(): void {

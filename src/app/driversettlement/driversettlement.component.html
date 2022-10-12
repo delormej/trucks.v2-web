@@ -83,7 +83,7 @@
         <tr>
             <td>Fuel</td>
             <td>
-                <div *ngIf="(driver.driverPromptId || 0) > 0; else noDriverPrompt">
+                <div *ngIf="driver && (driver.driverPromptId || 0) > 0; else noDriverPrompt">
                     <a [routerLink]="['/fuel']" 
                         [queryParams]="{ 
                             year: driverSettlement.year,

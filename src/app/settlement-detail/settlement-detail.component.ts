@@ -8,8 +8,14 @@ import { SettlementsService, DriverSettlement } from '../settlements.service';
   styleUrls: ['./settlement-detail.component.css']
 })
 export class SettlementDetailComponent implements OnInit {
-
+  loading: boolean = false;
+  settlementId!: string;
+  year!: number;
+  weekNumber!: number;
+  settlementDate!: Date;
+  companyId!: string;
   driverSettlements: DriverSettlement[] = [];
+  showFiller = false;
 
   constructor(
     private settlementsService: SettlementsService,
@@ -24,11 +30,22 @@ export class SettlementDetailComponent implements OnInit {
     );
   } 
 
-  getDriverSettlements(companyId: string, settlementId: string): void {
+  getDriverSettlement(driverSettlementId: string): DriverSettlement {
+    var driverSettlement = this.driverSettlements.find(
+      d => d.driverSettlementId === driverSettlementId);
 
+      return driverSettlement!;
+  }
+
+  getDriverSettlements(companyId: string, settlementId: string): void {
     this.settlementsService.getDriverSettlements(companyId, settlementId)
       .subscribe(res => {
         this.driverSettlements = res;
+        this.year = this.driverSettlements[0].year;
+        this.weekNumber = this.driverSettlements[0].week;
+        this.settlementId = this.driverSettlements[0].settlementId;
+        this.settlementDate = this.driverSettlements[0].settlementDate;
+        this.companyId = this.driverSettlements[0].companyId;
       });
   }
 
