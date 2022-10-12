@@ -16,9 +16,9 @@
               <div>
                 <mat-selection-list #driverSettlementSelection [multiple]="false">
                   <mat-list-option class="driver-list-option" 
-                    *ngFor="let driverSettlement of driverSettlements" 
-                      [value]="driverSettlement">
-                    {{driverSettlement.driver}}
+                    *ngFor="let d of driverSettlements" 
+                      [value]="d" [selected]="d.driverSettlementId === selectedDriverSettlement?.driverSettlementId">
+                    {{d.driver}}
                   </mat-list-option>
                 </mat-selection-list>                
               </div>
@@ -26,7 +26,8 @@
           
             <div class="settlement-sidenav-content">
               <app-driversettlement *ngIf="driverSettlementSelection.selectedOptions.selected.length > 0; else promptForSelection"
-                [driverSettlement]="driverSettlementSelection.selectedOptions.selected[0]?.value">
+                [driverSettlement]="driverSettlementSelection.selectedOptions.selected[0].value"
+                (driverSettlementChange)="driverSettlementChange($event)">
               </app-driversettlement>
               <ng-template #promptForSelection>
                 <div>Please select a driver from the left.</div>

@@ -15,6 +15,7 @@ export class SettlementDetailComponent implements OnInit {
   settlementDate!: Date;
   companyId!: string;
   driverSettlements: DriverSettlement[] = [];
+  selectedDriverSettlement!: DriverSettlement;
   showFiller = false;
 
   constructor(
@@ -29,6 +30,15 @@ export class SettlementDetailComponent implements OnInit {
       }
     );
   } 
+
+  driverSettlementChange(driverSettlement: DriverSettlement) {
+    var index = this.driverSettlements.findIndex(d => 
+      d.driverSettlementId === driverSettlement.driverSettlementId);
+    // Replace existing element with the updated version.
+    this.driverSettlements[index] = driverSettlement;
+    // Set currently selected.
+    this.selectedDriverSettlement = driverSettlement;
+  }
 
   getDriverSettlement(driverSettlementId: string): DriverSettlement {
     var driverSettlement = this.driverSettlements.find(

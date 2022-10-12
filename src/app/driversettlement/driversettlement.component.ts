@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { SettlementsService, DriverSettlement, ManualEntry, Driver } from '../settlements.service';
 import '../../number.extensions';
 
@@ -8,7 +8,12 @@ import '../../number.extensions';
   styleUrls: ['./driversettlement.component.css']
 })
 export class DriversettlementComponent implements OnInit, OnChanges {
-  @Input() driverSettlement!: DriverSettlement;
+  @Input() 
+  driverSettlement!: DriverSettlement;
+  @Output() 
+  driverSettlementChange: EventEmitter<DriverSettlement> = 
+    new EventEmitter<DriverSettlement>();
+  
   driver!: Driver;
 
   constructor(
@@ -41,6 +46,7 @@ export class DriversettlementComponent implements OnInit, OnChanges {
       .subscribe(res => {
         console.log(res);
         this.driverSettlement = res;
+        this.driverSettlementChange.emit(this.driverSettlement);
       });
   }
 
@@ -97,16 +103,19 @@ export class DriversettlementComponent implements OnInit, OnChanges {
     this.settlementsService.saveManualEntry(entry)
       .subscribe(res => {
         this.driverSettlement = res;
+        this.driverSettlementChange.emit(this.driverSettlement);
       });
   }
 
   deleteManualEntry(itemId: string): void {
     let driverSettlementId = this.driverSettlement.driverSettlementId;
+    
     console.log('deleting entry', itemId);
     
     this.settlementsService.deleteManualEntry(driverSettlementId, itemId)
       .subscribe(res => {
         this.driverSettlement = res;
+        this.driverSettlementChange.emit(this.driverSettlement);
       });
   }
 }
