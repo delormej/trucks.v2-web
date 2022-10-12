@@ -4,12 +4,12 @@
     </div>
 
     <div [hidden]="loading">
-        <mat-card-title>Settlement {{settlementId}}</mat-card-title>
+        <mat-card-title>Settlement {{settlement.settlementId}}</mat-card-title>
         <mat-card-subtitle>
-            Company {{companyId}} | {{settlementDate | date}} 
+            Company {{settlement.companyId}} | {{settlement.settlementDate | date}} 
         </mat-card-subtitle>
         <mat-card-content>
-            <div><a href=""> &lt;&lt; Previous </a> Week {{weekNumber}} <a href=""> Next &gt;&gt; </a></div>
+            <div><a href=""> &lt;&lt; Previous </a> Week {{settlement.weekNumber}} <a href=""> Next &gt;&gt; </a></div>
         </mat-card-content>
         <mat-drawer-container class="settlement-container" autosize>
             <mat-drawer #drawer class="settlement-sidenav" mode="side" disableClose="true" opened>

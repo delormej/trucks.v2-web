@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SettlementsService, DriverSettlement } from '../settlements.service';
+import { SettlementsService, SettlementSummary, DriverSettlement } from '../settlements.service';
 
 @Component({
   selector: 'app-settlement-detail',
@@ -9,11 +9,7 @@ import { SettlementsService, DriverSettlement } from '../settlements.service';
 })
 export class SettlementDetailComponent implements OnInit {
   loading: boolean = false;
-  settlementId!: string;
-  year!: number;
-  weekNumber!: number;
-  settlementDate!: Date;
-  companyId!: string;
+  settlement!: SettlementSummary;
   driverSettlements: DriverSettlement[] = [];
   selectedDriverSettlement!: DriverSettlement;
   showFiller = false;
@@ -51,11 +47,14 @@ export class SettlementDetailComponent implements OnInit {
     this.settlementsService.getDriverSettlements(companyId, settlementId)
       .subscribe(res => {
         this.driverSettlements = res;
-        this.year = this.driverSettlements[0].year;
-        this.weekNumber = this.driverSettlements[0].week;
-        this.settlementId = this.driverSettlements[0].settlementId;
-        this.settlementDate = this.driverSettlements[0].settlementDate;
-        this.companyId = this.driverSettlements[0].companyId;
+        this.settlement = { 
+          year: this.driverSettlements[0].year,
+          weekNumber: this.driverSettlements[0].week,
+          settlementId: this.driverSettlements[0].settlementId,
+          settlementDate: this.driverSettlements[0].settlementDate,
+          companyId: this.driverSettlements[0].companyId,
+          checkAmount: 0
+        };
       });
   }
 

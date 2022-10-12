@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { SettlementsService, Summary } from '../settlements.service'; 
+import { SettlementsService, SettlementSummary } from '../settlements.service'; 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -13,7 +13,7 @@ import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 export class SettlementsComponent implements OnInit, AfterViewInit {
   loadingProgressMode!: ProgressSpinnerMode;
   loading: boolean = false;
-  dataSource = new MatTableDataSource<Summary>();
+  dataSource = new MatTableDataSource<SettlementSummary>();
   displayedColumns: string[] = [
     "companyId",
     "settlementId",

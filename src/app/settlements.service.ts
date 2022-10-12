@@ -12,8 +12,8 @@ export class SettlementsService {
 
   constructor(private http: HttpClient) { }
 
-  getSettlementSummaries(): Observable<Summary[]> {
-    return this.http.get<Summary[]>(SettlementsService.baseUrl + "/settlements/summaries");
+  getSettlementSummaries(): Observable<SettlementSummary[]> {
+    return this.http.get<SettlementSummary[]>(SettlementsService.baseUrl + "/settlements/summaries");
   }  
 
   getDriverSettlements(companyId: string, settlementId: string, forceRecreate: boolean = false): Observable<DriverSettlement[]> {
@@ -120,7 +120,7 @@ export class ManualEntry {
   deductionAmount?: number  
 }
 
-export interface Summary {
+export interface SettlementSummary {
   settlementId: string;
   settlementDate: Date;
   weekNumber: number;
