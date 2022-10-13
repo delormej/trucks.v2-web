@@ -1,0 +1,143 @@
+<table mat-table [dataSource]="driverSettlement.credits">
+    <ng-container matColumnDef="deliveryDate">
+        <th mat-header-cell *matHeaderCellDef> Delivery Date </th>
+        <td mat-cell *matCellDef="let credit"> {{credit.deliveryDate}} </td>
+        <td mat-footer-cell *matFooterCellDef> <strong>Totals</strong> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="load">
+        <th mat-header-cell *matHeaderCellDef> Load </th>
+        <td mat-cell *matCellDef="let credit"> {{credit.proNumber}} </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <ng-container matColumnDef="miles">
+        <th mat-header-cell *matHeaderCellDef> Miles </th>
+        <td mat-cell *matCellDef="let credit"> 
+            {{credit.miles > 0 ? credit.miles : ""}} 
+        </td>
+        <td mat-footer-cell *matFooterCellDef>{{driverSettlement.milesTotal}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="revenue">
+        <th mat-header-cell *matHeaderCellDef> Revenue </th>
+        <td mat-cell *matCellDef="let credit"> 
+            {{credit.extendedAmount > 0 ? (credit.extendedAmount | number:'0.2-2') : ""}}
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <ng-container matColumnDef="base">
+        <th mat-header-cell *matHeaderCellDef> Base </th>
+        <td mat-cell *matCellDef="let credit"> 
+            {{credit.base > 0 ? (credit.base | number:'0.2-2') : ""}}
+        </td>
+        <td mat-footer-cell *matFooterCellDef> 
+            {{driverSettlement.baseTotal | number:'0.2-2'}} 
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fsc">
+        <th mat-header-cell *matHeaderCellDef> FSC </th>
+        <td mat-cell *matCellDef="let credit"> 
+            {{credit.creditAmount > 0 ? (credit.creditAmount | number:'0.2-2') : ""}} 
+        </td>
+        <td mat-footer-cell *matFooterCellDef>
+            {{driverSettlement.fscTotal | number:'0.2-2'}}
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="deadhead">
+        <th mat-header-cell *matHeaderCellDef> Deadhead </th>
+        <td mat-cell *matCellDef="let credit"> 
+            {{credit.deadHead > 0 ? (credit.deadHead | number:'0.2-2') : ""}}
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <ng-container matColumnDef="advance">
+        <th mat-header-cell *matHeaderCellDef> Advance </th>
+        <td mat-cell *matCellDef="let credit"> {{credit.advance}} </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <ng-container matColumnDef="empty">
+        <th mat-header-cell *matHeaderCellDef> Empty </th>
+        <td mat-cell *matCellDef="let credit"> 
+            {{credit.empty > 0 ? (credit.empty | number:'0.2-2') : ""}}
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <ng-container matColumnDef="tolls">
+        <th mat-header-cell *matHeaderCellDef> Tolls </th>
+        <td mat-cell *matCellDef="let credit"> 
+            {{credit.tolls > 0 ? (credit.tolls | number:'0.2-2') : ""}}
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <ng-container matColumnDef="other">
+        <th mat-header-cell *matHeaderCellDef> Other </th>
+        <td mat-cell *matCellDef="let credit"> 
+            {{credit.other > 0 ? (credit.other | number:'0.2-2') : ""}}
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>    
+
+    <ng-container matColumnDef="canada">
+        <th mat-header-cell *matHeaderCellDef> Canada </th>
+        <td mat-cell *matCellDef="let credit"> 
+            {{credit.canada > 0 ? (credit.canada | number:'0.2-2') : ""}}
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <ng-container matColumnDef="stops">
+        <th mat-header-cell *matHeaderCellDef> Stop off </th>
+        <td mat-cell *matCellDef="let credit"> 
+            {{credit.stopOff > 0 ? (credit.stopOff | number:'0.2-2') : ""}}
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <ng-container matColumnDef="detent">
+        <th mat-header-cell *matHeaderCellDef> Detention </th>
+        <td mat-cell *matCellDef="let credit"> 
+            {{credit.detention > 0 ? (credit.detention | number:'0.2-2') : ""}}
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <ng-container matColumnDef="handLoad">
+        <th mat-header-cell *matHeaderCellDef> Hand Load </th>
+        <td mat-cell *matCellDef="let credit"> 
+            {{credit.handLoad > 0 ? (credit.handLoad | number:'0.2-2') : ""}}
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <ng-container matColumnDef="layover">
+        <th mat-header-cell *matHeaderCellDef> Layover </th>
+        <td mat-cell *matCellDef="let credit"> 
+            {{credit.layover > 0 ? (credit.layover | number:'0.2-2') : ""}}
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <ng-container matColumnDef="bonus">
+        <th mat-header-cell *matHeaderCellDef> Bonus </th>
+        <td mat-cell *matCellDef="let credit"> 
+            {{credit.bonus > 0 ? (credit.bonus | number:'0.2-2') : ""}}
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>    
+    <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>          
+</table>
+<mat-card-actions>
+    <div><button mat-button color="primary">Copy to Clipboard</button></div>
+</mat-card-actions>
