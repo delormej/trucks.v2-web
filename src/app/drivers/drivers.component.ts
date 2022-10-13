@@ -10,7 +10,8 @@ import { Driver, SettlementsService } from '../settlements.service';
 export class DriversComponent implements OnInit {
   loading: boolean = false;
   drivers: Driver[] = [];
-
+  displayColumns: string[] = ['name', 'driverPromptId', 'teammateName'];
+  
   constructor(
     private settlementsService: SettlementsService,
     private snack: MatSnackBar) {}

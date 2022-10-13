@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of, throwError, pipe, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -74,8 +74,23 @@ export class SettlementsService {
   }
 
   getAllDrivers() : Observable<Driver[]> {
-    return this.http.get<Driver[]>(SettlementsService.baseUrl + "/driver/list");
+    return this.http.get<Driver[]>(SettlementsService.baseUrl + "/driver/list")
+      .pipe(map((drivers) => { 
+        drivers.forEach((driver, index) => {
+          if (driver.teammateDriverId != null && driver.teammateDriverId != '') {
+            let teammate = drivers.find(d => d.id === driver.teammateDriverId);
+            if (teammate != null)
+              driver.teammateName = teammate.name;
+          }
+        })
+        console.log('drivers', drivers);
+        return drivers; 
+      }));
   }
+
+  // setTeammate(drivers: Observable<Driver[]>) : Observable<Driver[]> {
+
+  // }
 
   getTeammateSuggestion(driver: string) : Observable<Driver[]> {
     return this.http.get<Driver[]>(SettlementsService.baseUrl + "/driver/suggest-teammate",
@@ -227,6 +242,7 @@ export interface Driver {
   created: Date;
   isTeamLeader: Boolean;
   teammateDriverId: string;
+  teammateName?: string;
   paymentHistory: Payment[];
 }
 

@@ -3,33 +3,7 @@
 
     <div class="driver-container">
         <form (ngSubmit)="onSubmit()" #driverForm="ngForm">
-            <div>
-                <mat-checkbox class="checkbox-margin" name="isTeamLeader" id="isTeamLeader" 
-                    [disabled]="driver.teammateDriverId == null"
-                    [(ngModel)]="driver.isTeamLeader">Team Leader
-                </mat-checkbox>
-                <mat-form-field appearance="fill">
-                    <mat-label>Teammate</mat-label>
-                    <mat-select #teammateDriverId [(ngModel)]="driver.teammateDriverId" name="teammateDriverId" id="teammateDriverId">
-                        <mat-option>None</mat-option>
-                        <mat-option *ngFor="let d of teamLeaders" [value]="d.id">{{d.name}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                &nbsp;
-                <button mat-raised-button color="basic"
-                        [disabled]="driver.teammateDriverId != null"
-                        (click)="onSuggestTeammate()"
-                        type="button" >
-                    Suggest
-                </button>
-                &nbsp;
-                <button mat-raised-button color="basic"
-                        [disabled]="!teammateSuggested"
-                        (click)="getTeamLeaders()"
-                        type="button" >
-                    Reset
-                </button>
-            </div>
+            <app-team [driver]="driver" ></app-team>
             <div>
                 <mat-form-field appearance="fill">
                     <mat-label>Social Security Number</mat-label>

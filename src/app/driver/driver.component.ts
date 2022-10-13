@@ -12,11 +12,7 @@ import { MatSelect } from '@angular/material/select';
 export class DriverComponent implements OnInit {
 
   driver!: Driver;
-  teamLeaders!: Driver[];
-  selectedTeammate!: Driver;
-
   submitted: boolean = false;
-  teammateSuggested: boolean = false;
 
   readonly snackLength: number = 3000;
 
@@ -24,8 +20,6 @@ export class DriverComponent implements OnInit {
     private settlementsService: SettlementsService,
     private route: ActivatedRoute,
     private snack: MatSnackBar) { }
-
-  @ViewChild('teammateDriverId') teammateSelect! : MatSelect;
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(
@@ -36,7 +30,6 @@ export class DriverComponent implements OnInit {
           this.getDriver(params['driver']); 
       }
     );
-    this.getTeamLeaders();
   }
 
   onSubmit() {
@@ -57,35 +50,11 @@ export class DriverComponent implements OnInit {
       });
   }
 
-  updateTeammateSuggestions(drivers: Driver[]) {
-    if (drivers?.length > 0) {
-      this.teamLeaders = drivers;
-      this.teammateSuggested = true;
-      this.teammateSelect.open();
-    }
-  }
-
-  onSuggestTeammate() {
-    this.settlementsService.getTeammateSuggestion(this.driver.name)
-      .subscribe({
-        next: (drivers) => this.updateTeammateSuggestions(drivers),
-        error: (error) => this.showError(error, "No teammate suggestions found")
-      });
-  }
-
   getDriver(name: string): void {
     this.settlementsService.getDriver(name)
       .subscribe({
         next: (driver) => this.driver = driver,
         error: (error) => this.showError(error, "Unable to load driver")
-      });
-  }
-
-  getTeamLeaders(): void {
-    this.settlementsService.getAllDrivers()
-      .subscribe({
-        next: (drivers) => { this.teamLeaders = drivers; this.teammateSuggested = false; },
-        error: (error) => this.showError(error, "Unable to load teammates.")
       });
   }
 

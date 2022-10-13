@@ -21,6 +21,7 @@ import { FuelComponent } from './fuel/fuel.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DriverPaymentsComponent } from './driver-payments/driver-payments.component';
 import { LoadsComponent } from './loads/loads.component';
+import { TeamComponent } from './team/team.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { LoadsComponent } from './loads/loads.component';
     VersionComponent,
     FuelComponent,
     DriverPaymentsComponent,
-    LoadsComponent
+    LoadsComponent,
+    TeamComponent
   ],
   imports: [
     HttpClientModule,

@@ -27,7 +27,7 @@
         <ng-container matColumnDef="netCost">
             <th mat-header-cell *matHeaderCellDef> Net </th>
             <td mat-cell *matCellDef="let charge"> {{charge.netCost | number:'0.2-2'}} </td>
-            <td mat-footer-cell *matFooterCellDef> <strong>{{fuelTotal | number:'0.2-2'}}</strong> </td>
+            <td mat-footer-cell *matFooterCellDef> <strong>{{fuelTotal > 0 ? (fuelTotal | number:'0.2-2') : ''}}</strong> </td>
         </ng-container>
 
         <ng-container matColumnDef="driverPromptId">
