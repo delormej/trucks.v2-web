@@ -144,12 +144,11 @@
         </app-settlement-entry>
     </div>
 
-    <h4>Amount Due: {{driverSettlement.amountDue.toDisplay()}}</h4> 
     <button type="submit" class="btn btn-secondary" (click)="recreate()">Recreate</button>    
     <br/>
     <a href={{getWorkbookLink(driverSettlement)}}>
         Download Workbook
     </a>
-    <hr />
+    
     <app-driver-settlement-notes [driverSettlement]="driverSettlement"></app-driver-settlement-notes>
 </div>
