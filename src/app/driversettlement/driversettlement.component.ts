@@ -119,7 +119,9 @@ export class DriversettlementComponent implements OnInit, OnChanges {
   }
 
   onTeammateSave(teammate: Teammate) {
-    console.log('teammate saving', teammate);
+    // TODO:
+    // we're not taking into consideration if original driver is team leader, we're just assuming teammate is NOT
+    // the team leader.  Should we be deleting the driver settlement for the non-team leader? 
 
     this.settlementsService.changeTeammate(
       this.driverSettlement.driverSettlementId, teammate)

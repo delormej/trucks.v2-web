@@ -23,7 +23,8 @@
                 </mat-selection-list>                
               </div>
             </mat-drawer>
-          
+<!-- When selecting a driver settlement + specific driver, esp. for next/prev week, should we just hide this and make the
+  prev/next week stuff just work as it used to without this side nav? -->          
             <div class="settlement-sidenav-content">
               <app-driversettlement *ngIf="driverSettlementSelection.selectedOptions.selected.length > 0; else promptForSelection"
                 [driverSettlement]="driverSettlementSelection.selectedOptions.selected[0].value"

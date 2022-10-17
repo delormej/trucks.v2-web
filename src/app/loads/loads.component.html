@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="driverSettlement.credits">
+<table mat-table [dataSource]="_driverSettlement.credits">
     <ng-container matColumnDef="deliveryDate">
         <th mat-header-cell *matHeaderCellDef> Delivery Date </th>
         <td mat-cell *matCellDef="let credit"> {{credit.deliveryDate}} </td>
@@ -16,7 +16,7 @@
         <td mat-cell *matCellDef="let credit"> 
             {{credit.miles > 0 ? credit.miles : ""}} 
         </td>
-        <td mat-footer-cell *matFooterCellDef>{{driverSettlement.milesTotal}}</td>
+        <td mat-footer-cell *matFooterCellDef>{{_driverSettlement.milesTotal}}</td>
     </ng-container>
 
     <ng-container matColumnDef="revenue">
@@ -33,7 +33,7 @@
             {{credit.base > 0 ? (credit.base | number:'0.2-2') : ""}}
         </td>
         <td mat-footer-cell *matFooterCellDef> 
-            {{driverSettlement.baseTotal | number:'0.2-2'}} 
+            {{_driverSettlement.baseTotal | number:'0.2-2'}} 
         </td>
     </ng-container>
 
@@ -43,7 +43,7 @@
             {{credit.creditAmount > 0 ? (credit.creditAmount | number:'0.2-2') : ""}} 
         </td>
         <td mat-footer-cell *matFooterCellDef>
-            {{driverSettlement.fscTotal | number:'0.2-2'}}
+            {{_driverSettlement.fscTotal | number:'0.2-2'}}
         </td>
     </ng-container>
 
@@ -57,7 +57,7 @@
 
     <ng-container matColumnDef="advance">
         <th mat-header-cell *matHeaderCellDef> Advance </th>
-        <td mat-cell *matCellDef="let credit"> {{credit.advance}} </td>
+        <td mat-cell *matCellDef="let credit"> {{credit.advanceAmount}} </td>
         <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
