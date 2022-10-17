@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { SettlementsService, DriverSettlement, ManualEntry, Driver } from '../settlements.service';
+import { SettlementsService, DriverSettlement, ManualEntry, Driver, Teammate } from '../settlements.service';
 import '../../number.extensions';
 
 @Component({
@@ -54,7 +54,6 @@ export class DriversettlementComponent implements OnInit, OnChanges {
     this.settlementsService.getDriver(name)
       .subscribe(res => {
         this.driver = res;
-        console.log(res);
       });
   }
 
@@ -116,6 +115,20 @@ export class DriversettlementComponent implements OnInit, OnChanges {
       .subscribe(res => {
         this.driverSettlement = res;
         this.driverSettlementChange.emit(this.driverSettlement);
+      });
+  }
+
+  onTeammateSave(teammate: Teammate) {
+    console.log('teammate saving', teammate);
+
+    this.settlementsService.changeTeammate(
+      this.driverSettlement.driverSettlementId, teammate)
+      .subscribe({
+        next: (driverSettlement) => {
+          this.driverSettlement = driverSettlement;
+          this.driverSettlementChange.emit(driverSettlement);
+        },
+        error: (error) => console.log('error', error)
       });
   }
 }

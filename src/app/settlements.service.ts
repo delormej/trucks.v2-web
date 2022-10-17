@@ -74,6 +74,7 @@ export class SettlementsService {
   }
 
   getAllDrivers() : Observable<Driver[]> {
+    // replace the pipe call with setTeammate(...)?
     return this.http.get<Driver[]>(SettlementsService.baseUrl + "/driver/list")
       .pipe(map((drivers) => { 
         drivers.forEach((driver, index) => {
@@ -82,14 +83,13 @@ export class SettlementsService {
             if (teammate != null)
               driver.teammateName = teammate.name;
           }
-        })
-        console.log('drivers', drivers);
+        });
+        
         return drivers; 
       }));
   }
 
   // setTeammate(drivers: Observable<Driver[]>) : Observable<Driver[]> {
-
   // }
 
   getTeammateSuggestion(driver: string) : Observable<Driver[]> {
@@ -117,6 +117,16 @@ export class SettlementsService {
           .set('driverSettlementId', driverSettlementId)
           .set('itemId', itemId) });
   }  
+
+  changeTeammate(driverSettlementId: string, teammate: Teammate): Observable<DriverSettlement> {
+    var body = {
+      driverSettlementId: driverSettlementId, 
+      updatedTeammateDriverId: teammate.driverId
+     };
+
+    return this.http.post<DriverSettlement>(
+      SettlementsService.baseUrl + "/driversettlements/change-teammate", body);
+  }
 
   getVersion() : Observable<VerisonInfo> {
     return this.http.get<VerisonInfo>(SettlementsService.baseUrl + "/version")
@@ -271,6 +281,11 @@ export interface FuelCharge {
   merchantCity:	string;
   merchantState: string;
   merchantPostal:	string;
+}
+
+export interface Teammate {
+  driverId?: string;
+  name?: string;
 }
 
 export interface VerisonInfo

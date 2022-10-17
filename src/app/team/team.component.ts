@@ -1,14 +1,14 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { MatSelect } from '@angular/material/select';
+import { Component, Input, OnInit, Output, ViewChild, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { MatSelect, MatSelectChange } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Driver, SettlementsService } from '../settlements.service';
+import { Driver, SettlementsService, Teammate } from '../settlements.service';
 
 @Component({
   selector: 'app-team',
   templateUrl: './team.component.html',
   styleUrls: ['./team.component.css']
 })
-export class TeamComponent implements OnInit {
+export class TeamComponent implements OnInit, OnChanges {
   teamLeaders!: Driver[];
   selectedTeammate!: Driver;
   teammateSuggested: boolean = false;
@@ -17,11 +17,21 @@ export class TeamComponent implements OnInit {
     private settlementService: SettlementsService,
     private snack: MatSnackBar) { }
 
+  @Output() teammateChanged = new EventEmitter<Teammate>; 
+  @Output() saveClicked = new EventEmitter<Teammate>;
   @Input() driver!: Driver;
+  @Input() showSave: boolean = true;
   @ViewChild('teammateDriverId') teammateSelect! : MatSelect;
 
   ngOnInit(): void {
     this.getTeamLeaders();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // called when the parent object changes the driver bound to this control
+    if (changes['driver'] != null) {
+      this.getTeamLeaders();
+    }
   }
   
   getTeamLeaders(): void {
@@ -46,6 +56,39 @@ export class TeamComponent implements OnInit {
         next: (drivers) => this.updateTeammateSuggestions(drivers),
         error: (error) => this.showError(error, "No teammate suggestions found")
       });
+  }
+
+  onTeammateChange(change: MatSelectChange) {
+    this.teammateChanged.emit(
+      this.getSelectedTeammate()
+    );
+    
+    this.teammateSuggested = true;
+    console.log('teammateSuggested', this.teammateSuggested);
+  }
+
+  onSaveClick() {
+    this.saveClicked.emit(
+      this.getSelectedTeammate()
+    );
+    this.teammateSuggested = false;
+  }
+
+  onResetClick() {
+    this.teammateSelect.value = null;
+    this.getTeamLeaders();
+  }
+
+  getSelectedTeammate(): Teammate {
+    var driver = this.teamLeaders.find(d => 
+      d.id === this.teammateSelect.value);
+
+    var teammate: Teammate = {
+      driverId: driver ? driver.id : undefined,
+      name: driver? driver.name : undefined
+    };
+    
+    return teammate;
   }
 
   showError(error: Error, message: string) {

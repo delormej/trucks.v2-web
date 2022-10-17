@@ -3,7 +3,7 @@
       <mat-spinner [hidden]="!loading" mode="indeterminate"></mat-spinner>
     </div>
 
-    <div [hidden]="loading">
+    <div *ngIf="settlement != null" [hidden]="loading">
         <mat-card-title>Settlement {{settlement.settlementId}}</mat-card-title>
         <mat-card-subtitle>
             Company {{settlement.companyId}} | {{settlement.settlementDate | date}} 

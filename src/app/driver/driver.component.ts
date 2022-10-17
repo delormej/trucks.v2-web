@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SettlementsService, Driver } from '../settlements.service';
+import { SettlementsService, Driver, Teammate } from '../settlements.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatSelect } from '@angular/material/select';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-driver',
@@ -13,6 +13,7 @@ export class DriverComponent implements OnInit {
 
   driver!: Driver;
   submitted: boolean = false;
+  @ViewChild('driverForm') driverForm!: NgForm;
 
   readonly snackLength: number = 3000;
 
@@ -35,6 +36,10 @@ export class DriverComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     this.saveDriver();
+  }
+
+  onTeammateChanged(teammate: Teammate) {
+    this.driverForm.control.markAsDirty();
   }
 
   showError(error: Error, message: string) {

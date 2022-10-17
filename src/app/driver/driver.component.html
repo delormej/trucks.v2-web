@@ -1,9 +1,12 @@
-<mat-card>
+<mat-card *ngIf="driver != null">
     <mat-card-title>{{driver.name}}</mat-card-title>
 
     <div class="driver-container">
         <form (ngSubmit)="onSubmit()" #driverForm="ngForm">
-            <app-team [driver]="driver" ></app-team>
+
+            <app-team [driver]="driver" [showSave]=false
+                (teammateChanged)="onTeammateChanged($event)"></app-team>
+            
             <div>
                 <mat-form-field appearance="fill">
                     <mat-label>Social Security Number</mat-label>
