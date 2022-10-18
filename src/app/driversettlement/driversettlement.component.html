@@ -10,127 +10,119 @@
 
     <app-loads [driverSettlement]="driverSettlement"></app-loads>
 
-    <div class="grid-container">
-        <mat-grid-list cols="3">
-            <mat-grid-tile>
-                <mat-card>
-                    <mat-card-title>Deductions</mat-card-title>
-                    <table>
-                        <tr>
-                            <td>Fuel</td>
-                            <div *ngIf="driver && (driver.driverPromptId || 0) > 0; else noDriverPrompt">
-                                <a [routerLink]="['/fuel']" 
-                                    [queryParams]="{ 
-                                        year: driverSettlement.year,
-                                        week: driverSettlement.week,
-                                        driverPromptId: driver.driverPromptId}">
-                                    {{driverSettlement.fuel | number:'0.2-2'}}
-                                </a>
-                            </div>
-                            <ng-template #noDriverPrompt>{{driverSettlement.fuel | number:'0.2-2'}}</ng-template>
-                        </tr>
-                        <tr>
-                            <td>Advances</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>Qualcomm</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>Occupational Insurance</td>
-                            <td>{{driverSettlement.occupationalInsurance | number:'0.2-2'}}</td>
-                        </tr>
-                        <tr>
-                            <td>Security Deposit</td>
-                            <td>0</td>
-                        </tr>                
-                        <tr>
-                            <td>Total</td>
-                            <td>{{driverSettlement.deductionsTotal | number:'0.2-2'}}</td>
-                        </tr>
-                    </table>
-                </mat-card>
-            </mat-grid-tile>
-            <mat-grid-tile>
-                <mat-card>
-                    <mat-card-title>Credits</mat-card-title>
-                    <table>
-                        <tr>
-                            <td></td>
-                            <td>0</td>
-                        </tr>            
-                        <tr>
-                            <td></td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>Total Credits</td>
-                            <td>{{driverSettlement.creditsTotal | number:'0.2-2'}}</td>
-                        </tr>            
-                    </table>
-                </mat-card>
-            </mat-grid-tile>
-            <mat-grid-tile>
-                <mat-card>
-                    <mat-card-title>Driver Income</mat-card-title>
-                    <table>
-                        <tr>
-                            <td>Driver Base</td>
-                            <td>{{driverSettlement.baseTotal | number:'0.2-2'}}</td>
-                        </tr>
-                        <tr>
-                            <td>FSC</td>
-                            <td>{{driverSettlement.fscTotal | number:'0.2-2'}}</td>
-                        </tr>
-                        <tr>
-                            <td>Accessorials</td>
-                            <td>{{driverSettlement.accessorialTotal | number:'0.2-2'}}</td>
-                        </tr>
-                        <tr>
-                            <td>Total Credits</td>
-                            <td>{{driverSettlement.creditsTotal | number:'0.2-2'}}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Total Income</strong></td>
-                            <td>{{driverSettlement.income | number:'0.2-2'}}</td>
-                        </tr>                
-                        <tr>
-                            <td>Total Deductions</td>
-                            <td>{{driverSettlement.deductionsTotal | number:'0.2-2'}}</td>
-                        </tr>                                
-                        <tr>
-                            <td>Previous Negative Balance</td>
-                            <td>{{driverSettlement.previousNegativeBalance | number:'0.2-2'}}</td>
-                        </tr>                                
-                        <tr>
-                            <td><strong>Amount Due</strong></td>
-                            <td><strong>{{driverSettlement.amountDue | number:'0.2-2'}}</strong></td>
-                        </tr>                                
-                    </table>
-                </mat-card>
-            </mat-grid-tile>
-        </mat-grid-list>
+    <div fxLayoutGap fxLayoutAlign="start stretch" fxLayoutGap="15px">
+        <mat-card fx>
+            <mat-card-title>Deductions</mat-card-title>
+            <table>
+                <tr>
+                    <td>Fuel</td>
+                    <div *ngIf="driver && (driver.driverPromptId || 0) > 0; else noDriverPrompt">
+                        <a [routerLink]="['/fuel']" 
+                            [queryParams]="{ 
+                                year: driverSettlement.year,
+                                week: driverSettlement.week,
+                                driverPromptId: driver.driverPromptId}">
+                            {{driverSettlement.fuel | number:'0.2-2'}}
+                        </a>
+                    </div>
+                    <ng-template #noDriverPrompt>{{driverSettlement.fuel | number:'0.2-2'}}</ng-template>
+                </tr>
+                <tr>
+                    <td>Advances</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>Qualcomm</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>Occupational Insurance</td>
+                    <td>{{driverSettlement.occupationalInsurance | number:'0.2-2'}}</td>
+                </tr>
+                <tr>
+                    <td>Security Deposit</td>
+                    <td>0</td>
+                </tr>                
+                <tr>
+                    <td>Total</td>
+                    <td>{{driverSettlement.deductionsTotal | number:'0.2-2'}}</td>
+                </tr>
+            </table>
+        </mat-card>
+        <mat-card>
+            <mat-card-title>Credits</mat-card-title>
+            <table>
+                <tr>
+                    <td></td>
+                    <td>0</td>
+                </tr>            
+                <tr>
+                    <td></td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>Total Credits</td>
+                    <td>{{driverSettlement.creditsTotal | number:'0.2-2'}}</td>
+                </tr>            
+            </table>
+        </mat-card>
+        <mat-card>
+            <mat-card-title>Driver Income</mat-card-title>
+            <table>
+                <tr>
+                    <td>Driver Base</td>
+                    <td>{{driverSettlement.baseTotal | number:'0.2-2'}}</td>
+                </tr>
+                <tr>
+                    <td>FSC</td>
+                    <td>{{driverSettlement.fscTotal | number:'0.2-2'}}</td>
+                </tr>
+                <tr>
+                    <td>Accessorials</td>
+                    <td>{{driverSettlement.accessorialTotal | number:'0.2-2'}}</td>
+                </tr>
+                <tr>
+                    <td>Total Credits</td>
+                    <td>{{driverSettlement.creditsTotal | number:'0.2-2'}}</td>
+                </tr>
+                <tr>
+                    <td><strong>Total Income</strong></td>
+                    <td>{{driverSettlement.income | number:'0.2-2'}}</td>
+                </tr>                
+                <tr>
+                    <td>Total Deductions</td>
+                    <td>{{driverSettlement.deductionsTotal | number:'0.2-2'}}</td>
+                </tr>                                
+                <tr>
+                    <td>Previous Negative Balance</td>
+                    <td>{{driverSettlement.previousNegativeBalance | number:'0.2-2'}}</td>
+                </tr>                                
+                <tr>
+                    <td><strong>Amount Due</strong></td>
+                    <td><strong>{{driverSettlement.amountDue | number:'0.2-2'}}</strong></td>
+                </tr>                                
+            </table>
+        </mat-card>
     </div>
 
     <div>
