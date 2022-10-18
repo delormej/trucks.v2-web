@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="_driverSettlement.credits">
+<table mat-table [dataSource]="credits">
     <ng-container matColumnDef="deliveryDate">
         <th mat-header-cell *matHeaderCellDef> Delivery Date </th>
         <td mat-cell *matCellDef="let credit"> {{credit.deliveryDate}} </td>

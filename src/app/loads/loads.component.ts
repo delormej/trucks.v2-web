@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DriverSettlement } from '../settlements.service';
+import { DriverSettlement, Credit } from '../settlements.service';
 
 const _defaultColumns: string[] = [
   'deliveryDate', 
@@ -28,12 +28,15 @@ const _defaultColumns: string[] = [
 })
 export class LoadsComponent implements OnInit {
   _driverSettlement!: DriverSettlement;
+  credits!: Credit[];
   displayedColumns: string[] = [];
 
   @Input() set driverSettlement(value: DriverSettlement) {
     this.displayedColumns = [];
     _defaultColumns.forEach((c) => this.displayedColumns.push(c));
+    
     this._driverSettlement = value;
+    this.credits = this._driverSettlement.credits.filter(c => c.manualCredit == 0);
 
     if (value.credits.find((c) => c.creditAmount > 0))
       this.displayedColumns.push('fsc');
