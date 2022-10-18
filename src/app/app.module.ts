@@ -22,6 +22,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DriverPaymentsComponent } from './driver-payments/driver-payments.component';
 import { LoadsComponent } from './loads/loads.component';
 import { TeamComponent } from './team/team.component';
+import { CreditsComponent } from './credits/credits.component';
+import { DeductionsComponent } from './deductions/deductions.component';
+import { TotalsComponent } from './totals/totals.component';
+import { AddManualDialogComponent } from './add-manual-dialog/add-manual-dialog.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +43,11 @@ import { TeamComponent } from './team/team.component';
     FuelComponent,
     DriverPaymentsComponent,
     LoadsComponent,
-    TeamComponent
+    TeamComponent,
+    CreditsComponent,
+    DeductionsComponent,
+    TotalsComponent,
+    AddManualDialogComponent
   ],
   imports: [
     HttpClientModule,

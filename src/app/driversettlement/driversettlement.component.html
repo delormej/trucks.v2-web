@@ -11,7 +11,7 @@
     <app-loads [driverSettlement]="driverSettlement"></app-loads>
 
     <div fxLayoutGap fxLayoutAlign="start stretch" fxLayoutGap="15px">
-        <mat-card fx>
+        <mat-card fxFlex="33">
             <mat-card-title>Deductions</mat-card-title>
             <table>
                 <tr>
@@ -60,8 +60,11 @@
                     <td>{{driverSettlement.deductionsTotal | number:'0.2-2'}}</td>
                 </tr>
             </table>
+            <mat-card-actions align="start">
+                <button mat-raised-button color="primary" (click)="openDialog('Deduction')">Add</button>
+            </mat-card-actions>
         </mat-card>
-        <mat-card>
+        <mat-card fxFlex="33">
             <mat-card-title>Credits</mat-card-title>
             <table>
                 <tr>
@@ -85,8 +88,11 @@
                     <td>{{driverSettlement.creditsTotal | number:'0.2-2'}}</td>
                 </tr>            
             </table>
+            <mat-card-actions align="start">
+                <button mat-raised-button color="primary" (click)="openDialog('Credit')">Add</button>
+            </mat-card-actions>
         </mat-card>
-        <mat-card>
+        <mat-card fxFlex="33">
             <mat-card-title>Driver Income</mat-card-title>
             <table>
                 <tr>
