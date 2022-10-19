@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DriverSettlement, Credit } from '../settlements.service';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 const _defaultColumns: string[] = [
   'deliveryDate', 
@@ -75,9 +76,12 @@ export class LoadsComponent implements OnInit {
       this.displayedColumns.push('bonus');
   }
 
-  constructor() { }
+  constructor(private clipboard: Clipboard) { }
+
+  copyToClipboard() {
+    this.clipboard.copy('foo\tbar\tfoo\tbar\n');
+  }
 
   ngOnInit(): void {
   }
-
 }

@@ -32,6 +32,11 @@ export class SettlementDetailComponent implements OnInit {
     );
   } 
 
+  get settlementInfo(): string {
+    // todo: this requires loading the whole settlement
+    return '';
+  }
+
   selectedDriverChanged(change: MatSelectionListChange) {
     console.log('selectedDriverSettlement', this.selectedDriverSettlements[0].driver);
     this.selectedDriver = this.selectedDriverSettlements[0].driver;
