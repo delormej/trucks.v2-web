@@ -1,0 +1,15 @@
+.manual-row {
+    min-height: 20px;
+    min-width: 80px;
+  }
+
+  .manual-row-data {
+    text-align: right;
+    padding-left: 5px;
+  }
+
+  .manual-actions {
+    vertical-align: top;
+    padding: 0px;
+    margin: 0px;
+  }

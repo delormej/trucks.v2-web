@@ -19,32 +19,10 @@
             </app-deductions>
         </mat-card>
         <mat-card fxFlex="33">
-            <mat-card-title>Credits</mat-card-title>
-            <table>
-                <tr>
-                    <td></td>
-                    <td>0</td>
-                </tr>            
-                <tr>
-                    <td></td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td>Total Credits</td>
-                    <td>{{driverSettlement.creditsTotal | number:'0.2-2'}}</td>
-                </tr>            
-            </table>
-            <mat-card-actions align="start">
-                <button mat-raised-button color="primary" (click)="openDialog('Credit')">Add</button>
-            </mat-card-actions>
+            <app-credits [driverSettlement]="driverSettlement"
+                (deleteManualEntryEvent)="deleteManualEntry($event)"
+                (newDeduction)="addManualEntry($event)">
+            </app-credits>
         </mat-card>
         <mat-card fxFlex="33">
             <mat-card-title>Driver Income</mat-card-title>

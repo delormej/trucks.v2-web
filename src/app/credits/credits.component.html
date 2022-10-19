@@ -1,1 +1,34 @@
-<p>credits works!</p>
+<div>
+    <mat-card-title>Credits</mat-card-title>
+    <table>
+        <tr *ngFor="let credit of manualCredits">
+            <td><div class="manual-row">{{credit.creditDescriptions}}</div></td>
+            <td><div class="manual-row manual-row-data">{{credit.manualCredit | number:'0.2-2'}}</div></td>
+            <td>
+                <div class="manual-actions">
+                    <button mat-icon-button color="basic" 
+                            aria-label="Edit manual credit"
+                            (click)="openDialog(credit)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                </div>
+            </td>
+            <td>
+                <div class="manual-actions">                    
+                    <button mat-icon-button color="basic" 
+                            aria-label="Delete manual credit."
+                            (click)="deleteEntry(credit.id)">
+                        <mat-icon>delete</mat-icon>
+                    </button>                
+                </div>
+            </td>            
+        </tr>
+        <tr >
+            <td><div class="manual-row"><strong>Total</strong></div></td>
+            <td><div class="manual-row manual-row-data"><strong>{{driverSettlement.creditsTotal | number:'0.2-2'}}</strong></div></td>
+        </tr>
+    </table>
+    <mat-card-actions align="end">
+        <button mat-raised-button color="primary" (click)="openDialog()">Add</button>
+    </mat-card-actions>
+</div>
