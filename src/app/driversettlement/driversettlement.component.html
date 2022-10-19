@@ -1,10 +1,19 @@
 <div *ngIf="driverSettlement!=null">
-    <h3>
+    <mat-toolbar>
         <a [routerLink]="['/driver']" 
             [queryParams]="{driver: driverSettlement.driver}">
             {{driverSettlement.driver}}
         </a>, Truck {{driverSettlement.trucks}}
-    </h3>
+        <span class="toolbar-spacer"></span>
+        <nav>
+            <button mat-button color="basic" (click)="recreate()">
+              Recreate
+            </button>
+            <button mat-button color="basic">
+              <a href="{{getWorkbookLink(driverSettlement)}}">Download Excel</a>
+            </button>
+        </nav>    
+    </mat-toolbar>
 
     <app-team [driver]="driver" (saveClicked)="onTeammateSave($event)"></app-team>
 
@@ -62,12 +71,6 @@
             </table>
         </mat-card>
     </div>
-
-    <button type="submit" class="btn btn-secondary" (click)="recreate()">Recreate</button>    
-    <br/>
-    <a href={{getWorkbookLink(driverSettlement)}}>
-        Download Workbook
-    </a>
     
     <app-driver-settlement-notes [driverSettlement]="driverSettlement"></app-driver-settlement-notes>
 </div>
