@@ -79,7 +79,30 @@ export class LoadsComponent implements OnInit {
   constructor(private clipboard: Clipboard) { }
 
   copyToClipboard() {
-    this.clipboard.copy('foo\tbar\tfoo\tbar\n');
+    var data: string = '';
+
+    this.credits.forEach(c => {
+      data += c.proNumber + '\t';
+      data += c.miles + '\t';
+      data += c.extendedAmount + '\t';
+      data += c.base + '\t';
+      data += c.creditAmount > 0 ? c.creditAmount + '\t' : '\t';
+      data += c.advanceAmount > 0 ? c.advanceAmount + '\t\t' : '\t\t';
+      data += c.deadHead > 0 ? c.deadHead + '\t' : '\t';
+      data += c.empty > 0 ? c.empty + '\t' : '\t';
+      data += c.tolls > 0 ? c.tolls + '\t' : '\t';
+      data += c.other > 0 ? c.other + '\t' : '\t';
+      data += (c.deadHead + c.empty + c.tolls + c.other) + '\t\t'; // totals column
+      data += c.canada > 0 ? c.canada + '\t' : '\t';
+      data += c.stopOff > 0 ? c.stopOff + '\t' : '\t';
+      data += c.detention > 0 ? c.detention + '\t' : '\t';
+      data += c.handLoad > 0 ? c.handLoad + '\t' : '\t';
+      data += c.layover > 0 ? c.layover + '\t' : '\t';
+      if (c.bonus > 0)
+        data += c.bonus;
+      data += '\n';
+    });
+    this.clipboard.copy(data);
   }
 
   ngOnInit(): void {
