@@ -1,13 +1,16 @@
 <div>
-    <form (ngSubmit)="onSubmit()" #notesForm="ngForm">
-    <div>
-        <div class="form-group">
-            <label for="notes">Notes</label>
-            <input type="text" class="form-control" id="notes"
-                [(ngModel)]="driverSettlement.notes" name="notes">            
-        </div>
-
-        <button type="submit" class="btn btn-success" [disabled]="!notesForm.form.valid">Save</button>
-    </div>
-    </form>
+    <mat-card>
+        <mat-card-title>Notes</mat-card-title>
+        <form (ngSubmit)="onSubmit()" #notesForm="ngForm">
+            <div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="notes"
+                        [(ngModel)]="driverSettlement.notes" name="notes">            
+                </div>
+            </div>
+            <mat-card-actions align="start">
+                <button type="submit" mat-raised-button color="primary" [disabled]="!notesForm.dirty">Save Notes</button>
+            </mat-card-actions>    
+        </form>
+    </mat-card>
 </div>
