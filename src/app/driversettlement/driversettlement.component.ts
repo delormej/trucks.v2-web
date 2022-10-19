@@ -1,8 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { SettlementsService, DriverSettlement, ManualEntry, Driver, Teammate } from '../settlements.service';
-import { MatDialog } from '@angular/material/dialog';
-import { AddManualDialogComponent, DialogData } from '../add-manual-dialog/add-manual-dialog.component';
-//import '../../number.extensions';
 
 @Component({
   selector: 'app-driversettlement',
@@ -19,32 +16,8 @@ export class DriversettlementComponent implements OnInit, OnChanges {
   driver!: Driver;
 
   constructor(
-    private settlementsService: SettlementsService,
-    public dialog: MatDialog) { }
-
-  openDialog(type: string): void {
-    const dialogRef = this.dialog.open(AddManualDialogComponent, {
-      width: '250px',
-      data: {type: type },
-    });
-
-    // dialogRef.afterClosed().subscribe((result: DialogData) => {
-    //   console.log('The dialog was closed', result);
-      
-    //   var entry: ManualEntry = {
-    //     itemId: result.id,
-    //     driverSettlementId: this.driverSettlement.driverSettlementId, 
-    //     description: result.description
-    //   };
-
-    //   if (result.type === "Credit")
-    //     entry.creditAmount = result.amount;
-    //   else if (result.type === "Deduction")
-    //     entry.deductionAmount = result.amount;
-
-    //   this.addManualEntry(entry);
-    // });
-  }
+    private settlementsService: SettlementsService) 
+    { }
 
   ngOnInit(): void {
   }
