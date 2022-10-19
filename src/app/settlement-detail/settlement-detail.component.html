@@ -12,9 +12,13 @@
             <div><a href=""> &lt;&lt; Previous </a> Week {{settlement.weekNumber}} <a href=""> Next &gt;&gt; </a></div>
         </mat-card-content>
         <mat-drawer-container class="settlement-container" autosize>
+            <!-- List of drivers with driver settlements in this settlement history -->
             <mat-drawer #drawer class="settlement-sidenav" mode="side" opened>
               <div>
-                <mat-selection-list #driverSettlementSelection [multiple]="false">
+                <mat-selection-list #driverSettlementSelection 
+                    (selectionChange)="selectedDriverChanged($event)"
+                    [(ngModel)]="selectedDriverSettlements"
+                    [multiple]="false">
                   <mat-list-option class="driver-list-option" 
                     *ngFor="let d of driverSettlements" 
                       [value]="d" [selected]="d.driver === selectedDriver">
@@ -23,8 +27,9 @@
                 </mat-selection-list>                
               </div>
             </mat-drawer>      
+            <!-- driver settelement for the selected driver -->
             <div class="settlement-sidenav-content">
-              <app-driversettlement *ngIf="driverSettlementSelection.selectedOptions.selected.length > 0; else promptForSelection"
+              <app-driversettlement *ngIf="selectedDriver != null; else promptForSelection"
                 [driverSettlement]="driverSettlementSelection.selectedOptions.selected[0].value"
                 (driverSettlementChange)="driverSettlementChange($event)">
               </app-driversettlement>

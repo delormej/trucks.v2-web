@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSelectionList, MatSelectionListChange } from '@angular/material/list';
 import { ActivatedRoute } from '@angular/router';
 import { SettlementsService, SettlementSummary, DriverSettlement } from '../settlements.service';
 
@@ -11,8 +12,11 @@ export class SettlementDetailComponent implements OnInit {
   loading: boolean = false;
   settlement!: SettlementSummary;
   driverSettlements: DriverSettlement[] = [];
-  selectedDriver: string = '';
+  selectedDriver?: string;
+  selectedDriverSettlements!: DriverSettlement[];
   showFiller = false;
+
+  @ViewChild('driverSettlementSelection') driverSettlementSelection!: MatSelectionList;
 
   constructor(
     private settlementsService: SettlementsService,
@@ -28,7 +32,13 @@ export class SettlementDetailComponent implements OnInit {
     );
   } 
 
+  selectedDriverChanged(change: MatSelectionListChange) {
+    console.log('selectedDriverSettlement', this.selectedDriverSettlements[0].driver);
+    this.selectedDriver = this.selectedDriverSettlements[0].driver;
+  }
+
   driverSettlementChange(driverSettlement: DriverSettlement) {
+    console.log('driverSettlementChange', driverSettlement.driver);
     var index = this.driverSettlements.findIndex(d => 
       d.driverSettlementId === driverSettlement.driverSettlementId);
     // Replace existing element with the updated version.

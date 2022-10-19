@@ -16,10 +16,10 @@ export class SettlementEntryComponent implements OnInit {
 
   onSubmit(): void {
     this.newManualEntryEvent.emit(this.entry);
-    this.entry = new ManualEntry();
+    // this.entry = new ManualEntry();
   }
 
   ngOnInit(): void {
-    this.entry = new ManualEntry();
+    // this.entry = new ManualEntry();
   }
 }

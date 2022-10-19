@@ -1,1 +1,67 @@
-<p>deductions works!</p>
+<div>
+    <mat-card-title>Deductions</mat-card-title>
+    <table>
+        <tr>
+            <td><div class="manual-row">Fuel</div></td>
+            <td>
+                <div class="manual-row manual-row-data">
+                    <div *ngIf="driver && (driver.driverPromptId || 0) > 0; else noDriverPrompt">
+                        <a [routerLink]="['/fuel']" 
+                            [queryParams]="{ 
+                                year: driverSettlement.year,
+                                week: driverSettlement.week,
+                                driverPromptId: driver.driverPromptId}">
+                            {{driverSettlement.fuel | number:'0.2-2'}}
+                        </a>
+                    </div>
+                    <ng-template #noDriverPrompt>{{driverSettlement.fuel | number:'0.2-2'}}</ng-template>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td><div class="manual-row">Advances</div></td>
+            <td><div class="manual-row manual-row-data">0</div></td>
+        </tr>
+        <tr >
+            <td><div class="manual-row">Qualcomm</div></td>
+            <td><div class="manual-row manual-row-data">0</div></td>
+        </tr>
+        <tr >
+            <td><div class="manual-row">Occupational Insurance</div></td>
+            <td><div class="manual-row manual-row-data">{{driverSettlement.occupationalInsurance | number:'0.2-2'}}</div></td>
+        </tr>
+        <tr *ngFor="let deduction of manualDeductions">
+            <td><div class="manual-row">{{deduction.description}}</div></td>
+            <td><div class="manual-row manual-row-data">{{deduction.manualDeduction | number:'0.2-2'}}</div></td>
+            <td>
+                <div class="manual-actions">
+                    <button mat-icon-button color="basic" 
+                            aria-label="Edit manual deduction"
+                            (click)="openDialog(deduction)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                </div>
+            </td>
+            <td>
+                <div class="manual-actions">                    
+                    <button mat-icon-button color="basic" 
+                            aria-label="Delete manual deduction."
+                            (click)="deleteEntry(deduction.id)">
+                        <mat-icon>delete</mat-icon>
+                    </button>                
+                </div>
+            </td>            
+        </tr>
+        <tr>
+            <td><div class="manual-row">Security Deposit</div></td>
+            <td><div class="manual-row manual-row-data">0</div></td>
+        </tr>                
+        <tr >
+            <td><div class="manual-row"><strong>Total</strong></div></td>
+            <td><div class="manual-row manual-row-data"><strong>{{driverSettlement.deductionsTotal | number:'0.2-2'}}</strong></div></td>
+        </tr>
+    </table>
+    <mat-card-actions align="end">
+        <button mat-raised-button color="primary" (click)="openDialog()">Add</button>
+    </mat-card-actions>
+</div>

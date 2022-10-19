@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { SettlementsService, DriverSettlement, ManualEntry, Driver, Teammate } from '../settlements.service';
 import { MatDialog } from '@angular/material/dialog';
-import { AddManualDialogComponent } from '../add-manual-dialog/add-manual-dialog.component';
+import { AddManualDialogComponent, DialogData } from '../add-manual-dialog/add-manual-dialog.component';
 //import '../../number.extensions';
 
 @Component({
@@ -28,21 +28,22 @@ export class DriversettlementComponent implements OnInit, OnChanges {
       data: {type: type },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
+    // dialogRef.afterClosed().subscribe((result: DialogData) => {
+    //   console.log('The dialog was closed', result);
       
-      var entry: ManualEntry = {
-        driverSettlementId: this.driverSettlement.driverSettlementId, 
-        description: result.description,
-      };
+    //   var entry: ManualEntry = {
+    //     itemId: result.id,
+    //     driverSettlementId: this.driverSettlement.driverSettlementId, 
+    //     description: result.description
+    //   };
 
-      if (result.type === "Credit")
-        entry.creditAmount = result.amount;
-      else if (result.type === "Deduction")
-        entry.deductionAmount = result.amount;
+    //   if (result.type === "Credit")
+    //     entry.creditAmount = result.amount;
+    //   else if (result.type === "Deduction")
+    //     entry.deductionAmount = result.amount;
 
-      this.addManualEntry(entry);
-    });
+    //   this.addManualEntry(entry);
+    // });
   }
 
   ngOnInit(): void {
@@ -117,7 +118,7 @@ export class DriversettlementComponent implements OnInit, OnChanges {
     return formatted;
   }  
 
-  addManualEntry(entry: Partial<ManualEntry>): void {
+  addManualEntry(entry: ManualEntry): void {
     entry.driverSettlementId = this.driverSettlement.driverSettlementId;
     console.log('adding entry', entry);
 
