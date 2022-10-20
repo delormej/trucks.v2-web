@@ -19,9 +19,11 @@ export class TeamComponent implements OnInit, OnChanges {
 
   @Output() teammateChanged = new EventEmitter<Teammate>; 
   @Output() saveClicked = new EventEmitter<Teammate>;
-  @Input() driver!: Driver;
+  @Input() driverName!: string;
+  @Input() teammateDriverId?: string;
+  @Input() isTeamLeader!: boolean;
   @Input() showSave: boolean = true;
-  @ViewChild('teammateDriverId') teammateSelect! : MatSelect;
+  @ViewChild('teammateDriverSelect') teammateSelect! : MatSelect;
 
   ngOnInit(): void {
     this.getTeamLeaders();
@@ -51,7 +53,9 @@ export class TeamComponent implements OnInit, OnChanges {
   }
 
   onSuggestTeammate() {
-    this.settlementService.getTeammateSuggestion(this.driver.name)
+    if (this.driverName == null)
+      return;
+    this.settlementService.getTeammateSuggestion(this.driverName)
       .subscribe({
         next: (drivers) => this.updateTeammateSuggestions(drivers),
         error: (error) => this.showError(error, "No teammate suggestions found")

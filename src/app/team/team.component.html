@@ -1,12 +1,12 @@
-<div *ngIf="driver != null">
+<div>
     <mat-checkbox class="checkbox-margin" name="isTeamLeader" id="isTeamLeader" 
-        [disabled]="driver.teammateDriverId == null"
-        [(ngModel)]="driver.isTeamLeader">Is Team Leader
+        [disabled]="teammateDriverId == null"
+        [(ngModel)]="isTeamLeader">Is Team Leader
     </mat-checkbox>
     <br>
     <mat-form-field appearance="fill">
         <mat-label>Teammate</mat-label>
-        <mat-select #teammateDriverId [(ngModel)]="driver.teammateDriverId" 
+        <mat-select #teammateDriverSelect [(ngModel)]="teammateDriverId" 
                 name="teammateDriverId" id="teammateDriverId" 
                 (selectionChange)="onTeammateChange($event)">
             <mat-option>None</mat-option>
@@ -15,7 +15,7 @@
     </mat-form-field>
     &nbsp;
     <button mat-raised-button color="basic"
-            [disabled]="driver.teammateDriverId != null"
+            [disabled]="teammateDriverId != null"
             [hidden]="teammateSuggested"
             (click)="onSuggestTeammate()"
             type="button" >

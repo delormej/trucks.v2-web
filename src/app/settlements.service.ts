@@ -118,8 +118,9 @@ export class SettlementsService {
           .set('itemId', itemId) });
   }  
 
-  changeTeammate(driverSettlementId: string, teammate: Teammate): Observable<DriverSettlement> {
+  changeTeammate(companyId: string, driverSettlementId: string, teammate: Teammate): Observable<DriverSettlement> {
     var body = {
+      companyId: companyId,
       driverSettlementId: driverSettlementId, 
       updatedTeammateDriverId: teammate.driverId
      };
@@ -163,6 +164,9 @@ export interface DriverSettlement {
   week: number;
   trucks: number[];
   driver: string;
+  driverId: string;
+  teammateDriver: string;
+  teammateDriverId: string;
   settlementDate: Date;
   deductions: Deduction[];
   credits: Credit[];
@@ -251,8 +255,8 @@ export interface Driver {
   socialSecurityNumber: string;
   ignoreComchek: boolean;
   created: Date;
-  isTeamLeader: Boolean;
-  teammateDriverId: string;
+  isTeamLeader: boolean;
+  teammateDriverId?: string;
   teammateName?: string;
   paymentHistory: Payment[];
 }

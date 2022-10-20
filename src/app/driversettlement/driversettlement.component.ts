@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { SettlementsService, DriverSettlement, ManualEntry, Driver, Teammate } from '../settlements.service';
 
 @Component({
@@ -16,7 +17,8 @@ export class DriversettlementComponent implements OnInit, OnChanges {
   driver!: Driver;
 
   constructor(
-    private settlementsService: SettlementsService) 
+    private settlementsService: SettlementsService,
+    private snack: MatSnackBar) 
     { }
 
   ngOnInit(): void {
@@ -26,6 +28,11 @@ export class DriversettlementComponent implements OnInit, OnChanges {
     this.driverSettlement = changes['driverSettlement'].currentValue;
     if (this.driverSettlement)
       this.getDriver(this.driverSettlement.driver);
+  }
+
+  showError(error: Error, message: string) {
+    this.snack.open(message, 'CLOSE', { panelClass: 'errorSnack' } );
+    console.log(error);
   }
 
   public recreate(): void {
@@ -124,13 +131,14 @@ export class DriversettlementComponent implements OnInit, OnChanges {
     // the team leader.  Should we be deleting the driver settlement for the non-team leader? 
 
     this.settlementsService.changeTeammate(
+      this.driverSettlement.companyId,
       this.driverSettlement.driverSettlementId, teammate)
       .subscribe({
         next: (driverSettlement) => {
           this.driverSettlement = driverSettlement;
           this.driverSettlementChange.emit(driverSettlement);
         },
-        error: (error) => console.log('error', error)
+        error: (error) => this.showError(error, 'Unable to change teammate.')
       });
   }
 }
