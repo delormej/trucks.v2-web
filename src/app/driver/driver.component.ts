@@ -10,7 +10,6 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./driver.component.css']
 })
 export class DriverComponent implements OnInit {
-
   driver!: Driver;
   submitted: boolean = false;
   @ViewChild('driverForm') driverForm!: NgForm;
@@ -39,6 +38,10 @@ export class DriverComponent implements OnInit {
   }
 
   onTeammateChanged(teammate: Teammate) {
+    this.driver.teammateDriverId = teammate.driverId;
+    this.driver.teammateName = teammate.name;
+    this.driver.isTeamLeader = teammate.isTeamLeader;
+
     this.driverForm.control.markAsDirty();
   }
 

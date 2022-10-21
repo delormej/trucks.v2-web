@@ -4,7 +4,10 @@
     <div class="driver-container">
         <form (ngSubmit)="onSubmit()" #driverForm="ngForm">
 
-            <app-team [driver]="driver" [showSave]=false
+            <app-team [driverName]="driver.name" 
+                [teammateDriverId]="driver.teammateDriverId" 
+                [isTeamLeader]="driver.isTeamLeader"
+                [showSave]=false
                 (teammateChanged)="onTeammateChanged($event)"></app-team>
             
             <div>

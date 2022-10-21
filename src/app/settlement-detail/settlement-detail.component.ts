@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatSelectionList, MatSelectionListChange } from '@angular/material/list';
+import { Component, OnInit } from '@angular/core';
+import { MatSelectionListChange } from '@angular/material/list';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { SettlementsService, SettlementSummary, DriverSettlement } from '../settlements.service';
 
@@ -9,18 +10,16 @@ import { SettlementsService, SettlementSummary, DriverSettlement } from '../sett
   styleUrls: ['./settlement-detail.component.css']
 })
 export class SettlementDetailComponent implements OnInit {
-  loading: boolean = false;
+  loading: boolean = true;
   settlement!: SettlementSummary;
   driverSettlements: DriverSettlement[] = [];
   selectedDriver?: string;
-  selectedDriverSettlements!: DriverSettlement[];
   showFiller = false;
-
-  @ViewChild('driverSettlementSelection') driverSettlementSelection!: MatSelectionList;
 
   constructor(
     private settlementsService: SettlementsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private snack: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -38,8 +37,8 @@ export class SettlementDetailComponent implements OnInit {
   }
 
   selectedDriverChanged(change: MatSelectionListChange) {
-    console.log('selectedDriverSettlement', this.selectedDriverSettlements[0].driver);
-    this.selectedDriver = this.selectedDriverSettlements[0].driver;
+    this.selectedDriver = change.options.length > 0 ? 
+      change.options[0]?.value : null;
   }
 
   driverSettlementChange(driverSettlement: DriverSettlement) {
@@ -61,16 +60,23 @@ export class SettlementDetailComponent implements OnInit {
 
   getDriverSettlements(companyId: string, settlementId: string): void {
     this.settlementsService.getDriverSettlements(companyId, settlementId)
-      .subscribe(res => {
-        this.driverSettlements = res.sort( (a, b) => (a.driver < b. driver) ? -1 : 1 );
-        this.settlement = { 
-          year: this.driverSettlements[0].year,
-          weekNumber: this.driverSettlements[0].week,
-          settlementId: this.driverSettlements[0].settlementId,
-          settlementDate: this.driverSettlements[0].settlementDate,
-          companyId: this.driverSettlements[0].companyId,
-          checkAmount: 0
-        };
+      .subscribe({
+        next: (res) => {
+          this.driverSettlements = res.sort( (a, b) => (a.driver < b. driver) ? -1 : 1 );
+          this.settlement = { 
+            year: this.driverSettlements[0].year,
+            weekNumber: this.driverSettlements[0].week,
+            settlementId: this.driverSettlements[0].settlementId,
+            settlementDate: this.driverSettlements[0].settlementDate,
+            companyId: this.driverSettlements[0].companyId,
+            checkAmount: this.driverSettlements[0].amountDue
+          }
+          this.loading = false;
+        },
+        error: (error) => { 
+          this.loading = false; 
+          this.showError(error, "Could not load driver settlements."); 
+        }
       });
   }
 
@@ -78,4 +84,9 @@ export class SettlementDetailComponent implements OnInit {
     let miles = driverSettlement.credits.reduce((partialSum, c) => partialSum + c.miles, 0);
     return miles;
   }
+
+  showError(error: Error, message: string) {
+    this.snack.open(message, 'CLOSE', { panelClass: 'errorSnack' } );
+    console.log(error);
+  }  
 }

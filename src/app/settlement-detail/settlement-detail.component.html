@@ -19,7 +19,6 @@
               <div>
                 <mat-selection-list #driverSettlementSelection 
                     (selectionChange)="selectedDriverChanged($event)"
-                    [(ngModel)]="selectedDriverSettlements"
                     [multiple]="false">
                   <mat-list-option class="driver-list-option" 
                     *ngFor="let d of driverSettlements" 

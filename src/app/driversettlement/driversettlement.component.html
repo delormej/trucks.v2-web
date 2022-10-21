@@ -15,7 +15,11 @@
         </nav>    
     </mat-toolbar>
 
-    <app-team [driver]="driver" (saveClicked)="onTeammateSave($event)"></app-team>
+    <app-team *ngIf="driverSettlement !=null" 
+        [driverName]="driverSettlement.driver" 
+        [teammateDriverId]="driverSettlement.teammateDriverId"
+        [isTeamLeader]="driverSettlement.teammateDriverId != null && driverSettlement.teammateDriverId != driverSettlement.driverId" 
+        (saveClicked)="onTeammateSave($event)"></app-team>
 
     <app-loads [driverSettlement]="driverSettlement"></app-loads>
 
