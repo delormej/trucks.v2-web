@@ -30,11 +30,6 @@ export class DriversettlementComponent implements OnInit, OnChanges {
       this.getDriver(this.driverSettlement.driver);
   }
 
-  showError(error: Error, message: string) {
-    this.snack.open(message, 'CLOSE', { panelClass: 'errorSnack' } );
-    console.log(error);
-  }
-
   public recreate(): void {
     this.getDriverSettlement(
         this.driverSettlement.companyId, 
@@ -140,5 +135,10 @@ export class DriversettlementComponent implements OnInit, OnChanges {
         },
         error: (error) => this.showError(error, 'Unable to change teammate.')
       });
+  }
+
+  showError(error: Error, message: string) {
+    this.snack.open(message, 'CLOSE', { panelClass: 'errorSnack' } );
+    console.log(error);
   }
 }

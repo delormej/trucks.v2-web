@@ -1,13 +1,12 @@
 <div>
     <mat-checkbox class="checkbox-margin" name="isTeamLeader" id="isTeamLeader" 
         [disabled]="teammateDriverId == null"
-        [(ngModel)]="isTeamLeader">Is Team Leader
+        [checked]="isTeamLeader">Is Team Leader
     </mat-checkbox>
     <br>
     <mat-form-field appearance="fill">
         <mat-label>Teammate</mat-label>
-        <mat-select #teammateDriverSelect [(ngModel)]="teammateDriverId" 
-                name="teammateDriverId" id="teammateDriverId" 
+        <mat-select #teammateDriverSelect [(value)]="teammateDriverId" 
                 (selectionChange)="onTeammateChange($event)">
             <mat-option>None</mat-option>
             <mat-option *ngFor="let d of teamLeaders" [value]="d.id">{{d.name}}</mat-option>

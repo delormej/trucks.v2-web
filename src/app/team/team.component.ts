@@ -10,12 +10,9 @@ import { Driver, SettlementsService, Teammate } from '../settlements.service';
 })
 export class TeamComponent implements OnInit, OnChanges {
   teamLeaders!: Driver[];
+  drivers!: Driver[];
   selectedTeammate!: Driver;
   teammateSuggested: boolean = false;
-
-  constructor(
-    private settlementService: SettlementsService,
-    private snack: MatSnackBar) { }
 
   @Output() teammateChanged = new EventEmitter<Teammate>; 
   @Output() saveClicked = new EventEmitter<Teammate>;
@@ -25,21 +22,36 @@ export class TeamComponent implements OnInit, OnChanges {
   @Input() showSave: boolean = true;
   @ViewChild('teammateDriverSelect') teammateSelect! : MatSelect;
 
+  constructor(
+    private settlementService: SettlementsService,
+    private snack: MatSnackBar) { }
+
   ngOnInit(): void {
     this.getTeamLeaders();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     // called when the parent object changes the driver bound to this control
-    if (changes['driver'] != null) {
-      this.getTeamLeaders();
-    }
+    this.teammateSuggested = false;
+    this.teamLeaders = [];
+    if (this.drivers)
+      this.drivers.forEach(driver => this.teamLeaders.push(driver));
+
+    // if (changes['driver'] != null) {
+    //   this.getTeamLeaders();
+    // }
   }
   
   getTeamLeaders(): void {
     this.settlementService.getAllDrivers()
       .subscribe({
-        next: (drivers) => { this.teamLeaders = drivers; this.teammateSuggested = false; },
+        next: (drivers) => {
+          this.teamLeaders = drivers; 
+          this.teammateSuggested = false;
+          // Make a backup copy of drivers to reset with if teamLeaders updated.
+          this.drivers = [];
+          drivers.forEach(driver => this.drivers.push(driver));
+        },
         error: (error) => this.showError(error, "Unable to load teammates.")
       });
   }
