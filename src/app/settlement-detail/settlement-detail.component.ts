@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatSelectionList, MatSelectionListChange } from '@angular/material/list';
+import { Component, OnInit } from '@angular/core';
+import { MatSelectionListChange } from '@angular/material/list';
 import { ActivatedRoute } from '@angular/router';
 import { SettlementsService, SettlementSummary, DriverSettlement } from '../settlements.service';
 
@@ -13,10 +13,7 @@ export class SettlementDetailComponent implements OnInit {
   settlement!: SettlementSummary;
   driverSettlements: DriverSettlement[] = [];
   selectedDriver?: string;
-  selectedDriverSettlements!: DriverSettlement[];
   showFiller = false;
-
-  @ViewChild('driverSettlementSelection') driverSettlementSelection!: MatSelectionList;
 
   constructor(
     private settlementsService: SettlementsService,
@@ -38,8 +35,8 @@ export class SettlementDetailComponent implements OnInit {
   }
 
   selectedDriverChanged(change: MatSelectionListChange) {
-    console.log('selectedDriverSettlement', this.selectedDriverSettlements[0].driver);
-    this.selectedDriver = this.selectedDriverSettlements[0].driver;
+    this.selectedDriver = change.options.length > 0 ? 
+      change.options[0]?.value : null;
   }
 
   driverSettlementChange(driverSettlement: DriverSettlement) {
