@@ -291,6 +291,7 @@ export interface FuelCharge {
 export interface Teammate {
   driverId?: string;
   name?: string;
+  isTeamLeader: boolean;
 }
 
 export interface VerisonInfo

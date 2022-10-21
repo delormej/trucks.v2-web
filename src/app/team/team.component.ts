@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, Output, ViewChild, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSelect, MatSelectChange } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Driver, SettlementsService, Teammate } from '../settlements.service';
@@ -74,6 +75,14 @@ export class TeamComponent implements OnInit, OnChanges {
       });
   }
 
+  onTeamLeaderChange(change: MatCheckboxChange) {
+    this.isTeamLeader = change.checked;
+
+    this.teammateChanged.emit(
+      this.getSelectedTeammate()
+    );
+  }
+
   onTeammateChange(change: MatSelectChange) {
     this.teammateChanged.emit(
       this.getSelectedTeammate()
@@ -101,7 +110,8 @@ export class TeamComponent implements OnInit, OnChanges {
 
     var teammate: Teammate = {
       driverId: driver ? driver.id : undefined,
-      name: driver? driver.name : undefined
+      name: driver? driver.name : undefined,
+      isTeamLeader: this.isTeamLeader
     };
     
     return teammate;

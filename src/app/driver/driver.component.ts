@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { SettlementsService, Driver, Teammate } from '../settlements.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgForm } from '@angular/forms';
-import { threadId } from 'worker_threads';
 
 @Component({
   selector: 'app-driver',
@@ -41,6 +40,7 @@ export class DriverComponent implements OnInit {
   onTeammateChanged(teammate: Teammate) {
     this.driver.teammateDriverId = teammate.driverId;
     this.driver.teammateName = teammate.name;
+    this.driver.isTeamLeader = teammate.isTeamLeader;
 
     this.driverForm.control.markAsDirty();
   }
