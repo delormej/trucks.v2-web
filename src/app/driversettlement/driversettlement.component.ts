@@ -31,24 +31,18 @@ export class DriversettlementComponent implements OnInit, OnChanges {
   }
 
   public recreate(): void {
-    this.getDriverSettlement(
-        this.driverSettlement.companyId, 
+    this.settlementsService.getDriverSettlement(
+        this.driverSettlement.companyId,
         this.driverSettlement.driver,
         true,
-        this.driverSettlement.settlementId);
-  }
-
-  getDriverSettlement(companyId: string, 
-      driver: string, 
-      force: boolean,
-      settlementId?: string, 
-      year?: number,
-      week?: number):void {
-    this.settlementsService.getDriverSettlement(companyId, driver, force, settlementId, year, week)
-      .subscribe(res => {
-        console.log(res);
-        this.driverSettlement = res;
-        this.driverSettlementChange.emit(this.driverSettlement);
+        this.driverSettlement.settlementId)
+      .subscribe({
+        next: (driverSettlement) => {
+          this.driverSettlement = driverSettlement;
+          this.driverSettlementChange.emit(this.driverSettlement);
+          this.snack.open("Succesfully recreated Driver Settlement.", "CLOSE"); 
+        },
+        error: (error) => this.showError(error, 'Unable to recreate')
       });
   }
 
@@ -101,7 +95,6 @@ export class DriversettlementComponent implements OnInit, OnChanges {
 
   addManualEntry(entry: ManualEntry): void {
     entry.driverSettlementId = this.driverSettlement.driverSettlementId;
-    console.log('adding entry', entry);
 
     if (entry.creditAmount != null && entry.creditAmount != 0 &&
         entry.deductionAmount != null && entry.deductionAmount != 0)
@@ -117,8 +110,6 @@ export class DriversettlementComponent implements OnInit, OnChanges {
   deleteManualEntry(itemId: string): void {
     let driverSettlementId = this.driverSettlement.driverSettlementId;
     
-    console.log('deleting entry', itemId);
-    
     this.settlementsService.deleteManualEntry(driverSettlementId, itemId)
       .subscribe(res => {
         this.driverSettlement = res;
@@ -127,10 +118,6 @@ export class DriversettlementComponent implements OnInit, OnChanges {
   }
 
   onTeammateSave(teammate: Teammate) {
-    // TODO:
-    // we're not taking into consideration if original driver is team leader, we're just assuming teammate is NOT
-    // the team leader.  Should we be deleting the driver settlement for the non-team leader? 
-
     this.settlementsService.changeTeammate(
       this.driverSettlement.companyId,
       this.driverSettlement.driverSettlementId, teammate)
@@ -138,6 +125,7 @@ export class DriversettlementComponent implements OnInit, OnChanges {
         next: (driverSettlement) => {
           this.driverSettlement = driverSettlement;
           this.driverSettlementChange.emit(driverSettlement);
+          this.snack.open('Updated teammate', 'CLOSE');
         },
         error: (error) => this.showError(error, 'Unable to change teammate.')
       });
