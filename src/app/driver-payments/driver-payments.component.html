@@ -2,12 +2,7 @@
     <ng-container matColumnDef="settlementDate">
         <th mat-header-cell *matHeaderCellDef> Settlement Date </th>
         <td mat-cell *matCellDef="let payment"> 
-            <a [routerLink]="['/driver-settlement']" 
-            [queryParams]="{companyId: payment.companyId,
-                        settlementId: payment.settlementId, 
-                        driver: driverName}">
-                {{payment.settlementDate | date}} 
-            </a>    
+            {{payment.settlementDate | date}} 
         </td>
     </ng-container>    
     <ng-container matColumnDef="settlementId">
