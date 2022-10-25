@@ -102,8 +102,9 @@ export class SettlementsService {
       { params: new HttpParams().set('driver', driver) } );
   }
 
-  saveDriver(driver: Driver) {
-    return this.http.post<Driver>(SettlementsService.baseUrl + "/driver", driver);
+  saveDriver(driver: Driver, teammateChanged: boolean) {
+    return this.http.put<Driver>(SettlementsService.baseUrl + "/driver", driver,
+      { params: new HttpParams().set('updateTeammate', teammateChanged) });
   }
 
   saveManualEntry(entry: ManualEntry) {
@@ -291,7 +292,7 @@ export interface FuelCharge {
 export interface Teammate {
   driverId?: string;
   name?: string;
-  isTeamLeader: boolean;
+  teamLeaderDriverId?: string;
 }
 
 export interface VerisonInfo

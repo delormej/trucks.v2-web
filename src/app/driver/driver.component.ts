@@ -11,6 +11,7 @@ import { NgForm } from '@angular/forms';
 })
 export class DriverComponent implements OnInit {
   driver!: Driver;
+  teamChanged: boolean = false;
   submitted: boolean = false;
   @ViewChild('driverForm') driverForm!: NgForm;
 
@@ -38,9 +39,11 @@ export class DriverComponent implements OnInit {
   }
 
   onTeammateChanged(teammate: Teammate) {
+    this.teamChanged = true;
+
     this.driver.teammateDriverId = teammate.driverId;
     this.driver.teammateName = teammate.name;
-    this.driver.isTeamLeader = teammate.isTeamLeader;
+    this.driver.isTeamLeader = teammate.teamLeaderDriverId == this.driver.id;
 
     this.driverForm.control.markAsDirty();
   }
@@ -51,7 +54,7 @@ export class DriverComponent implements OnInit {
   }
 
   saveDriver() {
-    this.settlementsService.saveDriver(this.driver)
+    this.settlementsService.saveDriver(this.driver, this.teamChanged)
       .subscribe({
         next: (res) => this.snack.open("Saved", 'CLOSE', { duration: this.snackLength }),
         error: (error) => { this.showError(error, "ERROR: Unable to save"); } 

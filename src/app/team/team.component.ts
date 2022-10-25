@@ -13,14 +13,15 @@ export class TeamComponent implements OnInit, OnChanges {
   teamLeaders!: Driver[];
   drivers!: Driver[];
   selectedTeammate!: Driver;
-  teammateSuggested: boolean = false;
+  dirty: boolean = false;
 
   @Output() teammateChanged = new EventEmitter<Teammate>; 
   @Output() saveClicked = new EventEmitter<Teammate>;
-  @Input() driverName!: string;
-  @Input() teammateDriverId?: string;
-  @Input() isTeamLeader!: boolean;
+  
+  // Should we just take a driver object??
+  @Input() driver!: Driver;
   @Input() showSave: boolean = true;
+  
   @ViewChild('teammateDriverSelect') teammateSelect! : MatSelect;
 
   constructor(
@@ -33,7 +34,7 @@ export class TeamComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     // called when the parent object changes the driver bound to this control
-    this.teammateSuggested = false;
+    this.dirty = false;
     this.teamLeaders = [];
     if (this.drivers)
       this.drivers.forEach(driver => this.teamLeaders.push(driver));
@@ -47,11 +48,11 @@ export class TeamComponent implements OnInit, OnChanges {
     this.settlementService.getAllDrivers()
       .subscribe({
         next: (drivers) => {
-          this.teamLeaders = drivers; 
-          this.teammateSuggested = false;
+          this.teamLeaders = drivers.filter(d => d.name != this.driver.name); 
+          this.dirty = false;
           // Make a backup copy of drivers to reset with if teamLeaders updated.
           this.drivers = [];
-          drivers.forEach(driver => this.drivers.push(driver));
+          this.teamLeaders.forEach(driver => this.drivers.push(driver));
         },
         error: (error) => this.showError(error, "Unable to load teammates.")
       });
@@ -60,15 +61,15 @@ export class TeamComponent implements OnInit, OnChanges {
   updateTeammateSuggestions(drivers: Driver[]) {
     if (drivers?.length > 0) {
       this.teamLeaders = drivers;
-      this.teammateSuggested = true;
+      this.dirty = true;
       this.teammateSelect.open();
     }
   }
 
   onSuggestTeammate() {
-    if (this.driverName == null)
+    if (this.driver.name == null)
       return;
-    this.settlementService.getTeammateSuggestion(this.driverName)
+    this.settlementService.getTeammateSuggestion(this.driver.name)
       .subscribe({
         next: (drivers) => this.updateTeammateSuggestions(drivers),
         error: (error) => this.showError(error, "No teammate suggestions found")
@@ -76,7 +77,8 @@ export class TeamComponent implements OnInit, OnChanges {
   }
 
   onTeamLeaderChange(change: MatCheckboxChange) {
-    this.isTeamLeader = change.checked;
+    this.driver.isTeamLeader = change.checked;
+    this.dirty = true;
 
     this.teammateChanged.emit(
       this.getSelectedTeammate()
@@ -88,15 +90,15 @@ export class TeamComponent implements OnInit, OnChanges {
       this.getSelectedTeammate()
     );
     
-    this.teammateSuggested = true;
-    console.log('teammateSuggested', this.teammateSuggested);
+    this.dirty = true;
+    console.log('teammateSuggested', this.dirty);
   }
 
   onSaveClick() {
     this.saveClicked.emit(
       this.getSelectedTeammate()
     );
-    this.teammateSuggested = false;
+    this.dirty = false;
   }
 
   onResetClick() {
@@ -105,16 +107,20 @@ export class TeamComponent implements OnInit, OnChanges {
   }
 
   getSelectedTeammate(): Teammate {
-    var driver = this.teamLeaders.find(d => 
-      d.id === this.teammateSelect.value);
+    var teamDriver = this.getDriver(this.teammateSelect.value);
 
     var teammate: Teammate = {
-      driverId: driver ? driver.id : undefined,
-      name: driver? driver.name : undefined,
-      isTeamLeader: this.isTeamLeader
+      driverId: teamDriver ? teamDriver.id : undefined,
+      name: teamDriver ? teamDriver.name : undefined,
+      teamLeaderDriverId: this.driver.isTeamLeader ? this.driver.id : teamDriver?.id
     };
-    
+
     return teammate;
+  }
+
+  getDriver(id: string): Driver | undefined {
+    return this.drivers?.find(d => 
+      d.id === id);
   }
 
   showError(error: Error, message: string) {

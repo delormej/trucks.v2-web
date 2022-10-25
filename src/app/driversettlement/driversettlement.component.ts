@@ -55,7 +55,13 @@ export class DriversettlementComponent implements OnInit, OnChanges {
   getDriver(name: string): void {
     this.settlementsService.getDriver(name)
       .subscribe(res => {
-        this.driver = res;
+        this.driver = {
+          ...res,
+          teammateDriverId: this.driverSettlement.teammateDriverId,
+          isTeamLeader: 
+            (this.driverSettlement.teammateDriverId == res.id) ||
+            res.isTeamLeader
+        }
       });
   }
 

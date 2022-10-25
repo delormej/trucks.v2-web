@@ -1,13 +1,13 @@
 <div>
     <mat-checkbox class="checkbox-margin" name="isTeamLeader" id="isTeamLeader" 
-        [disabled]="teammateDriverId == null"
+        [disabled]="driver.teammateDriverId == null"
         (change)="onTeamLeaderChange($event)"
-        [checked]="isTeamLeader">Is Team Leader
+        [checked]="driver.isTeamLeader">Is Team Leader
     </mat-checkbox>
     <br>
     <mat-form-field appearance="fill">
         <mat-label>Teammate</mat-label>
-        <mat-select #teammateDriverSelect [(value)]="teammateDriverId" 
+        <mat-select #teammateDriverSelect [(value)]="driver.teammateDriverId" 
                 (selectionChange)="onTeammateChange($event)">
             <mat-option>None</mat-option>
             <mat-option *ngFor="let d of teamLeaders" [value]="d.id">{{d.name}}</mat-option>
@@ -15,21 +15,21 @@
     </mat-form-field>
     &nbsp;
     <button mat-raised-button color="basic"
-            [disabled]="teammateDriverId != null"
-            [hidden]="teammateSuggested"
+            [disabled]="driver.teammateDriverId != null"
+            [hidden]="dirty"
             (click)="onSuggestTeammate()"
             type="button" >
         Suggest
     </button>
     <button mat-raised-button color="primary"
-            [hidden]="!showSave || !teammateSuggested"
+            [hidden]="!showSave || !dirty"
             (click)="onSaveClick()"
             type="button" >
         Save
     </button>    
     &nbsp;
     <button mat-raised-button color="basic"
-            [disabled]="!teammateSuggested"
+            [disabled]="!dirty"
             (click)="onResetClick()"
             type="button" >
         Reset
