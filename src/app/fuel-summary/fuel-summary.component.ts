@@ -17,7 +17,7 @@ export class FuelSummaryComponent implements OnInit {
 
   public myData!: Row[];
   public chartType: ChartType = ChartType.LineChart;
-  public chartColumns: string[] = ["Week", "Cost", "Gallons"];
+  public chartColumns: string[] = ["Week", "Total Cost", "Avg Price/Gallon"];
   public chartOptions = {
     series: {
       0: {targetAxisIndex: 0},
@@ -42,7 +42,8 @@ export class FuelSummaryComponent implements OnInit {
 
         for (let i = 0; i < fuel.length; i++) {
           if (week+i == fuel[i].week.weekNumber) 
-            this.myData.push([week+i, fuel[i].totalCost, fuel[i].totalGallons]);
+            this.myData.push( [ week+i, fuel[i].totalCost, 
+              (fuel[i].totalCost/fuel[i].totalGallons) ] );
           else
             this.myData.push([week+i, 0, 0]);
           
@@ -53,7 +54,7 @@ export class FuelSummaryComponent implements OnInit {
       error: (error) => this.showError(error, "Unable to load fuel summary.")
     });
   }
-  
+
   showError(error: Error, message: string) {
     this.snack.open(message, 'CLOSE', { panelClass: 'errorSnack' } );
     console.log(error);
