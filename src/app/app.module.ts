@@ -27,7 +27,8 @@ import { DeductionsComponent } from './deductions/deductions.component';
 import { TotalsComponent } from './totals/totals.component';
 import { AddManualDialogComponent } from './add-manual-dialog/add-manual-dialog.component';
 
-import { GoogleChartsModule } from 'angular-google-charts'
+import { GoogleChartsModule } from 'angular-google-charts';
+import { FuelSummaryComponent } from './fuel-summary/fuel-summary.component'
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { GoogleChartsModule } from 'angular-google-charts'
     CreditsComponent,
     DeductionsComponent,
     TotalsComponent,
-    AddManualDialogComponent
+    AddManualDialogComponent,
+    FuelSummaryComponent
   ],
   imports: [
     HttpClientModule,
