@@ -1,6 +1,6 @@
 <div>
     <mat-checkbox class="checkbox-margin" name="isTeamLeader" id="isTeamLeader" 
-        [disabled]="driver.teammateDriverId == null"
+        [hidden]="driver.teammateDriverId == null"
         (change)="onTeamLeaderChange($event)"
         [checked]="driver.isTeamLeader">Is Team Leader
     </mat-checkbox>
