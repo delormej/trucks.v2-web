@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DriverSettlement, SettlementsService } from '../settlements.service';
 
 @Component({
@@ -10,6 +11,7 @@ export class DriverSettlementNotesComponent implements OnInit {
   @Input() driverSettlement!: DriverSettlement;
 
   constructor(
+    private snack: MatSnackBar,
     private settlementsService: SettlementsService
   ) { }
 
@@ -20,6 +22,14 @@ export class DriverSettlementNotesComponent implements OnInit {
     this.settlementsService.saveDriverSettlementNotes(
         this.driverSettlement.driverSettlementId,
         this.driverSettlement.notes)
-      .subscribe(d => console.log('saved', this.driverSettlement));
+      .subscribe( {
+        next: () => this.snack.open("Succesfully saved note.", "CLOSE"),
+        error: (error) => this.showError(error, "Unable to save note.")
+      });
   }
+
+  showError(error: Error, message: string) {
+    this.snack.open(message, 'CLOSE', { panelClass: 'errorSnack' } );
+    console.log(error);
+  }  
 }
