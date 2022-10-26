@@ -138,6 +138,10 @@ export class SettlementsService {
     return this.http.post<FuelCharge[]>(SettlementsService.baseUrl + "/fuel/upload",
       formData, {responseType: 'json'});
   }
+
+  getFuelSummary() : Observable<FuelSummary[]> {
+    return this.http.get<FuelSummary[]>(SettlementsService.baseUrl + "/fuel/fuel-summary")
+  }
 }
 
 export interface ManualEntry {
@@ -287,6 +291,15 @@ export interface FuelCharge {
   merchantCity:	string;
   merchantState: string;
   merchantPostal:	string;
+}
+
+export interface FuelSummary {
+  week: {
+    weekNumber: number,
+    year: number
+  };
+  totalGallons: number;
+  totalCost: number;
 }
 
 export interface Teammate {

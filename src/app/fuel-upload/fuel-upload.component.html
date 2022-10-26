@@ -1,4 +1,10 @@
 <mat-card>
+  <google-chart style="width: 100%;" [columns]="chartColumns" 
+    [type]="chartType" [options]="chartOptions" 
+    [data]="myData">
+  </google-chart>
+</mat-card>
+<mat-card>
    <mat-card-title>Upload Fuel CSV</mat-card-title>
    <mat-card-subtitle>{{fileName || "Please select fuel csv file."}}</mat-card-subtitle>
    <mat-card-actions>

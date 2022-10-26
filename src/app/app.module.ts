@@ -27,6 +27,9 @@ import { DeductionsComponent } from './deductions/deductions.component';
 import { TotalsComponent } from './totals/totals.component';
 import { AddManualDialogComponent } from './add-manual-dialog/add-manual-dialog.component';
 
+import { GoogleChartsModule } from 'angular-google-charts'
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,7 +59,8 @@ import { AddManualDialogComponent } from './add-manual-dialog/add-manual-dialog.
     FormsModule,
     MaterialModules,
     BrowserAnimationsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    GoogleChartsModule
   ],
   providers: [],
   bootstrap: [ AppComponent ]
