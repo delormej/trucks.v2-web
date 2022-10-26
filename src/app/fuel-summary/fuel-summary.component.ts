@@ -34,7 +34,7 @@ export class FuelSummaryComponent implements OnInit {
       next: (fuel) => {
         fuel = fuel.sort( (a, b) => 
           ( a.week.year < b.week.year ) && (a.week.weekNumber < b.week.weekNumber) ? -1 : 1 );
-        console.log(fuel);
+
         this.myData = [];
         var week = fuel[0].week.weekNumber;
 
