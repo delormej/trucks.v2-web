@@ -15,27 +15,47 @@
         </nav>    
     </mat-toolbar>
 
-    <app-team *ngIf="driver !=null" 
-        [driver]="driver" 
-        (saveClicked)="onTeammateSave($event)"></app-team>
+    <mat-grid-list cols="2" rowHeight="4:1">
+        <mat-grid-tile>
+            <app-team *ngIf="driver !=null" 
+            [driver]="driver" 
+            (saveClicked)="onTeammateSave($event)"></app-team>                
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <table>
+                <tr *ngIf="driverSettlement.ratePerMile > 0">
+                    <td>Rate Per Mile&nbsp;&nbsp;</td>
+                    <td>{{driverSettlement.ratePerMile}}</td>
+                </tr>
+                <tr>
+                    <td>Accessorial&nbsp;&nbsp;</td>
+                    <td>{{driverSettlement.accessorialPercent*100}}%</td>
+                </tr>
+                <tr>
+                    <td>Base</td>
+                    <td>{{driverSettlement.basePercent*100}}%</td>
+                </tr>
+            </table>
+        </mat-grid-tile>
+    </mat-grid-list>
 
     <app-loads [driverSettlement]="driverSettlement"></app-loads>
 
     <div fxLayoutGap fxLayoutAlign="start stretch" fxLayoutGap="15px">
-        <mat-card fxFlex="33">
+        <mat-card fxFlex="33" class="custom-mat-card">
             <app-deductions [driver]="driver" 
                 [driverSettlement]="driverSettlement"
                 (deleteManualEntryEvent)="deleteManualEntry($event)"
                 (newDeduction)="addManualEntry($event)">
             </app-deductions>
         </mat-card>
-        <mat-card fxFlex="33">
+        <mat-card fxFlex="33" class="custom-mat-card">
             <app-credits [driverSettlement]="driverSettlement"
                 (deleteManualEntryEvent)="deleteManualEntry($event)"
                 (newDeduction)="addManualEntry($event)">
             </app-credits>
         </mat-card>
-        <mat-card fxFlex="33">
+        <mat-card fxFlex="33" class="custom-mat-card">
             <mat-card-title>Driver Income</mat-card-title>
             <table>
                 <tr>
@@ -75,4 +95,17 @@
     </div>
     
     <app-driver-settlement-notes [driverSettlement]="driverSettlement"></app-driver-settlement-notes>
+
+    <mat-expansion-panel class="custom-mat-card">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Generator Details
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>
+            id: {{driverSettlement.driverSettlementId}} <br>
+            Version: {{driverSettlement.generatorVersion}} <br>
+            Last Updated: {{driverSettlement.lastUpdated | date:'medium'}} <br>
+        </p>
+    </mat-expansion-panel>
 </div>

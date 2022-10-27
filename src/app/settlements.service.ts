@@ -197,6 +197,7 @@ export interface DriverSettlement {
   securityDeposit: number;
   qualcomm: number;
   notes: string;
+  generatorVersion: string;
 }
 
 export interface Deduction {
