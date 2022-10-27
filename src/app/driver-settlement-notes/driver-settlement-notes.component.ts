@@ -23,7 +23,7 @@ export class DriverSettlementNotesComponent implements OnInit {
         this.driverSettlement.driverSettlementId,
         this.driverSettlement.notes)
       .subscribe( {
-        next: () => this.snack.open("Succesfully saved note.", "CLOSE"),
+        next: () => this.snack.open("Succesfully saved note.", "CLOSE", {duration: 3000}),
         error: (error) => this.showError(error, "Unable to save note.")
       });
   }

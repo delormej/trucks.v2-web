@@ -40,7 +40,7 @@ export class DriversettlementComponent implements OnInit, OnChanges {
         next: (driverSettlement) => {
           this.driverSettlement = driverSettlement;
           this.driverSettlementChange.emit(this.driverSettlement);
-          this.snack.open("Succesfully recreated Driver Settlement.", "CLOSE"); 
+          this.snack.open("Succesfully recreated Driver Settlement.", "CLOSE", {duration:3000}); 
         },
         error: (error) => this.showError(error, 'Unable to recreate')
       });
@@ -125,7 +125,7 @@ export class DriversettlementComponent implements OnInit, OnChanges {
         next: (driverSettlement) => {
           this.driverSettlement = driverSettlement;
           this.driverSettlementChange.emit(driverSettlement);
-          this.snack.open('Updated teammate', 'CLOSE');
+          this.snack.open('Updated teammate', 'CLOSE', { duration: 3000 });
         },
         error: (error) => this.showError(error, 'Unable to change teammate.')
       });

@@ -43,7 +43,7 @@ export class FuelUploadComponent implements OnInit {
             next: (fuel) => { 
               this.fuel = fuel;
               this.saved = true; 
-              this.snack.open("Succesfully saved fuel.", "CLOSE"); 
+              this.snack.open("Succesfully saved fuel.", "CLOSE", {duration:3000}); 
             },
             error: (error) => this.showError(error, "Error saving CSV.")
           });
