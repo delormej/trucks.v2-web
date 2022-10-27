@@ -15,13 +15,14 @@
         </nav>    
     </mat-toolbar>
 
-    <mat-grid-list cols="2" rowHeight="4:1">
-        <mat-grid-tile>
+    <mat-grid-list cols="10" rowHeight=".75:1">
+        <mat-grid-tile colspan="7">
             <app-team *ngIf="driver !=null" 
             [driver]="driver" 
-            (saveClicked)="onTeammateSave($event)"></app-team>                
+            (saveClicked)="onTeammateSave($event)"
+            class="app-team"></app-team>                
         </mat-grid-tile>
-        <mat-grid-tile>
+        <mat-grid-tile colspan="3">
             <table>
                 <tr *ngIf="driverSettlement.ratePerMile > 0">
                     <td>Rate Per Mile&nbsp;&nbsp;</td>

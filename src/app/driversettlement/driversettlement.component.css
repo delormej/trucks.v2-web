@@ -24,3 +24,8 @@
   .custom-mat-card {
     margin-bottom: 10px;
   }
+
+  .app-team {
+    position: absolute;
+    left: 5px;
+  }
