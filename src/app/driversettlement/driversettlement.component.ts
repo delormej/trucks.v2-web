@@ -40,7 +40,7 @@ export class DriversettlementComponent implements OnInit, OnChanges {
         next: (driverSettlement) => {
           this.driverSettlement = driverSettlement;
           this.driverSettlementChange.emit(this.driverSettlement);
-          this.snack.open("Succesfully recreated Driver Settlement.", "CLOSE", {duration:3000}); 
+          this.snack.open("Succesfully recreated.", "CLOSE", {duration:3000}); 
         },
         error: (error) => this.showError(error, 'Unable to recreate')
       });
