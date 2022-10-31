@@ -35,7 +35,16 @@
                 (driverSettlementChange)="driverSettlementChange($event)">
               </app-driversettlement>
               <ng-template #promptForSelection>
-                <div>Please select a driver from the left.</div>
+                <div>
+                  Please select a driver from the left.
+                  <br/><br/>
+                  <button mat-raised-button color="basic" 
+                      [disabled]="this.loading"
+                      (click)="onForceRecreateClick()">
+                    Recreate All
+                  </button>
+                </div>
+
               </ng-template>
             </div>          
           </mat-drawer-container>

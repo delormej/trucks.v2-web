@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatSelectionListChange } from '@angular/material/list';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { SettlementsService, SettlementSummary, DriverSettlement } from '../settlements.service';
 
 @Component({
@@ -15,6 +16,8 @@ export class SettlementDetailComponent implements OnInit {
   driverSettlements: DriverSettlement[] = [];
   selectedDriver?: string;
   showFiller = false;
+  companyId!: string;
+  settlementId!: string;
 
   constructor(
     private settlementsService: SettlementsService,
@@ -25,7 +28,9 @@ export class SettlementDetailComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(
       params => {
-        this.getDriverSettlements(params['companyId'], params['settlementId']); 
+        this.companyId = params['companyId'];
+        this.settlementId = params['settlementId'];
+        this.getDriverSettlements(false); 
         this.selectedDriver = params['driver'];
       }
     );
@@ -58,8 +63,8 @@ export class SettlementDetailComponent implements OnInit {
       return driverSettlement!;
   }
 
-  getDriverSettlements(companyId: string, settlementId: string): void {
-    this.settlementsService.getDriverSettlements(companyId, settlementId)
+  getDriverSettlements(forceRecreate: boolean): void {
+    this.settlementsService.getDriverSettlements(this.companyId, this.settlementId, forceRecreate)
       .subscribe({
         next: (res) => {
           this.driverSettlements = res.sort( (a, b) => (a.driver < b. driver) ? -1 : 1 );
@@ -72,6 +77,9 @@ export class SettlementDetailComponent implements OnInit {
             checkAmount: this.driverSettlements[0].amountDue
           }
           this.loading = false;
+
+          if (forceRecreate)
+            this.snack.open("Succesfully recreated all.", "CLOSE", {duration:3000}); 
         },
         error: (error) => { 
           this.loading = false; 
@@ -83,6 +91,11 @@ export class SettlementDetailComponent implements OnInit {
   public getMiles(driverSettlement: DriverSettlement): number {
     let miles = driverSettlement.credits.reduce((partialSum, c) => partialSum + c.miles, 0);
     return miles;
+  }
+
+  onForceRecreateClick() : void {
+    this.loading = true;
+    this.getDriverSettlements(true);
   }
 
   showError(error: Error, message: string) {

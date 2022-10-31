@@ -52,10 +52,8 @@ export class DriversettlementComponent implements OnInit, OnChanges {
         this.driver = {
           ...res,
           teammateDriverId: this.driverSettlement.teammateDriverId,
-          isTeamLeader: 
-            (this.driverSettlement.teammateDriverId == res.id) ||
-            res.isTeamLeader
-        }
+          isTeamLeader: this.driverSettlement.isTeamLeader 
+        };
       });
   }
 
