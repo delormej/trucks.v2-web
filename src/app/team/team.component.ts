@@ -10,15 +10,14 @@ import { Driver, SettlementsService, Teammate } from '../settlements.service';
   styleUrls: ['./team.component.css']
 })
 export class TeamComponent implements OnInit, OnChanges {
-  teamLeaders!: Driver[];
-  drivers!: Driver[];
+  private teamLeaders!: Driver[];
+  private drivers!: Driver[];
   selectedTeammate!: Driver;
   dirty: boolean = false;
 
   @Output() teammateChanged = new EventEmitter<Teammate>; 
   @Output() saveClicked = new EventEmitter<Teammate>;
   
-  // Should we just take a driver object??
   @Input() driver!: Driver;
   @Input() showSave: boolean = true;
   
@@ -38,17 +37,13 @@ export class TeamComponent implements OnInit, OnChanges {
     this.teamLeaders = [];
     if (this.drivers)
       this.drivers.forEach(driver => this.teamLeaders.push(driver));
-
-    // if (changes['driver'] != null) {
-    //   this.getTeamLeaders();
-    // }
   }
   
   getTeamLeaders(): void {
     this.settlementService.getAllDrivers()
       .subscribe({
         next: (drivers) => {
-          this.teamLeaders = drivers.filter(d => d.name != this.driver.name); 
+          this.teamLeaders = drivers;
           this.dirty = false;
           // Make a backup copy of drivers to reset with if teamLeaders updated.
           this.drivers = [];
@@ -56,6 +51,10 @@ export class TeamComponent implements OnInit, OnChanges {
         },
         error: (error) => this.showError(error, "Unable to load teammates.")
       });
+  }
+
+  public getTeammates(): Driver[] {
+    return this.teamLeaders.filter(d => d.name != this.driver.name);
   }
 
   updateTeammateSuggestions(drivers: Driver[]) {
@@ -108,7 +107,6 @@ export class TeamComponent implements OnInit, OnChanges {
 
   getSelectedTeammate(): Teammate {
     var teamDriver = this.getDriver(this.teammateSelect.value);
-
     var teammate: Teammate = {
       driverId: teamDriver ? teamDriver.id : undefined,
       name: teamDriver ? teamDriver.name : undefined,

@@ -4,13 +4,18 @@
         (change)="onTeamLeaderChange($event)"
         [checked]="driver.isTeamLeader">Is Team Leader
     </mat-checkbox>
+
+<!-- 
+    Add the split stuff... 
+    NOTE: don't allow "Saving" for Split unless you are the team leader.
+-->
     <br>
     <mat-form-field appearance="fill">
         <mat-label>Teammate</mat-label>
         <mat-select #teammateDriverSelect [(value)]="driver.teammateDriverId" 
                 (selectionChange)="onTeammateChange($event)">
             <mat-option>None</mat-option>
-            <mat-option *ngFor="let d of teamLeaders" [value]="d.id">{{d.name}}</mat-option>
+            <mat-option *ngFor="let d of getTeammates()" [value]="d.id">{{d.name}}</mat-option>
         </mat-select>
     </mat-form-field>
     &nbsp;
@@ -23,6 +28,7 @@
     </button>
     <button mat-raised-button color="primary"
             [hidden]="!showSave || !dirty"
+            [disabled]="!(driver.isTeamLeader)"
             (click)="onSaveClick()"
             type="button" >
         Save

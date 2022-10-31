@@ -172,6 +172,8 @@ export interface DriverSettlement {
   driverId: string;
   teammateDriver: string;
   teammateDriverId: string;
+  isSplit: boolean;
+  isTeamLeader: boolean;
   settlementDate: Date;
   deductions: Deduction[];
   credits: Credit[];
