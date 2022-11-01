@@ -27,6 +27,10 @@ export class FuelSummaryComponent implements OnInit {
       format:'#',
       ticks: [0]
     },
+    vAxes: {
+      0: { format: '$#,###' },
+      1: { format: 'currency' }
+    }
   };  
 
   ngOnInit(): void {
