@@ -112,6 +112,12 @@ export class SettlementsService {
       SettlementsService.baseUrl + "/driversettlements/manual", entry);
   }
 
+  deleteDriverSettlement(driverSettlementId: string) {
+    return this.http.delete(
+      SettlementsService.baseUrl + "/driversettlements", { params: new HttpParams()
+          .set('driverSettlementId', driverSettlementId) });
+  } 
+
   deleteManualEntry(driverSettlementId: string, itemId: string) {
     return this.http.delete<DriverSettlement>(
       SettlementsService.baseUrl + "/driversettlements/manual", { params: new HttpParams()
@@ -200,6 +206,7 @@ export interface DriverSettlement {
   qualcomm: number;
   notes: string;
   generatorVersion: string;
+  deleted: boolean;
 }
 
 export interface Deduction {

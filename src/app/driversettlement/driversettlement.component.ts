@@ -46,6 +46,19 @@ export class DriversettlementComponent implements OnInit, OnChanges {
       });
   }
 
+  public delete(): void {
+    this.settlementsService.deleteDriverSettlement(
+      this.driverSettlement.driverSettlementId)
+      .subscribe({
+        next: (result) => {
+          this.snack.open("Deleted Driver Settlement.", "CLOSE", {duration:3000});
+          this.driverSettlement.deleted = true;
+          this.driverSettlementChange.emit(this.driverSettlement);
+        },
+        error: (error) => this.showError(error, "Unable to delete.")
+      });
+  }
+
   getDriver(name: string): void {
     this.settlementsService.getDriver(name)
       .subscribe(res => {

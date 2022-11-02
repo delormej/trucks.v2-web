@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MatSelectionListChange } from '@angular/material/list';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { SettlementsService, SettlementSummary, DriverSettlement } from '../settlements.service';
 
 @Component({
@@ -50,6 +49,15 @@ export class SettlementDetailComponent implements OnInit {
     console.log('driverSettlementChange', driverSettlement.driver);
     var index = this.driverSettlements.findIndex(d => 
       d.driverSettlementId === driverSettlement.driverSettlementId);
+
+    if (driverSettlement.deleted) {
+      this.driverSettlements = this.driverSettlements.filter(d => 
+        d.deleted == false);
+    
+      this.selectedDriver = undefined;
+      return;
+    }
+  
     // Replace existing element with the updated version.
     this.driverSettlements[index] = driverSettlement;
     // Set currently selected.
