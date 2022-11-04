@@ -6,6 +6,7 @@
     </mat-checkbox>
 
     <mat-checkbox class="checkbox-margin" name="isSplit" id="isSplit" 
+        disabled="true"
         [hidden]="driver.teammateDriverId == null"
         (change)="onSplitChange($event)"
         [checked]="driver.isSplit">50/50 Split
