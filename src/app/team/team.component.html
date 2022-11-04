@@ -5,6 +5,12 @@
         [checked]="driver.isTeamLeader">Is Team Leader
     </mat-checkbox>
 
+    <mat-checkbox class="checkbox-margin" name="isSplit" id="isSplit" 
+        [hidden]="driver.teammateDriverId == null"
+        (change)="onSplitChange($event)"
+        [checked]="driver.isSplit">50/50 Split
+    </mat-checkbox>
+
 <!-- 
     Add the split stuff... 
     NOTE: don't allow "Saving" for Split unless you are the team leader.

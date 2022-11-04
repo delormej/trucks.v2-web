@@ -14,6 +14,7 @@ export class TeamComponent implements OnInit, OnChanges {
   private drivers!: Driver[];
   selectedTeammate!: Driver;
   dirty: boolean = false;
+  splitChanged: boolean = false;
 
   @Output() teammateChanged = new EventEmitter<Teammate>; 
   @Output() saveClicked = new EventEmitter<Teammate>;
@@ -71,7 +72,7 @@ export class TeamComponent implements OnInit, OnChanges {
     this.settlementService.getTeammateSuggestion(this.driver.name)
       .subscribe({
         next: (drivers) => this.updateTeammateSuggestions(drivers),
-        error: (error) => this.showError(error, "No teammate suggestions found")
+        error: (error) => this.snack.open("No teammate suggestions found", "CLOSE", { duration: 3000 })
       });
   }
 
@@ -82,6 +83,16 @@ export class TeamComponent implements OnInit, OnChanges {
     this.teammateChanged.emit(
       this.getSelectedTeammate()
     );
+  }
+
+  onSplitChange(change: MatCheckboxChange) {
+    this.driver.isSplit = change.checked;
+    this.dirty = true;
+    this.splitChanged = true;
+
+    this.teammateChanged.emit(
+      this.getSelectedTeammate()
+    );    
   }
 
   onTeammateChange(change: MatSelectChange) {
@@ -110,9 +121,10 @@ export class TeamComponent implements OnInit, OnChanges {
     var teammate: Teammate = {
       driverId: teamDriver ? teamDriver.id : undefined,
       name: teamDriver ? teamDriver.name : undefined,
-      teamLeaderDriverId: this.driver.isTeamLeader ? this.driver.id : teamDriver?.id
+      teamLeaderDriverId: this.driver.isTeamLeader ? this.driver.id : teamDriver?.id,
+      isSplit: this.driver.isSplit,
+      splitChanged: this.splitChanged
     };
-
     return teammate;
   }
 

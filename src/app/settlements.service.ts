@@ -136,6 +136,34 @@ export class SettlementsService {
       SettlementsService.baseUrl + "/driversettlements/change-teammate", body);
   }
 
+  createDriverSplit(driver: Driver): Observable<Driver> {
+    return this.http.post<Driver>(
+      SettlementsService.baseUrl + "/driver/split", driver);
+  }
+
+  createDriverSettlementSplit(
+      driverSettlementId: string, 
+      teamleaderDriverId: string, 
+      teammateDriverId?: string): Observable<DriverSettlement[]> {
+
+    var body = {
+      driverSettlementId: driverSettlementId,
+      teamleaderDriverId: teamleaderDriverId, 
+      teammateDriverId: teammateDriverId
+    };
+
+    return this.http.post<DriverSettlement[]>(
+      SettlementsService.baseUrl + "/driversettlements/split", body);
+  }
+
+  unsplitDriverSettlement(driverSettlementId: string): Observable<DriverSettlement[]> {
+    return this.http.post<DriverSettlement[]>(
+      SettlementsService.baseUrl + "/driversettlements/unsplit", null,
+        { params: new HttpParams()
+          .set('driverSettlementId', driverSettlementId)
+        });
+    }
+
   getVersion() : Observable<VerisonInfo> {
     return this.http.get<VerisonInfo>(SettlementsService.baseUrl + "/version")
   };
@@ -273,6 +301,7 @@ export interface Driver {
   isTeamLeader: boolean;
   teammateDriverId?: string;
   teammateName?: string;
+  isSplit: boolean;
   paymentHistory: Payment[];
 }
 
@@ -316,6 +345,8 @@ export interface Teammate {
   driverId?: string;
   name?: string;
   teamLeaderDriverId?: string;
+  isSplit: boolean;
+  splitChanged: boolean;
 }
 
 export interface VerisonInfo

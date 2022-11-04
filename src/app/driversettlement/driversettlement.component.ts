@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable } from 'rxjs';
 import { SettlementsService, DriverSettlement, ManualEntry, Driver, Teammate } from '../settlements.service';
 
 @Component({
@@ -65,7 +66,8 @@ export class DriversettlementComponent implements OnInit, OnChanges {
         this.driver = {
           ...res,
           teammateDriverId: this.driverSettlement.teammateDriverId,
-          isTeamLeader: this.driverSettlement.isTeamLeader 
+          isTeamLeader: this.driverSettlement.isTeamLeader,
+          isSplit: this.driverSettlement.isSplit
         };
       });
   }
@@ -129,10 +131,30 @@ export class DriversettlementComponent implements OnInit, OnChanges {
   }
 
   onTeammateSave(teammate: Teammate) {
-    this.settlementsService.changeTeammate(
-      this.driverSettlement.companyId,
-      this.driverSettlement.driverSettlementId, teammate)
-      .subscribe({
+    var method: Observable<DriverSettlement[]>;
+    
+    if (teammate.splitChanged) {
+      if (teammate.isSplit) 
+        method = this.createSplit(teammate);
+      else
+        method = this.unsplit();
+      
+      method.subscribe({
+        next: (driverSettlements) => {
+          driverSettlements.forEach(d => {
+            if (d.driverSettlementId != this.driverSettlement.driverSettlementId)
+              this.driverSettlementChange.emit(d)
+            else
+              this.driverSettlement = d;
+          });
+          this.driverSettlementChange.emit(this.driverSettlement);
+          this.snack.open("Updated split", "CLOSE", { duration: 3000 });
+        },
+        error: (error) => this.showError(error, "Unable to update split.")
+      })
+    }
+    else {
+      this.changeTeammate(teammate).subscribe({
         next: (driverSettlement) => {
           this.driverSettlement = driverSettlement;
           this.driverSettlementChange.emit(driverSettlement);
@@ -140,6 +162,25 @@ export class DriversettlementComponent implements OnInit, OnChanges {
         },
         error: (error) => this.showError(error, 'Unable to change teammate.')
       });
+    }
+  }
+
+  createSplit(teammate: Teammate): Observable<DriverSettlement[]> {
+    return this.settlementsService.createDriverSettlementSplit(
+      this.driverSettlement.driverSettlementId,
+      this.driverSettlement.driverId,
+      teammate.driverId);
+  }
+
+  unsplit(): Observable<DriverSettlement[]> {
+    return this.settlementsService.unsplitDriverSettlement(
+      this.driverSettlement.driverSettlementId);
+  }
+
+  changeTeammate(teammate: Teammate): Observable<DriverSettlement> {
+    return this.settlementsService.changeTeammate(
+      this.driverSettlement.companyId,
+      this.driverSettlement.driverSettlementId, teammate);
   }
 
   showError(error: Error, message: string) {
