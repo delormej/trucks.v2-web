@@ -89,6 +89,7 @@ export class DriverComponent implements OnInit {
       .subscribe({
         next: (pin) => { 
           this.driver.driverPromptId = pin; 
+          this.driverForm.control.markAsDirty();
           this.snack.open("Found pin suggestion", "CLOSE", { duration: 1500 }); 
         },
         error: (error) => { this.showError(error, 'No pin found') }
