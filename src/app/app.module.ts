@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModules } from './material.modules';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -28,7 +28,13 @@ import { TotalsComponent } from './totals/totals.component';
 import { AddManualDialogComponent } from './add-manual-dialog/add-manual-dialog.component';
 
 import { GoogleChartsModule } from 'angular-google-charts';
-import { FuelSummaryComponent } from './fuel-summary/fuel-summary.component'
+import { FuelSummaryComponent } from './fuel-summary/fuel-summary.component';
+import { DriverAddressComponent } from './driver-address/driver-address.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCardModule } from '@angular/material/card'
 
 
 @NgModule({
@@ -52,7 +58,8 @@ import { FuelSummaryComponent } from './fuel-summary/fuel-summary.component'
     DeductionsComponent,
     TotalsComponent,
     AddManualDialogComponent,
-    FuelSummaryComponent
+    FuelSummaryComponent,
+    DriverAddressComponent
   ],
   imports: [
     HttpClientModule,
@@ -62,7 +69,13 @@ import { FuelSummaryComponent } from './fuel-summary/fuel-summary.component'
     MaterialModules,
     BrowserAnimationsModule,
     FlexLayoutModule,
-    GoogleChartsModule
+    GoogleChartsModule,
+    MatInputModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatCardModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [ AppComponent ]
