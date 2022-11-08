@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTableDataSource } from '@angular/material/table';
 import { Driver, SettlementsService } from '../settlements.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { Driver, SettlementsService } from '../settlements.service';
 })
 export class DriversComponent implements OnInit {
   loading: boolean = false;
-  drivers: Driver[] = [];
+  drivers!: MatTableDataSource<Driver>;
   displayColumns: string[] = ['name', 'driverPromptId', 'teammateName'];
   
   constructor(
@@ -20,9 +21,17 @@ export class DriversComponent implements OnInit {
     this.loading = true;
     this.settlementsService.getAllDrivers()
     .subscribe({
-      next: (drivers) => { this.drivers = drivers; this.loading = false; },
+      next: (drivers) => { 
+        this.drivers = new MatTableDataSource(drivers); 
+        this.loading = false; 
+      },
       error: (error) => { this.loading = false; this.showError(error, 'Unable to load drivers.') }
     });
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.drivers.filter = filterValue.trim().toLowerCase();
   }
 
   showError(error: Error, message: string) {

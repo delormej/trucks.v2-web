@@ -5,6 +5,11 @@
         <mat-spinner [hidden]="!loading" mode="indeterminate"></mat-spinner>
     </div>
 
+    <mat-form-field appearance="standard">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. robert" #input>
+    </mat-form-field>
+
     <table [hidden]="loading" mat-table [dataSource]="drivers">
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Name </th>
