@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
-import { SettlementsService, DriverSettlement, ManualEntry, Driver, Teammate } from '../settlements.service';
+import { SettlementsService, DriverSettlement, ManualEntry, Driver, Teammate, Credit } from '../settlements.service';
 
 @Component({
   selector: 'app-driversettlement',
@@ -141,13 +141,7 @@ export class DriversettlementComponent implements OnInit, OnChanges {
       
       method.subscribe({
         next: (driverSettlements) => {
-          driverSettlements.forEach(d => {
-            if (d.driverSettlementId != this.driverSettlement.driverSettlementId)
-              this.driverSettlementChange.emit(d)
-            else
-              this.driverSettlement = d;
-          });
-          this.driverSettlementChange.emit(this.driverSettlement);
+          this.updateDriverSettlements(driverSettlements),
           this.snack.open("Updated split", "CLOSE", { duration: 3000 });
         },
         error: (error) => this.showError(error, "Unable to update split.")
@@ -176,6 +170,37 @@ export class DriversettlementComponent implements OnInit, OnChanges {
     return this.settlementsService.unsplitDriverSettlement(
       this.driverSettlement.driverSettlementId);
   }
+
+  splitItem(credit: Credit) {
+    var updated: Observable<DriverSettlement[]>;
+
+    if (credit.isSplit) {
+      updated = this.settlementsService.splitItem(
+        this.driverSettlement.driverSettlementId, credit.id);
+    }
+    else {
+      updated = this.settlementsService.unsplitItem(
+        this.driverSettlement.driverSettlementId, credit.id);
+    }
+
+    updated.subscribe({
+      next: (driverSettlements) => {
+        this.updateDriverSettlements(driverSettlements),
+        this.snack.open("Updated item split", "CLOSE", { duration: 3000 });
+      },
+      error: (error) => this.showError(error, "Unable to modify item.")
+    });
+  }
+
+  updateDriverSettlements(driverSettlements: DriverSettlement[]) {
+      driverSettlements.forEach(d => {
+        if (d.driverSettlementId != this.driverSettlement.driverSettlementId)
+          this.driverSettlementChange.emit(d)
+        else
+          this.driverSettlement = d;
+      });
+      this.driverSettlementChange.emit(this.driverSettlement);
+  }    
 
   changeTeammate(teammate: Teammate): Observable<DriverSettlement> {
     return this.settlementsService.changeTeammate(

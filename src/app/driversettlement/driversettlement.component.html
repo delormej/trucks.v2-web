@@ -44,7 +44,9 @@
         </mat-grid-tile>
     </mat-grid-list>
 
-    <app-loads [driverSettlement]="driverSettlement"></app-loads>
+    <app-loads [driverSettlement]="driverSettlement"
+        (onSplitItem)="splitItem($event)">
+    </app-loads>
 
     <div fxLayoutGap fxLayoutAlign="start stretch" fxLayoutGap="15px">
         <mat-card fxFlex="33" class="custom-mat-card">
@@ -77,7 +79,7 @@
                 </tr>
                 <tr>
                     <td><div class="manual-row">Total Credits</div></td>
-                    <td><div class="manual-row manual-row-data">{{driverSettlement.creditsTotal | number:'0.2-2'}}</div></td>
+                    <td><div class="manual-row manual-row-data">{{driverSettlement.manualCreditsTotal | number:'0.2-2'}}</div></td>
                 </tr>
                 <tr>
                     <td><div class="manual-row"><strong>Total Income</strong></div></td>

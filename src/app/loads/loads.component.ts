@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DriverSettlement, Credit } from '../settlements.service';
 import { Clipboard } from '@angular/cdk/clipboard';
 
@@ -31,6 +31,10 @@ export class LoadsComponent implements OnInit {
   _driverSettlement!: DriverSettlement;
   credits!: Credit[];
   displayedColumns: string[] = [];
+
+  @Output() 
+  onSplitItem: EventEmitter<Credit> = 
+    new EventEmitter<Credit>();
 
   @Input() set driverSettlement(value: DriverSettlement) {
     this.displayedColumns = [];
@@ -74,6 +78,9 @@ export class LoadsComponent implements OnInit {
 
     if (value.credits.find((c) => c.bonus > 0))
       this.displayedColumns.push('bonus');
+
+    if (value.isSplit)
+      this.displayedColumns.push('split');
   }
 
   constructor(private clipboard: Clipboard) { }
@@ -106,5 +113,22 @@ export class LoadsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  splitCredit(credit: Credit): void {
+    if (credit.isSplit)
+      return;
+
+    credit.isSplit = true;
+    this.onSplitItem.emit(credit);
+    
+  }
+
+  unsplitCredit(credit: Credit): void {
+    if (!credit.isSplit)
+      return;
+    
+    credit.isSplit = false;
+    this.onSplitItem.emit(credit);
   }
 }

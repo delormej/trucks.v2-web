@@ -162,7 +162,25 @@ export class SettlementsService {
         { params: new HttpParams()
           .set('driverSettlementId', driverSettlementId)
         });
-    }
+  }
+
+  splitItem(driverSettlementId: string, itemId: string) {
+    return this.http.post<DriverSettlement[]>(
+      SettlementsService.baseUrl + "/driversettlements/split-item", null,
+        { params: new HttpParams()
+          .set('driverSettlementId', driverSettlementId)
+          .set('itemId', itemId)
+        });
+  }
+
+  unsplitItem(driverSettlementId: string, itemId: string) {
+    return this.http.post<DriverSettlement[]>(
+      SettlementsService.baseUrl + "/driversettlements/unsplit-item", null,
+        { params: new HttpParams()
+          .set('driverSettlementId', driverSettlementId)
+          .set('itemId', itemId)
+        });    
+  }
 
   getVersion() : Observable<VerisonInfo> {
     return this.http.get<VerisonInfo>(SettlementsService.baseUrl + "/version")
@@ -222,7 +240,7 @@ export interface DriverSettlement {
   baseTotal: number; 
   fscTotal: number;
   accessorialTotal: number; 
-  creditsTotal: number;
+  manualCreditsTotal: number;
   deductionsTotal: number;
   milesTotal: number;
   income: number;
@@ -246,6 +264,7 @@ export interface Deduction {
   amount: number;
   totalDeductions: number;
   manualDeduction: number;
+  isSplit: boolean;
 }
 
 export interface Credit {
@@ -278,6 +297,7 @@ export interface Credit {
   other: number;
   base: number;
   manualCredit: number;
+  isSplit: boolean;
 }
 
 export interface Driver {
