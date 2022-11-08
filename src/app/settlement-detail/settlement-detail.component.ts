@@ -17,6 +17,8 @@ export class SettlementDetailComponent implements OnInit {
   showFiller = false;
   companyId!: string;
   settlementId!: string;
+  previousSettlementId!: string;
+  nextSettlementId!: string;
 
   constructor(
     private settlementsService: SettlementsService,
@@ -31,6 +33,8 @@ export class SettlementDetailComponent implements OnInit {
         this.settlementId = params['settlementId'];
         this.getDriverSettlements(false); 
         this.selectedDriver = params['driver'];
+        this.previousSettlementId = params['previousSettlementId'];
+        this.nextSettlementId = params['nextSettlementId'];
       }
     );
   } 
