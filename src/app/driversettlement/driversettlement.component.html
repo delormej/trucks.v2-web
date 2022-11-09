@@ -84,7 +84,11 @@
                 <tr>
                     <td><div class="manual-row"><strong>Total Income</strong></div></td>
                     <td><div class="manual-row manual-row-data">{{driverSettlement.income | number:'0.2-2'}}</div></td>
-                </tr>                
+                </tr>               
+                <tr>
+                    <td><div class="manual-row"><strong>YTD Total Income</strong></div></td>
+                    <td><div class="manual-row manual-row-data">{{driverSettlement.currentYtdIncome | number:'0.2-2'}}</div></td>
+                </tr>                                
                 <tr>
                     <td><div class="manual-row">Total Deductions</div></td>
                     <td><div class="manual-row manual-row-data">{{driverSettlement.deductionsTotal | number:'0.2-2'}}</div></td>

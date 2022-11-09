@@ -246,7 +246,6 @@ export interface DriverSettlement {
   income: number;
   previousNegativeBalance: number;
   paidMilesYtd: number;
-  previousYtdIncome: number;
   currentYtdIncome: number;
   securityDeposit: number;
   qualcomm: number;
@@ -330,6 +329,7 @@ export interface Payment {
   settlementDate: Date;
   companyId: string;
   amount: number;
+  incomeYtd: number;
 }
 
 export interface FuelCharge {
