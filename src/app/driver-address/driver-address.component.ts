@@ -1,6 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { MatSelect } from '@angular/material/select';
+import { Component, Input, OnChanges, Output, SimpleChanges, EventEmitter } from '@angular/core';
 import { Driver } from '../settlements.service';
 
 @Component({
@@ -10,6 +8,8 @@ import { Driver } from '../settlements.service';
 })
 export class DriverAddressComponent {
   @Input() driver!: Driver;
+
+  @Output() onDirty = new EventEmitter();
 
   states = [
     {name: 'Alabama', abbreviation: 'AL'},
@@ -74,4 +74,8 @@ export class DriverAddressComponent {
   ];
 
   constructor() {}
+
+  onChange($event: any) {
+    this.onDirty.emit(true);
+  }
 }

@@ -51,6 +51,11 @@ export class DriverComponent implements OnInit {
     this.driverForm.control.markAsDirty();
   }
 
+  onAddressDirty(value: boolean) {
+    if (value)
+      this.driverForm.control.markAsDirty();
+  }
+
   showError(error: Error, message: string) {
     this.snack.open(message, 'CLOSE', { panelClass: 'errorSnack' } );
     console.log(error);

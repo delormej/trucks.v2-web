@@ -2,20 +2,25 @@
   <div class="row">
     <div class="col">
       <mat-form-field class="full-width">
-        <textarea matInput placeholder="Address" [(ngModel)]="driver.streetAddress"></textarea>
+        <textarea matInput placeholder="Address" 
+          [(ngModel)]="driver.streetAddress" 
+          (ngModelChange)="onChange($event)"></textarea>
       </mat-form-field>
     </div>
   </div>
   <div class="row">
     <div class="col">
       <mat-form-field class="full-width">
-        <input matInput placeholder="City" [(ngModel)]="driver.city">
+        <input matInput placeholder="City" 
+          [(ngModel)]="driver.city"
+          (ngModelChange)="onChange($event)">
       </mat-form-field>
     </div>
     <div class="col">
       <mat-form-field class="full-width">
         <mat-select
             [(ngModel)]="driver.state" 
+            (ngModelChange)="onChange($event)"
             placeholder="State">
           <mat-option ngDefaultControl *ngFor="let state of states" [value]="state.abbreviation">
             {{ state.name }}
@@ -27,7 +32,9 @@
   <div class="row">
     <div class="col">
       <mat-form-field class="full-width">
-        <input matInput maxlength="5" placeholder="Postal Code" [(ngModel)]="driver.zipCode">
+        <input matInput maxlength="5" placeholder="Postal Code" 
+          [(ngModel)]="driver.zipCode"
+          (ngModelChange)="onChange($event)">
       </mat-form-field>
     </div>
   </div>
