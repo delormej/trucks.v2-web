@@ -15,7 +15,10 @@
             <th mat-header-cell *matHeaderCellDef> Settlement Id </th>
             <td mat-cell *matCellDef="let summary">
                 <a [routerLink]="['/settlement-detail']" 
-                    [queryParams]="{companyId: summary.companyId, settlementId: summary.settlementId}">
+                    [queryParams]="{companyId: summary.companyId, 
+                      settlementId: summary.settlementId,
+                      nextSettlementId: getNextSettlementId(summary.settlementId),
+                      previousSettlementId: getPreviousSettlementId(summary.settlementId)}">
                     {{summary.settlementId}}
                 </a>                    
             </td>

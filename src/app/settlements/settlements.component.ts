@@ -54,6 +54,29 @@ export class SettlementsComponent implements OnInit, AfterViewInit {
     });
   }
 
+  getNextSettlementId(settlementId: string): string {
+    var settlements = this.dataSource.data;
+    var currentIndex = settlements.findIndex(s => 
+      s.settlementId == settlementId);
+
+    if ((currentIndex + 1) < settlements.length)
+      return settlements[currentIndex + 1].settlementId;
+    else
+      return "";
+
+  }
+
+  getPreviousSettlementId(settlementId: string): string {
+    var settlements = this.dataSource.data;
+    var currentIndex = settlements.findIndex(s => 
+      s.settlementId == settlementId);
+
+    if (currentIndex > 0)
+      return settlements[currentIndex - 1].settlementId;
+    else
+      return "";    
+  }
+  
   showError(error: Error, message: string) {
     this.snack.open(message, 'CLOSE', { panelClass: 'errorSnack' } );
     console.log(error);

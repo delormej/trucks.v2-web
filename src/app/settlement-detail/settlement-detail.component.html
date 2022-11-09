@@ -10,8 +10,12 @@
         <mat-card-subtitle>
             Company {{settlement.companyId}} | {{settlement.settlementDate | date}} 
         </mat-card-subtitle>
-        <mat-card-content>
-            <div><!--<a href=""> &lt;&lt; Previous </a>--> <strong>Week {{settlement.weekNumber}}</strong> <!--<a href=""> Next &gt;&gt; </a>--></div>
+        <mat-card-content>             
+          <div>
+            <a href="getPreviousSettlementLink()"> &lt;&lt; Previous </a> 
+            <strong>Week {{settlement.weekNumber}}</strong> 
+            <a href="getNextSettlementLink()"> Next &gt;&gt; </a>
+          </div>
         </mat-card-content>
         <mat-drawer-container class="settlement-container" autosize>
             <!-- List of drivers with driver settlements in this settlement history -->
