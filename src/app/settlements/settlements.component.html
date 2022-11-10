@@ -5,6 +5,13 @@
       <mat-spinner [hidden]="!loading" [mode]="loadingProgressMode"></mat-spinner>
     </div>
 
+    <mat-card-actions>
+      <button mat-button disabled>
+        <mat-icon>download</mat-icon>
+        <span>Check for New Settlements</span>
+      </button>
+    </mat-card-actions>
+
     <table [hidden]="loading" mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="companyId">
             <th mat-header-cell *matHeaderCellDef> Company Id </th>

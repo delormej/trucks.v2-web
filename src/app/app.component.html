@@ -16,6 +16,23 @@
           <a routerLink="/fuel-upload" routerLinkActive="active" 
             ariaCurrentWhenActive="page">Fuel</a>
         </button>
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>menu</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item disabled>
+              <mat-icon>login</mat-icon>
+              <span>Login</span>
+            </button>            
+            <button mat-menu-item disabled>
+              <mat-icon>download</mat-icon>
+              <span>Check for New Settlements</span>
+            </button>
+            <button mat-menu-item disabled>
+              <mat-icon>corporate_fare</mat-icon>
+              <span>Manage Panther Companies</span>
+            </button>
+          </mat-menu>
       </nav>
     </mat-toolbar>
   <!-- The routed views render in the <router-outlet>-->
