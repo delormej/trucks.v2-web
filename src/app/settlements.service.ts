@@ -325,6 +325,7 @@ export interface Driver {
 }
 
 export interface Payment { 
+  weekNumber: number;
   settlementId: string;
   settlementDate: Date;
   companyId: string;
