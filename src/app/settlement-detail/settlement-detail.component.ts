@@ -34,8 +34,6 @@ export class SettlementDetailComponent implements OnInit {
         this.getSettlement(this.companyId, this.settlementId);
         this.getDriverSettlements(false); 
         this.selectedDriver = params['driver'];
-        this.previousSettlementId = params['previousSettlementId'];
-        this.nextSettlementId = params['nextSettlementId'];
       }
     );
   } 
