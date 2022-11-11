@@ -5,7 +5,7 @@
         <mat-spinner [hidden]="!loading" mode="indeterminate"></mat-spinner>
     </div>
 
-    <mat-form-field appearance="standard">
+    <mat-form-field *ngIf="!loading" appearance="standard">
         <mat-label>Filter</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Ex. robert" #input>
     </mat-form-field>
