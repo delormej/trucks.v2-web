@@ -44,6 +44,11 @@
         </mat-grid-tile>
     </mat-grid-list>
 
+    <div>
+        {{week.startDate | date}} - {{week.endDate | date}},
+        &nbsp;&nbsp;<strong>Pay Date</strong> {{week.payDate | date}}
+    </div>
+
     <app-loads [driverSettlement]="driverSettlement"
         (onSplitItem)="splitItem($event)">
     </app-loads>

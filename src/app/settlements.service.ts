@@ -16,6 +16,11 @@ export class SettlementsService {
     return this.http.get<SettlementSummary[]>(SettlementsService.baseUrl + "/settlements/summaries");
   }  
 
+  getSettlementSummary(companyId: string, settlementId: string): Observable<SettlementSummary> {
+    return this.http.get<SettlementSummary>(SettlementsService.baseUrl + 
+        "/settlements/summary/" + companyId + "/" + settlementId);
+  }  
+
   getDriverSettlements(companyId: string, settlementId: string, forceRecreate: boolean = false): Observable<DriverSettlement[]> {
     return this.http.get<DriverSettlement[]>(SettlementsService.baseUrl + "/driversettlements/" + companyId + "/" + settlementId,
       { params: new HttpParams().set('forceRecreate', forceRecreate)});
@@ -211,6 +216,15 @@ export interface SettlementSummary {
   year: number;
   companyId: string;
   checkAmount: number;
+  week: Week;
+}
+
+export interface Week {
+  startDate: Date;
+  endDate: Date;
+  payDate: Date;
+  weekNumber: number;
+  year: number;
 }
 
 export interface DriverSettlement {

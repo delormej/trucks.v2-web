@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
-import { SettlementsService, DriverSettlement, ManualEntry, Driver, Teammate, Credit } from '../settlements.service';
+import { SettlementsService, DriverSettlement, ManualEntry, Driver, Teammate, Credit, Week } from '../settlements.service';
 
 @Component({
   selector: 'app-driversettlement',
@@ -9,8 +9,9 @@ import { SettlementsService, DriverSettlement, ManualEntry, Driver, Teammate, Cr
   styleUrls: ['./driversettlement.component.css']
 })
 export class DriversettlementComponent implements OnInit, OnChanges {
-  @Input() 
-  driverSettlement!: DriverSettlement;
+  @Input() driverSettlement!: DriverSettlement;
+  @Input() week!: Week;
+
   @Output() 
   driverSettlementChange: EventEmitter<DriverSettlement> = 
     new EventEmitter<DriverSettlement>();

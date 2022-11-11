@@ -31,6 +31,7 @@ export class SettlementDetailComponent implements OnInit {
       params => {
         this.companyId = params['companyId'];
         this.settlementId = params['settlementId'];
+        this.getSettlement(this.companyId, this.settlementId);
         this.getDriverSettlements(false); 
         this.selectedDriver = params['driver'];
         this.previousSettlementId = params['previousSettlementId'];
@@ -68,6 +69,14 @@ export class SettlementDetailComponent implements OnInit {
     this.selectedDriver = driverSettlement.driver;
   }
 
+  getSettlement(companyId: string, settlementId: string): void {
+    this.settlementsService.getSettlementSummary(companyId, settlementId)
+      .subscribe({
+        next: (res) => this.settlement = res,
+        error: (error) => this.showError(error, "Unable to load Settlement")
+      });
+  }
+
   getDriverSettlement(driverSettlementId: string): DriverSettlement {
     var driverSettlement = this.driverSettlements.find(
       d => d.driverSettlementId === driverSettlementId);
@@ -80,14 +89,6 @@ export class SettlementDetailComponent implements OnInit {
       .subscribe({
         next: (res) => {
           this.driverSettlements = res.sort( (a, b) => (a.driver < b. driver) ? -1 : 1 );
-          this.settlement = { 
-            year: this.driverSettlements[0].year,
-            weekNumber: this.driverSettlements[0].week,
-            settlementId: this.driverSettlements[0].settlementId,
-            settlementDate: this.driverSettlements[0].settlementDate,
-            companyId: this.driverSettlements[0].companyId,
-            checkAmount: this.driverSettlements[0].amountDue
-          }
           this.loading = false;
 
           if (forceRecreate)

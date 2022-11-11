@@ -11,9 +11,9 @@
             Company {{settlement.companyId}} | {{settlement.settlementDate | date}} 
         </mat-card-subtitle>
         <mat-card-content>             
-          <div>
+          <div *ngIf="settlement.week">
             <!--<a href="getPreviousSettlementLink()"> &lt;&lt; Previous </a> -->
-            <strong>Week {{settlement.weekNumber}}</strong> 
+            <strong>Week {{settlement.week.weekNumber}}</strong> 
             <!-- <a href="getNextSettlementLink()"> Next &gt;&gt; </a> -->
           </div>
         </mat-card-content>
@@ -35,6 +35,7 @@
             <!-- driver settelement for the selected driver -->
             <div class="settlement-sidenav-content">
               <app-driversettlement *ngIf="selectedDriver != null; else promptForSelection"
+                [week]="settlement.week"
                 [driverSettlement]="driverSettlementSelection.selectedOptions.selected[0].value"
                 (driverSettlementChange)="driverSettlementChange($event)">
               </app-driversettlement>
