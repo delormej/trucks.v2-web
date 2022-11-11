@@ -32,8 +32,7 @@ export class SettlementDetailComponent implements OnInit {
         this.companyId = params['companyId'];
         this.settlementId = params['settlementId'];
         this.getSettlement(this.companyId, this.settlementId);
-        this.getDriverSettlements(false); 
-        this.selectedDriver = params['driver'];
+        this.getDriverSettlements(false, params['driver']); 
       }
     );
   } 
@@ -82,12 +81,14 @@ export class SettlementDetailComponent implements OnInit {
       return driverSettlement!;
   }
 
-  getDriverSettlements(forceRecreate: boolean): void {
+  getDriverSettlements(forceRecreate: boolean, selectedDriver?: string): void {
     this.settlementsService.getDriverSettlements(this.companyId, this.settlementId, forceRecreate)
       .subscribe({
         next: (res) => {
           this.driverSettlements = res.sort( (a, b) => (a.driver < b. driver) ? -1 : 1 );
           this.loading = false;
+          
+          this.selectedDriver = selectedDriver;
 
           if (forceRecreate)
             this.snack.open("Succesfully recreated all.", "CLOSE", {duration:3000}); 
