@@ -47,28 +47,43 @@
                 <mat-form-field appearance="fill">
                     <mat-label>Accessorial Percent</mat-label>
                     <input matInput type="number" id="accessorialPercent" name="accessorialPercent" 
-                        [(ngModel)]="driver.driverPercent.accessorial">
+                        min="0" max="100"
+                        [ngModel]="driver.driverPercent.accessorial * 100 | number: '1.0-0'" 
+                        (ngModelChange)="driver.driverPercent.accessorial = $event / 100">
+                        <span matSuffix>%&nbsp;</span>
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label>Tolls Percent</mat-label>
                     <input matInput type="number" id="tollsPercent" name="tollsPercent" 
-                        [(ngModel)]="driver.driverPercent.tolls">
-                </mat-form-field>                
+                        min="0" max="100"
+                        [ngModel]="driver.driverPercent.tolls * 100 | number: '1.0-0'" 
+                        (ngModelChange)="driver.driverPercent.tolls = $event / 100">
+                        <span matSuffix>%&nbsp;</span>
+                </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label>Empty Percent</mat-label>
                     <input matInput type="number" id="emptyPercent" name="emptyPercent" 
-                        [(ngModel)]="driver.driverPercent.empty">
-                </mat-form-field>                      
+                        min="0" max="100"
+                        [ngModel]="driver.driverPercent.empty * 100 | number: '1.0-0'" 
+                        (ngModelChange)="driver.driverPercent.empty = $event / 100">
+                        <span matSuffix>%&nbsp;</span>
+                </mat-form-field>                
                 <mat-form-field appearance="fill">
                     <mat-label>Deadhead Percent</mat-label>
                     <input matInput type="number" id="deadheadPercent" name="deadheadPercent" 
-                        [(ngModel)]="driver.driverPercent.deadhead">
-                </mat-form-field>                                      
+                        min="0" max="100"
+                        [ngModel]="driver.driverPercent.deadhead * 100 | number: '1.0-0'" 
+                        (ngModelChange)="driver.driverPercent.deadhead = $event / 100">
+                        <span matSuffix>%&nbsp;</span>
+                </mat-form-field>                
                 <mat-form-field appearance="fill">
                     <mat-label>Fuel Surcharge Percent</mat-label>
                     <input matInput type="number" id="fuelSurchargePercent" name="fuelSurchargePercent" 
-                        [(ngModel)]="driver.driverPercent.fuelSurcharge">
-                </mat-form-field>                                                      
+                        min="0" max="100"
+                        [ngModel]="driver.driverPercent.fuelSurcharge * 100 | number: '1.0-0'" 
+                        (ngModelChange)="driver.driverPercent.fuelSurcharge = $event / 100">
+                        <span matSuffix>%&nbsp;</span>
+                </mat-form-field>                
             </div>
             <div>
                 <app-driver-address (onDirty)="onAddressDirty($event)" 
