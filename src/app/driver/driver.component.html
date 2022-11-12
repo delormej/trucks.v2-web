@@ -13,26 +13,7 @@
                     <input matInput type="password" id="socialSecurityNumber" name="socialSecurityNumber" 
                         [(ngModel)]="driver.socialSecurityNumber">
                 </mat-form-field>            
-            </div>
-            <div>
-                <mat-form-field appearance="fill">
-                    <mat-hint>If blank default RPM will be used.</mat-hint>
-                    <mat-label>Rate Per Mile</mat-label>
-                    <input matInput type="number" id="ratePerMile" name="ratePerMilej" 
-                        [(ngModel)]="driver.ratePerMile">
-                    </mat-form-field>
-                <mat-form-field appearance="fill">
-                    <mat-label>Base Percent</mat-label>
-                    <input matInput type="number" id="basePercent" name="basePercent" 
-                        [(ngModel)]="driver.basePercent">
-                </mat-form-field>
-                <mat-form-field appearance="fill">
-                    <mat-label>Accessorial Percent</mat-label>
-                    <input matInput type="number" id="accessorialPercent" name="accessorialPercent" 
-                        [(ngModel)]="driver.accessorialPercent">
-                </mat-form-field>
-            </div>
-            <div>
+
                 <mat-form-field appearance="fill">
                     <mat-label>Driver Prompt</mat-label>
                     <input matInput type="number" id="driverPromptId" name="driverPromptId" 
@@ -44,7 +25,47 @@
                     (click)="getDriverPin()"
                     type="button" >
                 Suggest
-                </button>
+                </button>   
+            </div>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-hint>If blank default RPM will be used.</mat-hint>
+                    <mat-label>Rate Per Mile</mat-label>
+                    <input matInput type="number" id="ratePerMile" name="ratePerMilej" 
+                        [(ngModel)]="driver.ratePerMile">
+                    </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Base Percent</mat-label>
+                    <input matInput type="number" id="basePercent" name="basePercent" 
+                        [(ngModel)]="driver.driverPercent.base">
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Accessorial Percent</mat-label>
+                    <input matInput type="number" id="accessorialPercent" name="accessorialPercent" 
+                        [(ngModel)]="driver.driverPercent.accessorial">
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Tolls Percent</mat-label>
+                    <input matInput type="number" id="tollsPercent" name="tollsPercent" 
+                        [(ngModel)]="driver.driverPercent.tolls">
+                </mat-form-field>                
+                <mat-form-field appearance="fill">
+                    <mat-label>Empty Percent</mat-label>
+                    <input matInput type="number" id="emptyPercent" name="emptyPercent" 
+                        [(ngModel)]="driver.driverPercent.empty">
+                </mat-form-field>                      
+                <mat-form-field appearance="fill">
+                    <mat-label>Deadhead Percent</mat-label>
+                    <input matInput type="number" id="deadheadPercent" name="deadheadPercent" 
+                        [(ngModel)]="driver.driverPercent.deadhead">
+                </mat-form-field>                                      
+                <mat-form-field appearance="fill">
+                    <mat-label>Fuel Surcharge Percent</mat-label>
+                    <input matInput type="number" id="fuelSurchargePercent" name="fuelSurchargePercent" 
+                        [(ngModel)]="driver.driverPercent.fuelSurcharge">
+                </mat-form-field>                                                      
             </div>
             <div>
                 <app-driver-address (onDirty)="onAddressDirty($event)" 

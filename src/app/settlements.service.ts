@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, of, throwError, pipe, map } from 'rxjs';
+import { Observable, of, throwError, pipe, map, Observer } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -199,6 +199,38 @@ export class SettlementsService {
   getFuelSummary() : Observable<FuelSummary[]> {
     return this.http.get<FuelSummary[]>(SettlementsService.baseUrl + "/fuel/fuel-summary")
   }
+
+  private _deductionCategories!: string[];
+
+  // This function runs when subscribe() is called
+  // deductionCategoriesSubscriber(observer: Observer<string[]>) {
+  //   observer.next(this._deductionCategories);
+  //   observer.complete();
+
+  //   // unsubscribe function doesn't need to do anything in this
+  //   // because values are delivered synchronously
+  //   return {unsubscribe() {}};
+  // }
+
+  getDeductionCategories() : Observable<string[]> {
+    let observable: Observable<string[]>;
+
+    if (this._deductionCategories == null) {
+      observable = this.http.get<string[]>(SettlementsService.baseUrl + "/settlements/deduction-categories");
+      observable.subscribe({
+          next: (result) => {
+            this._deductionCategories = [];
+            result.forEach(c => this._deductionCategories.push(c));
+          }
+      });
+    }
+    else { 
+      // observable = new Observable(this.deductionCategoriesSubscriber);     
+      observable = new Observable(o => o.next(this._deductionCategories));
+    }
+
+    return observable;
+  }
 }
 
 export interface ManualEntry {
@@ -324,8 +356,7 @@ export interface Driver {
   city: string;
   state: string;
   zipCode: string;
-  basePercent: number;
-  accessorialPercent: number;
+  driverPercent: DriverPercent;
   ratePerMile: number;
   driverPromptId: number;
   socialSecurityNumber: string;
@@ -336,6 +367,15 @@ export interface Driver {
   teammateName?: string;
   isSplit: boolean;
   paymentHistory: Payment[];
+}
+
+export interface DriverPercent {
+  base: number;
+  empty: number;
+  deadhead: number;
+  fuelSurcharge: number;
+  accessorial: number;
+  tolls: number;
 }
 
 export interface Payment { 
