@@ -39,7 +39,10 @@
                 <mat-form-field appearance="fill">
                     <mat-label>Base Percent</mat-label>
                     <input matInput type="number" id="basePercent" name="basePercent" 
-                        [(ngModel)]="driver.driverPercent.base">
+                        min="0" max="100"
+                        [ngModel]="driver.driverPercent.base * 100 | number: '1.0-0'" 
+                        (ngModelChange)="driver.driverPercent.base = $event / 100">
+                        <span matSuffix>%&nbsp;</span>
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label>Accessorial Percent</mat-label>
