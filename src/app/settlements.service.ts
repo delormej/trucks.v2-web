@@ -366,6 +366,7 @@ export interface Driver {
   teammateDriverId?: string;
   teammateName?: string;
   isSplit: boolean;
+  paysForFuel: boolean;
   paymentHistory: Payment[];
 }
 
@@ -385,6 +386,7 @@ export interface Payment {
   companyId: string;
   amount: number;
   incomeYtd: number;
+  trucks: string;
 }
 
 export interface FuelCharge {

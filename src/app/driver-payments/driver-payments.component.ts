@@ -8,7 +8,7 @@ import { Driver, Payment } from '../settlements.service';
 })
 export class DriverPaymentsComponent implements OnInit {
 
-  displayedColumns: string[] = [ "weekNumber", "settlementDate", "settlementId", "amount", "income" ];
+  displayedColumns: string[] = [ "weekNumber", "settlementDate", "settlementId", "trucks", "amount", "income", "securityBalance" ];
   sortedPayments!: Payment[];
   driverName!: string;
 

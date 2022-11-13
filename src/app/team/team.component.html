@@ -2,7 +2,7 @@
     <mat-checkbox class="checkbox-margin" name="isTeamLeader" id="isTeamLeader" 
         [hidden]="driver.teammateDriverId == null"
         (change)="onTeamLeaderChange($event)"
-        [checked]="driver.isTeamLeader">Is Team Leader
+        [checked]="driver.isTeamLeader">{{driver.name}} Is Team Leader
     </mat-checkbox>
 
     <mat-checkbox class="checkbox-margin" name="isSplit" id="isSplit" 
