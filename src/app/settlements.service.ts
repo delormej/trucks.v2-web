@@ -278,8 +278,7 @@ export interface DriverSettlement {
   fuel: number;
   occupationalInsurance: number;
   ignoreComchek: boolean;
-  basePercent: number;
-  accessorialPercent: number;
+  driverPercent: DriverPercent;  
   ratePerMile: number;
   lastUpdated: Date;
   amountDue: number;
