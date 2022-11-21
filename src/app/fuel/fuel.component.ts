@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { SettlementsService } from '../settlements.service';
@@ -23,6 +24,7 @@ export class FuelComponent implements AfterViewInit, OnInit {
     private _fuel: FuelCharge[] = [];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
+    @ViewChild(MatSort) sort!: MatSort;
 
     ngOnInit() {
       this.route.queryParams.subscribe(
@@ -41,6 +43,14 @@ export class FuelComponent implements AfterViewInit, OnInit {
 
     ngAfterViewInit() {
       this.dataSource.paginator = this.paginator;
+      //this.dataSource.filter = "xxx";
+      this.dataSource.sort = this.sort;
+    }
+
+    onSortChange(sortState: Sort) {
+      console.log(sortState);
+      if (sortState.active == "transactionDate")
+        this.dataSource.sort?.sortChange
     }
 
     @Input()

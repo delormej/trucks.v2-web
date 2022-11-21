@@ -63,12 +63,16 @@ export class SettlementsService {
   }
 
   getFuel(year: number, week: number, driverPromptId: number) : Observable<Types.FuelCharge[]> {
+    var params: HttpParams = new HttpParams();
+    if (year != null)
+      params.set('year', year);
+    if (week != null)
+      params.set('week', week);
+    if (driverPromptId != null)
+      params.set('driverPromptId', driverPromptId);
+
     return this.http.get<Types.FuelCharge[]>(SettlementsService.baseUrl + "/fuel",
-      { params: new HttpParams()
-        .set('year', year)
-        .set('week', week)
-        .set('driverPromptId', driverPromptId) 
-      });
+      { params: params });
   }
 
   saveDriverSettlementNotes(driverSettlementId: string, notes: string) {
