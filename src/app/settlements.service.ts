@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, of, throwError, pipe, map, Observer } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import * as Types from './settlements.service.types';
 
 @Injectable({
   providedIn: 'root'
@@ -12,17 +13,19 @@ export class SettlementsService {
 
   constructor(private http: HttpClient) { }
 
-  getSettlementSummaries(): Observable<SettlementSummary[]> {
-    return this.http.get<SettlementSummary[]>(SettlementsService.baseUrl + "/settlements/summaries");
+  getSettlementSummaries(): Observable<Types.SettlementSummary[]> {
+    return this.http.get<Types.SettlementSummary[]>(SettlementsService.baseUrl + "/settlements/summaries");
   }  
 
-  getSettlementSummary(companyId: string, settlementId: string): Observable<SettlementSummary> {
-    return this.http.get<SettlementSummary>(SettlementsService.baseUrl + 
+  getSettlementSummary(companyId: string, settlementId: string): Observable<Types.SettlementSummary> {
+    return this.http.get<Types.SettlementSummary>(SettlementsService.baseUrl + 
         "/settlements/summary/" + companyId + "/" + settlementId);
   }  
 
-  getDriverSettlements(companyId: string, settlementId: string, forceRecreate: boolean = false): Observable<DriverSettlement[]> {
-    return this.http.get<DriverSettlement[]>(SettlementsService.baseUrl + "/driversettlements/" + companyId + "/" + settlementId,
+  getDriverSettlements(companyId: string, settlementId: string, 
+      forceRecreate: boolean = false): Observable<Types.DriverSettlement[]> {
+    return this.http.get<Types.DriverSettlement[]>(
+      SettlementsService.baseUrl + "/driversettlements/" + companyId + "/" + settlementId,
       { params: new HttpParams().set('forceRecreate', forceRecreate)});
   }    
 
@@ -33,7 +36,7 @@ export class SettlementsService {
       settlementId?: string, 
       year?: number,
       week?: number  
-    ): Observable<DriverSettlement> {
+    ): Observable<Types.DriverSettlement> {
     
     var url = SettlementsService.baseUrl;
     var params = new HttpParams()
@@ -56,11 +59,11 @@ export class SettlementsService {
 
     params = params.append('driverName', driver);
 
-    return this.http.get<DriverSettlement>(url, { params: params });
+    return this.http.get<Types.DriverSettlement>(url, { params: params });
   }
 
-  getFuel(year: number, week: number, driverPromptId: number) : Observable<FuelCharge[]> {
-    return this.http.get<FuelCharge[]>(SettlementsService.baseUrl + "/fuel",
+  getFuel(year: number, week: number, driverPromptId: number) : Observable<Types.FuelCharge[]> {
+    return this.http.get<Types.FuelCharge[]>(SettlementsService.baseUrl + "/fuel",
       { params: new HttpParams()
         .set('year', year)
         .set('week', week)
@@ -70,17 +73,17 @@ export class SettlementsService {
 
   saveDriverSettlementNotes(driverSettlementId: string, notes: string) {
     console.log('saving notes for driverSettlement:', driverSettlementId);
-    return this.http.post<Driver>(SettlementsService.baseUrl + "/driversettlements/notes", 
+    return this.http.post<Types.Driver>(SettlementsService.baseUrl + "/driversettlements/notes", 
       { driverSettlementId: driverSettlementId, notes: notes } );
   }
 
   getDriver(name: string) {
-    return this.http.get<Driver>(SettlementsService.baseUrl + "/driver?name=" + name);
+    return this.http.get<Types.Driver>(SettlementsService.baseUrl + "/driver?name=" + name);
   }
 
-  getAllDrivers() : Observable<Driver[]> {
+  getAllDrivers() : Observable<DriverAndTeammate[]> {
     // replace the pipe call with setTeammate(...)?
-    return this.http.get<Driver[]>(SettlementsService.baseUrl + "/driver/list")
+    return this.http.get<DriverAndTeammate[]>(SettlementsService.baseUrl + "/driver/list")
       .pipe(map((drivers) => { 
         drivers.forEach((driver, index) => {
           if (driver.teammateDriverId != null && driver.teammateDriverId != '') {
@@ -97,8 +100,8 @@ export class SettlementsService {
   // setTeammate(drivers: Observable<Driver[]>) : Observable<Driver[]> {
   // }
 
-  getTeammateSuggestion(driver: string) : Observable<Driver[]> {
-    return this.http.get<Driver[]>(SettlementsService.baseUrl + "/driver/suggest-teammate",
+  getTeammateSuggestion(driver: string) : Observable<Types.Driver[]> {
+    return this.http.get<Types.Driver[]>(SettlementsService.baseUrl + "/driver/suggest-teammate",
       { params: new HttpParams().set('driver', driver) } );
   }
 
@@ -107,13 +110,13 @@ export class SettlementsService {
       { params: new HttpParams().set('driver', driver) } );
   }
 
-  saveDriver(driver: Driver, teammateChanged: boolean) {
-    return this.http.put<Driver>(SettlementsService.baseUrl + "/driver", driver,
+  saveDriver(driver: Types.Driver, teammateChanged: boolean) {
+    return this.http.put<Types.Driver>(SettlementsService.baseUrl + "/driver", driver,
       { params: new HttpParams().set('updateTeammate', teammateChanged) });
   }
 
-  saveManualEntry(entry: ManualEntry) {
-    return this.http.post<DriverSettlement>(
+  saveManualEntry(entry: Types.ManualEntryRequest) {
+    return this.http.post<Types.DriverSettlement>(
       SettlementsService.baseUrl + "/driversettlements/manual", entry);
   }
 
@@ -124,32 +127,33 @@ export class SettlementsService {
   } 
 
   deleteManualEntry(driverSettlementId: string, itemId: string) {
-    return this.http.delete<DriverSettlement>(
+    return this.http.delete<Types.DriverSettlement>(
       SettlementsService.baseUrl + "/driversettlements/manual", { params: new HttpParams()
           .set('driverSettlementId', driverSettlementId)
           .set('itemId', itemId) });
   }  
 
-  changeTeammate(companyId: string, driverSettlementId: string, teammate: Teammate): Observable<DriverSettlement> {
+  changeTeammate(companyId: string, driverSettlementId: string, 
+      teammate: Teammate): Observable<Types.DriverSettlement> {
     var body = {
       companyId: companyId,
       driverSettlementId: driverSettlementId, 
       updatedTeammateDriverId: teammate.driverId
      };
 
-    return this.http.post<DriverSettlement>(
+    return this.http.post<Types.DriverSettlement>(
       SettlementsService.baseUrl + "/driversettlements/change-teammate", body);
   }
 
-  createDriverSplit(driver: Driver): Observable<Driver> {
-    return this.http.post<Driver>(
+  createDriverSplit(driver: Types.Driver): Observable<Types.Driver> {
+    return this.http.post<Types.Driver>(
       SettlementsService.baseUrl + "/driver/split", driver);
   }
 
   createDriverSettlementSplit(
       driverSettlementId: string, 
       teamleaderDriverId: string, 
-      teammateDriverId?: string): Observable<DriverSettlement[]> {
+      teammateDriverId?: string): Observable<Types.DriverSettlement[]> {
 
     var body = {
       driverSettlementId: driverSettlementId,
@@ -157,12 +161,12 @@ export class SettlementsService {
       teammateDriverId: teammateDriverId
     };
 
-    return this.http.post<DriverSettlement[]>(
+    return this.http.post<Types.DriverSettlement[]>(
       SettlementsService.baseUrl + "/driversettlements/split", body);
   }
 
-  unsplitDriverSettlement(driverSettlementId: string): Observable<DriverSettlement[]> {
-    return this.http.post<DriverSettlement[]>(
+  unsplitDriverSettlement(driverSettlementId: string): Observable<Types.DriverSettlement[]> {
+    return this.http.post<Types.DriverSettlement[]>(
       SettlementsService.baseUrl + "/driversettlements/unsplit", null,
         { params: new HttpParams()
           .set('driverSettlementId', driverSettlementId)
@@ -170,7 +174,7 @@ export class SettlementsService {
   }
 
   splitItem(driverSettlementId: string, itemId: string) {
-    return this.http.post<DriverSettlement[]>(
+    return this.http.post<Types.DriverSettlement[]>(
       SettlementsService.baseUrl + "/driversettlements/split-item", null,
         { params: new HttpParams()
           .set('driverSettlementId', driverSettlementId)
@@ -179,7 +183,7 @@ export class SettlementsService {
   }
 
   unsplitItem(driverSettlementId: string, itemId: string) {
-    return this.http.post<DriverSettlement[]>(
+    return this.http.post<Types.DriverSettlement[]>(
       SettlementsService.baseUrl + "/driversettlements/unsplit-item", null,
         { params: new HttpParams()
           .set('driverSettlementId', driverSettlementId)
@@ -187,17 +191,17 @@ export class SettlementsService {
         });    
   }
 
-  getVersion() : Observable<VerisonInfo> {
-    return this.http.get<VerisonInfo>(SettlementsService.baseUrl + "/version")
+  getVersion() : Observable<Types.VersionInfo> {
+    return this.http.get<Types.VersionInfo>(SettlementsService.baseUrl + "/version")
   };
 
-  saveFuelCsv(formData: FormData) : Observable<FuelCharge[]> {
-    return this.http.post<FuelCharge[]>(SettlementsService.baseUrl + "/fuel/upload",
+  saveFuelCsv(formData: FormData) : Observable<Types.FuelCharge[]> {
+    return this.http.post<Types.FuelCharge[]>(SettlementsService.baseUrl + "/fuel/upload",
       formData, {responseType: 'json'});
   }
 
-  getFuelSummary() : Observable<FuelSummary[]> {
-    return this.http.get<FuelSummary[]>(SettlementsService.baseUrl + "/fuel/fuel-summary")
+  getFuelSummary() : Observable<Types.FuelSummary[]> {
+    return this.http.get<Types.FuelSummary[]>(SettlementsService.baseUrl + "/fuel/fuel-summary")
   }
 
   private _deductionCategories!: string[];
@@ -233,188 +237,8 @@ export class SettlementsService {
   }
 }
 
-export interface ManualEntry {
-  itemId?: string;
-  driverSettlementId?: string; 
-  description?: string;
-  creditAmount?: number; 
-  deductionAmount?: number  
-}
-
-export interface SettlementSummary {
-  settlementId: string;
-  settlementDate: Date;
-  weekNumber: number;
-  year: number;
-  companyId: string;
-  checkAmount: number;
-  week: Week;
-}
-
-export interface Week {
-  startDate: Date;
-  endDate: Date;
-  payDate: Date;
-  weekNumber: number;
-  year: number;
-}
-
-export interface DriverSettlement {
-  driverSettlementId: string;
-  settlementId: string;
-  companyId: string;
-  year: number;
-  week: number;
-  trucks: number[];
-  driver: string;
-  driverId: string;
-  teammateDriver: string;
-  teammateDriverId: string;
-  isSplit: boolean;
-  isTeamLeader: boolean;
-  settlementDate: Date;
-  deductions: Deduction[];
-  credits: Credit[];
-  fuel: number;
-  occupationalInsurance: number;
-  ignoreComchek: boolean;
-  driverPercent: DriverPercent;  
-  ratePerMile: number;
-  lastUpdated: Date;
-  amountDue: number;
-  baseTotal: number; 
-  fscTotal: number;
-  accessorialTotal: number; 
-  manualCreditsTotal: number;
-  deductionsTotal: number;
-  milesTotal: number;
-  income: number;
-  previousNegativeBalance: number;
-  paidMilesYtd: number;
-  currentYtdIncome: number;
-  securityDeposit: number;
-  qualcomm: number;
-  notes: string;
-  generatorVersion: string;
-  deleted: boolean;
-}
-
-export interface Deduction {
-  id: string;
-  date: Date;
-  driver: string;
-  truckId: number;
-  description: string;
-  amount: number;
-  totalDeductions: number;
-  manualDeduction: number;
-  isSplit: boolean;
-}
-
-export interface Credit {
-  id: string;
-  proNumber: string;
-  deliveryDate: Date;
-  driver: string;
-  truckId: number;
-  ratePerMile: number;
-  miles: number;
-  extendedAmount: number;
-  detention: number;
-  deadHead: number;
-  stopOff: number;
-  canada: number;
-  layover: number;
-  handLoad: number;
-  tolls: number;
-  bonus: number;
-  empty: number;
-  totalPaid: number;
-  creditDate: Date;
-  creditDescriptions: string;
-  ratePerMileDescription: string;
-  creditAmount: number;
-  advanceDate: Date;
-  advanceDescription: string;
-  advanceNumber: string;
-  advanceAmount: number;
-  other: number;
-  base: number;
-  manualCredit: number;
-  isSplit: boolean;
-}
-
-export interface Driver {
-  id: string;
-  isAdmin: boolean;
-  email: string;
-  name: string;
-  pictureUrl: string; 
-  lastLogin: Date;
-  streetAddress: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  driverPercent: DriverPercent;
-  ratePerMile: number;
-  driverPromptId: number;
-  socialSecurityNumber: string;
-  ignoreComchek: boolean;
-  created: Date;
-  isTeamLeader: boolean;
-  teammateDriverId?: string;
+export interface DriverAndTeammate extends Types.Driver {
   teammateName?: string;
-  isSplit: boolean;
-  paysForFuel: boolean;
-  paymentHistory: Payment[];
-}
-
-export interface DriverPercent {
-  base: number;
-  empty: number;
-  deadhead: number;
-  fuelSurcharge: number;
-  accessorial: number;
-  tolls: number;
-}
-
-export interface Payment { 
-  weekNumber: number;
-  settlementId: string;
-  settlementDate: Date;
-  companyId: string;
-  amount: number;
-  incomeYtd: number;
-  trucks: string;
-}
-
-export interface FuelCharge {
-  id:	string;
-  weekNumber:	number;
-  year:	number;
-  driverPromptId: number;
-  transactionDate:	string;
-  transactionTime:	string;
-  transactionTicketNumber:	string;
-  netCost:	number;
-  truckId:	string;
-  product:	string;
-  units:	number;
-  unitCost:	number;
-  merchantName:	string;
-  merchantAddress:	string;
-  merchantCity:	string;
-  merchantState: string;
-  merchantPostal:	string;
-}
-
-export interface FuelSummary {
-  week: {
-    weekNumber: number,
-    year: number
-  };
-  totalGallons: number;
-  totalCost: number;
 }
 
 export interface Teammate {
@@ -423,12 +247,4 @@ export interface Teammate {
   teamLeaderDriverId?: string;
   isSplit: boolean;
   splitChanged: boolean;
-}
-
-export interface VerisonInfo
-{
-    projectId: string;
-    version: string;
-    computeInstanceId: string;
-    serviceRevision: string;
 }

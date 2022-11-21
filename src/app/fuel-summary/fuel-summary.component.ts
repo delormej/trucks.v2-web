@@ -37,22 +37,22 @@ export class FuelSummaryComponent implements OnInit {
     this.settlementsService.getFuelSummary().subscribe( {
       next: (fuel) => {
         fuel = fuel.sort( (a, b) => 
-          ( a.week.year < b.week.year ) && (a.week.weekNumber < b.week.weekNumber) ? -1 : 1 );
+          ( a.week!.year! < b.week!.year! ) && (a.week!.weekNumber! < b.week!.weekNumber!) ? -1 : 1 );
 
         this.myData = [];
-        var week = fuel[0].week.weekNumber;
+        var week = fuel[0].week!.weekNumber;
 
-        this.chartOptions.hAxis.ticks = [week];
+        this.chartOptions.hAxis.ticks = [week!];
 
         for (let i = 0; i < fuel.length; i++) {
-          if (week+i == fuel[i].week.weekNumber) 
-            this.myData.push( [ week+i, fuel[i].totalCost, 
-              (fuel[i].totalCost/fuel[i].totalGallons) ] );
+          if (week!+i == fuel[i].week!.weekNumber) 
+            this.myData.push( [ week!+i, fuel[i].totalCost!, 
+              (fuel[i].totalCost!/fuel[i].totalGallons!) ] );
           else
-            this.myData.push([week+i, 0, 0]);
+            this.myData.push([week!+i, 0, 0]);
           
           if (i > 0)
-            this.chartOptions.hAxis.ticks.push( week+i );
+            this.chartOptions.hAxis.ticks.push( week!+i );
         }
       },
       error: (error) => this.showError(error, "Unable to load fuel summary.")

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import { Driver, SettlementsService } from '../settlements.service';
+import { SettlementsService } from '../settlements.service';
+import { Driver } from '../settlements.service.types';
 
 @Component({
   selector: 'app-drivers',

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProgressBarMode } from '@angular/material/progress-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FuelCharge, SettlementsService } from '../settlements.service';
+import { SettlementsService } from '../settlements.service';
+import { FuelCharge } from '../settlements.service.types';
 
 @Component({
   selector: 'app-fuel-upload',

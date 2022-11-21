@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatSelectionListChange } from '@angular/material/list';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { SettlementsService, SettlementSummary, DriverSettlement } from '../settlements.service';
+import { SettlementsService } from '../settlements.service';
+import { SettlementSummary, DriverSettlement } from '../settlements.service.types';
 
 @Component({
   selector: 'app-settlement-detail',
@@ -85,7 +86,7 @@ export class SettlementDetailComponent implements OnInit {
     this.settlementsService.getDriverSettlements(this.companyId, this.settlementId, forceRecreate)
       .subscribe({
         next: (res) => {
-          this.driverSettlements = res.sort( (a, b) => (a.driver < b. driver) ? -1 : 1 );
+          this.driverSettlements = res.sort( (a, b) => (a.driver! < b.driver!) ? -1 : 1 );
           this.loading = false;
           
           this.selectedDriver = selectedDriver;
@@ -101,7 +102,7 @@ export class SettlementDetailComponent implements OnInit {
   }
 
   public getMiles(driverSettlement: DriverSettlement): number {
-    let miles = driverSettlement.credits.reduce((partialSum, c) => partialSum + c.miles, 0);
+    let miles = driverSettlement.credits!.reduce((partialSum, c) => partialSum + c.miles!, 0);
     return miles;
   }
 

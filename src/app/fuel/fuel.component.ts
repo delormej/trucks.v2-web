@@ -2,7 +2,8 @@ import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/cor
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { SettlementsService, FuelCharge } from '../settlements.service';
+import { SettlementsService } from '../settlements.service';
+import { FuelCharge } from '../settlements.service.types';
 
 @Component({
   selector: 'app-fuel',
@@ -47,7 +48,7 @@ export class FuelComponent implements AfterViewInit, OnInit {
       this._fuel = value;
       this.dataSource.data = this._fuel;      
       this.fuelTotal = this._fuel.reduce( (partialSum, charge) => 
-        partialSum + charge.netCost, 0)
+        partialSum + charge.netCost!, 0)
     }
 
     public get fuel() { return this._fuel; }

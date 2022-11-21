@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SettlementsService, Driver, Teammate } from '../settlements.service';
+import { DriverAndTeammate, SettlementsService, Teammate } from '../settlements.service';
+import { Driver } from '../settlements.service.types';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgForm } from '@angular/forms';
 
@@ -10,7 +11,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./driver.component.css']
 })
 export class DriverComponent implements OnInit {
-  driver!: Driver;
+  driver!: DriverAndTeammate;
   teamChanged: boolean = false;
   submitted: boolean = false;
   isSplit: boolean = false;
@@ -90,7 +91,7 @@ export class DriverComponent implements OnInit {
   }
 
   getDriverPin(): void {
-    this.settlementsService.getDriverPin(this.driver.name)
+    this.settlementsService.getDriverPin(this.driver.name!)
       .subscribe({
         next: (pin) => { 
           this.driver.driverPromptId = pin; 

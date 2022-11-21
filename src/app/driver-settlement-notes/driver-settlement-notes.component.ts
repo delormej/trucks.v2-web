@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DriverSettlement, SettlementsService } from '../settlements.service';
+import { SettlementsService } from '../settlements.service';
+import { DriverSettlement } from '../settlements.service.types';
 
 @Component({
   selector: 'app-driver-settlement-notes',
@@ -20,8 +21,8 @@ export class DriverSettlementNotesComponent implements OnInit {
 
   onSubmit(): void {
     this.settlementsService.saveDriverSettlementNotes(
-        this.driverSettlement.driverSettlementId,
-        this.driverSettlement.notes)
+        this.driverSettlement.driverSettlementId!,
+        this.driverSettlement.notes!)
       .subscribe( {
         next: () => this.snack.open("Succesfully saved note.", "CLOSE", {duration: 3000}),
         error: (error) => this.showError(error, "Unable to save note.")

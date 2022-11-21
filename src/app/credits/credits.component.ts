@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddManualDialogComponent, DialogData } from '../add-manual-dialog/add-manual-dialog.component';
-import { Credit, Driver, DriverSettlement, ManualEntry } from '../settlements.service';
+import { Credit, DriverSettlement, ManualEntryRequest } from '../settlements.service.types';
 
 
 @Component({
@@ -15,13 +15,13 @@ export class CreditsComponent implements OnInit {
 
   @Input() set driverSettlement(value: DriverSettlement) {
     this._driverSettlement = value;
-    this.manualCredits = value.credits.filter(d => d.manualCredit != 0);
+    this.manualCredits = value.credits!.filter(d => d.manualCredit != 0);
   }
   get driverSettlement(): DriverSettlement {
     return this._driverSettlement;
   }
   @Output() deleteManualEntryEvent = new EventEmitter<string>();
-  @Output() newDeduction = new EventEmitter<ManualEntry>();
+  @Output() newDeduction = new EventEmitter<ManualEntryRequest>();
 
   constructor(
     public dialog: MatDialog) { }
@@ -43,7 +43,7 @@ export class CreditsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe( (result: DialogData) => {      
       console.log('afterClosed;', result);
-      var entry: ManualEntry = {
+      var entry: ManualEntryRequest = {
         itemId: result.id,
         driverSettlementId: this.driverSettlement.driverSettlementId, 
         description: result.description,

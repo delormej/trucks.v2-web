@@ -8,7 +8,7 @@
           Settlement {{settlement.settlementId}}
         </mat-card-title>
         <mat-card-subtitle>
-            Company {{settlement.companyId}} | {{settlement.settlementDate | date}} 
+            Company {{settlement.companyId}} | {{settlement.week?.settlementDate | date}} 
         </mat-card-subtitle>
         <mat-card-content>             
           <div *ngIf="settlement.week">
@@ -35,7 +35,7 @@
             <!-- driver settelement for the selected driver -->
             <div class="settlement-sidenav-content">
               <app-driversettlement *ngIf="selectedDriver != null; else promptForSelection"
-                [week]="settlement.week"
+                [week]="settlement.week!"
                 [driverSettlement]="driverSettlementSelection.selectedOptions.selected[0].value"
                 (driverSettlementChange)="driverSettlementChange($event)">
               </app-driversettlement>

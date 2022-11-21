@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
-import { SettlementsService, DriverSettlement, ManualEntry, Driver, Teammate, Credit, Week } from '../settlements.service';
+import { SettlementsService, Teammate } from '../settlements.service';
+import { DriverSettlement, ManualEntryRequest, Driver, Credit, Week } from '../settlements.service.types';
 
 @Component({
   selector: 'app-driversettlement',
@@ -29,13 +30,13 @@ export class DriversettlementComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     this.driverSettlement = changes['driverSettlement'].currentValue;
     if (this.driverSettlement)
-      this.getDriver(this.driverSettlement.driver);
+      this.getDriver(this.driverSettlement.driver!);
   }
 
   public recreate(): void {
     this.settlementsService.getDriverSettlement(
-        this.driverSettlement.companyId,
-        this.driverSettlement.driver,
+        this.driverSettlement.companyId!,
+        this.driverSettlement.driver!,
         true,
         this.driverSettlement.settlementId)
       .subscribe({
@@ -50,7 +51,7 @@ export class DriversettlementComponent implements OnInit, OnChanges {
 
   public delete(): void {
     this.settlementsService.deleteDriverSettlement(
-      this.driverSettlement.driverSettlementId)
+      this.driverSettlement.driverSettlementId!)
       .subscribe({
         next: (result) => {
           this.snack.open("Deleted Driver Settlement.", "CLOSE", {duration:3000});
@@ -107,7 +108,7 @@ export class DriversettlementComponent implements OnInit, OnChanges {
     return formatted;
   }  
 
-  addManualEntry(entry: ManualEntry): void {
+  addManualEntry(entry: ManualEntryRequest): void {
     entry.driverSettlementId = this.driverSettlement.driverSettlementId;
 
     if (entry.creditAmount != null && entry.creditAmount != 0 &&
@@ -124,7 +125,7 @@ export class DriversettlementComponent implements OnInit, OnChanges {
   deleteManualEntry(itemId: string): void {
     let driverSettlementId = this.driverSettlement.driverSettlementId;
     
-    this.settlementsService.deleteManualEntry(driverSettlementId, itemId)
+    this.settlementsService.deleteManualEntry(driverSettlementId!, itemId)
       .subscribe(res => {
         this.driverSettlement = res;
         this.driverSettlementChange.emit(this.driverSettlement);
@@ -162,14 +163,14 @@ export class DriversettlementComponent implements OnInit, OnChanges {
 
   createSplit(teammate: Teammate): Observable<DriverSettlement[]> {
     return this.settlementsService.createDriverSettlementSplit(
-      this.driverSettlement.driverSettlementId,
-      this.driverSettlement.driverId,
+      this.driverSettlement.driverSettlementId!,
+      this.driverSettlement.driverId!,
       teammate.driverId);
   }
 
   unsplit(): Observable<DriverSettlement[]> {
     return this.settlementsService.unsplitDriverSettlement(
-      this.driverSettlement.driverSettlementId);
+      this.driverSettlement.driverSettlementId!);
   }
 
   splitItem(credit: Credit) {
@@ -177,11 +178,11 @@ export class DriversettlementComponent implements OnInit, OnChanges {
 
     if (credit.isSplit) {
       updated = this.settlementsService.splitItem(
-        this.driverSettlement.driverSettlementId, credit.id);
+        this.driverSettlement.driverSettlementId!, credit.id!);
     }
     else {
       updated = this.settlementsService.unsplitItem(
-        this.driverSettlement.driverSettlementId, credit.id);
+        this.driverSettlement.driverSettlementId!, credit.id!);
     }
 
     updated.subscribe({
@@ -205,8 +206,8 @@ export class DriversettlementComponent implements OnInit, OnChanges {
 
   changeTeammate(teammate: Teammate): Observable<DriverSettlement> {
     return this.settlementsService.changeTeammate(
-      this.driverSettlement.companyId,
-      this.driverSettlement.driverSettlementId, teammate);
+      this.driverSettlement.companyId!,
+      this.driverSettlement.driverSettlementId!, teammate);
   }
 
   showError(error: Error, message: string) {

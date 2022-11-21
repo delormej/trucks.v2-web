@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { SettlementsService, VerisonInfo } from '../settlements.service';
+import { SettlementsService } from '../settlements.service';
+import { VersionInfo } from '../settlements.service.types';
 
 @Component({
   selector: 'app-version',
@@ -10,7 +11,7 @@ import { SettlementsService, VerisonInfo } from '../settlements.service';
 export class VersionComponent implements OnInit {
   
   appVersion: string = environment.appVersion;
-  serverVersion!: VerisonInfo;
+  serverVersion!: VersionInfo;
   
   constructor(private settlementsService: SettlementsService) {}
 

@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, Output, SimpleChanges, EventEmitter } from '@angular/core';
-import { Driver } from '../settlements.service';
+import { Driver } from '../settlements.service.types';
 
 @Component({
   selector: 'app-driver-address',

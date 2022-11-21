@@ -8,6 +8,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "deploy": "gsutil cp dist/trucks-web/* gs://trucks.jasondel.com",
+    "generate": "npx swagger-typescript-api --no-client -r -p http://localhost:5000/swagger/v1/swagger.json -o ./src/app -n settlements.service.types.ts",
     "test": "ng test"
   },
   "private": true,

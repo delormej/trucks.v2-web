@@ -9,7 +9,7 @@
                         <a [routerLink]="['/fuel']" 
                             [queryParams]="{ 
                                 year: driverSettlement.year,
-                                week: driverSettlement.week,
+                                week: driverSettlement.weekNumber,
                                 driverPromptId: driver.driverPromptId}">
                             {{driverSettlement.fuel | number:'0.2-2'}}
                         </a>
@@ -46,7 +46,7 @@
                 <div class="manual-actions">                    
                     <button mat-icon-button color="basic" 
                             aria-label="Delete manual deduction."
-                            (click)="deleteEntry(deduction.id)">
+                            (click)="deleteEntry(deduction.id!)">
                         <mat-icon>delete</mat-icon>
                     </button>                
                 </div>

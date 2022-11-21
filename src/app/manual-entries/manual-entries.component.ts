@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { DriverSettlement, Credit, Deduction } from '../settlements.service';
+import { DriverSettlement, Credit, Deduction } from '../settlements.service.types';
 
 @Component({
   selector: 'app-manual-entries',
@@ -13,10 +13,10 @@ export class ManualEntriesComponent {
   @Input() 
   set driverSettlement(value: DriverSettlement) {
     this.manualCredits = 
-      value.credits.filter(c => c.manualCredit != 0);
+      value.credits!.filter(c => c.manualCredit != 0);
     
     this.manualDeductions = 
-      value.deductions.filter(c => c.manualDeduction != 0);      
+      value.deductions!.filter(c => c.manualDeduction != 0);      
   }
 
   @Output() 

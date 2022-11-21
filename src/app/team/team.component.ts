@@ -2,7 +2,8 @@ import { Component, Input, OnInit, Output, ViewChild, EventEmitter, OnChanges, S
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSelect, MatSelectChange } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Driver, SettlementsService, Teammate } from '../settlements.service';
+import { SettlementsService, Teammate } from '../settlements.service';
+import { Driver } from '../settlements.service.types';
 
 @Component({
   selector: 'app-team',
@@ -122,7 +123,7 @@ export class TeamComponent implements OnInit, OnChanges {
       driverId: teamDriver ? teamDriver.id : undefined,
       name: teamDriver ? teamDriver.name : undefined,
       teamLeaderDriverId: this.driver.isTeamLeader ? this.driver.id : teamDriver?.id,
-      isSplit: this.driver.isSplit,
+      isSplit: this.driver.isSplit!,
       splitChanged: this.splitChanged
     };
     return teammate;

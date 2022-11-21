@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
-import { ManualEntry } from '../settlements.service';
+import { ManualEntryRequest } from '../settlements.service.types';
 
 @Component({
   selector: 'app-settlement-entry',
@@ -7,9 +7,9 @@ import { ManualEntry } from '../settlements.service';
   styleUrls: ['./settlement-entry.component.css']
 })
 export class SettlementEntryComponent implements OnInit {
-  @Output() newManualEntryEvent = new EventEmitter<ManualEntry>();
+  @Output() newManualEntryEvent = new EventEmitter<ManualEntryRequest>();
 
-  entry!: ManualEntry;
+  entry!: ManualEntryRequest;
 
   constructor() { 
   }

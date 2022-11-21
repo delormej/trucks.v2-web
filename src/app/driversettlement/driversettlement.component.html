@@ -28,17 +28,17 @@
         </mat-grid-tile>
         <mat-grid-tile colspan="3">
             <table>
-                <tr *ngIf="driverSettlement.ratePerMile > 0">
+                <tr *ngIf="driverSettlement.ratePerMile! > 0">
                     <td>Rate Per Mile&nbsp;&nbsp;</td>
                     <td>{{driverSettlement.ratePerMile}}</td>
                 </tr>
                 <tr>
                     <td>Accessorial&nbsp;&nbsp;</td>
-                    <td>{{driverSettlement.driverPercent.accessorial*100}}%</td>
+                    <td>{{driverSettlement.driverPercent!.accessorial!*100}}%</td>
                 </tr>
                 <tr>
                     <td>Base</td>
-                    <td>{{driverSettlement.driverPercent.base*100}}%</td>
+                    <td>{{driverSettlement.driverPercent!.base!*100}}%</td>
                 </tr>
             </table>
         </mat-grid-tile>
@@ -46,7 +46,7 @@
 
     <div>
         {{week.startDate | date}} - {{week.endDate | date}},
-        &nbsp;&nbsp;<strong>Pay Date</strong> {{week.payDate | date}}
+        &nbsp;&nbsp;<strong>Pay Date</strong> {{week.settlementDate | date}}
     </div>
 
     <app-loads [driverSettlement]="driverSettlement"

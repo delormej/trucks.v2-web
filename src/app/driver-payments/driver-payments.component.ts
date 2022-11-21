@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Driver, Payment } from '../settlements.service';
+import { Driver, Payment } from '../settlements.service.types';
+
 
 @Component({
   selector: 'app-driver-payments',
@@ -10,12 +11,12 @@ export class DriverPaymentsComponent implements OnInit {
 
   displayedColumns: string[] = [ "weekNumber", "settlementDate", "settlementId", "trucks", "amount", "income", "securityBalance" ];
   sortedPayments!: Payment[];
-  driverName!: string;
+  driverName?: string;
 
   @Input()
   set driver(value: Driver) {
-    this.sortedPayments = value.paymentHistory.sort( (a, b) => 
-      (a.settlementDate <= b.settlementDate ? 1 : -1) );
+    this.sortedPayments = value.paymentHistory!.sort( (a, b) => 
+      (a.settlementDate! <= b.settlementDate! ? 1 : -1) );
     this.driverName = value.name;
   }
 

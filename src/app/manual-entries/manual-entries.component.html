@@ -5,7 +5,7 @@
             <div>Credits</div>
             <table>
                 <tr *ngFor="let credit of manualCredits">
-                    <td><button (click)="onDeleteEntry(credit.id)">Delete</button></td>
+                    <td><button (click)="onDeleteEntry(credit.id!)">Delete</button></td>
                     <td>{{credit.creditDescriptions}}</td>
                     <td>{{credit.manualCredit | number:'0.2-2'}}</td>
                 </tr>
@@ -15,7 +15,7 @@
             <div>Deductions</div>
             <table>
                 <tr *ngFor="let deduction of manualDeductions">
-                    <td><button (click)="onDeleteEntry(deduction.id)">Delete</button></td>
+                    <td><button (click)="onDeleteEntry(deduction.id!)">Delete</button></td>
                     <td>{{deduction.description}}</td>
                     <td>{{deduction.manualDeduction | number:'0.2-2'}}</td>
                 </tr>
