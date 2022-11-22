@@ -11,15 +11,19 @@
             
             <mat-form-field appearance="fill">
                 <mat-label>In Service Date</mat-label>
-                <input matInput [matDatepicker]="picker">
+                <input matInput [matDatepicker]="inServicePicker" 
+                    id="inServiceDate" name="inServiceDate"
+                    [(ngModel)]="driver.inServiceDate">
                 <mat-hint>MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
+                <mat-datepicker-toggle matSuffix [for]="inServicePicker"></mat-datepicker-toggle>
+                <mat-datepicker #inServicePicker></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field appearance="fill">
                 <mat-label>End Service Date</mat-label>
-                <input matInput [matDatepicker]="picker">
+                <input matInput [matDatepicker]="picker" 
+                    id="endServiceDate" name="endServiceDate"
+                    [(ngModel)]="driver.endServiceDate">
                 <mat-hint>MM/DD/YYYY</mat-hint>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
@@ -40,13 +44,13 @@
                         <mat-label>Starting Balance</mat-label>
                         <input matInput type="number" id="securityBalanceStartBalance" name="securityBalanceStartBalance">
                     </mat-form-field>
-                    <mat-form-field appearance="fill">
+                    <!-- <mat-form-field appearance="fill">
                         <mat-label>As of Date</mat-label>
                         <input matInput [matDatepicker]="picker">
                         <mat-hint>MM/DD/YYYY</mat-hint>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
+                    </mat-form-field> -->
                     <mat-form-field appearance="fill">
                         <mat-label>Weekly Deduction</mat-label>
                         <input matInput type="number" id="weeklySecurityBalanceDeduction" name="weeklySecurityBalanceDeduction">
