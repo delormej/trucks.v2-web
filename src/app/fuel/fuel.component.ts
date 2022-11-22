@@ -47,12 +47,6 @@ export class FuelComponent implements AfterViewInit, OnInit {
       this.dataSource.sort = this.sort;
     }
 
-    onSortChange(sortState: Sort) {
-      console.log(sortState);
-      if (sortState.active == "transactionDate")
-        this.dataSource.sort?.sortChange
-    }
-
     @Input()
     public set fuel(value: FuelCharge[]) {
       this._fuel = value;
