@@ -40,23 +40,29 @@ export class FuelSummaryComponent implements OnInit {
           ( a.week!.year! < b.week!.year! ) && (a.week!.weekNumber! < b.week!.weekNumber!) ? -1 : 1 );
 
         this.myData = [];
-        var week = fuel[0].week!.weekNumber;
-
-        this.chartOptions.hAxis.ticks = [week!];
+        var startWeek = fuel[0].week!.weekNumber!;
+        this.chartOptions.hAxis.ticks = [startWeek];
 
         for (let i = 0; i < fuel.length; i++) {
-          if (week!+i == fuel[i].week!.weekNumber) 
-            this.myData.push( [ week!+i, fuel[i].totalCost!, 
-              (fuel[i].totalCost!/fuel[i].totalGallons!) ] );
-          else
-            this.myData.push([week!+i, 0, 0]);
+          this.myData.push( [ 
+            fuel[i].week!.weekNumber!.toString(), 
+            fuel[i].totalCost! > 0 ? fuel[i].totalCost! : null, 
+            (fuel[i].totalCost!/fuel[i].totalGallons!) 
+          ] );
           
           if (i > 0)
-            this.chartOptions.hAxis.ticks.push( week!+i );
+            this.chartOptions.hAxis.ticks.push( fuel[i].week?.weekNumber! );
         }
       },
       error: (error) => this.showError(error, "Unable to load fuel summary.")
     });
+  }
+
+  onSelected(event: any) {
+    var row = event?.selection[0].row;
+    var week = this.myData[row][0];
+    console.log(week);
+
   }
 
   showError(error: Error, message: string) {
