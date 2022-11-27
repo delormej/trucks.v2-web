@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ChartType, Row } from 'angular-google-charts'
 import { SettlementsService } from '../settlements.service';
+import { FuelSummary } from '../settlements.service.types';
 
 @Component({
   selector: 'app-fuel-summary',
@@ -15,6 +16,7 @@ export class FuelSummaryComponent implements OnInit {
     private settlementsService: SettlementsService
   ) { }
 
+  public _fuel!: FuelSummary[];
   public myData!: Row[];
   public chartType: ChartType = ChartType.LineChart;
   public chartColumns: string[] = ["Week", "Total Cost", "Avg Price/Gallon"];
@@ -35,23 +37,23 @@ export class FuelSummaryComponent implements OnInit {
 
   ngOnInit(): void {
     this.settlementsService.getFuelSummary().subscribe( {
-      next: (fuel) => {
-        fuel = fuel.sort( (a, b) => 
+      next: (data) => {
+        this._fuel = data.sort( (a, b) => 
           ( a.week!.year! < b.week!.year! ) && (a.week!.weekNumber! < b.week!.weekNumber!) ? -1 : 1 );
 
         this.myData = [];
-        var startWeek = fuel[0].week!.weekNumber!;
+        var startWeek = this._fuel[0].week!.weekNumber!;
         this.chartOptions.hAxis.ticks = [startWeek];
 
-        for (let i = 0; i < fuel.length; i++) {
+        for (let i = 0; i < this._fuel.length; i++) {
           this.myData.push( [ 
-            fuel[i].week!.weekNumber!.toString(), 
-            fuel[i].totalCost! > 0 ? fuel[i].totalCost! : null, 
-            (fuel[i].totalCost!/fuel[i].totalGallons!) 
+            this._fuel[i].week!.weekNumber!.toString(), 
+            this._fuel[i].totalCost! > 0 ? this._fuel[i].totalCost! : null, 
+            (this._fuel[i].totalCost!/this._fuel[i].totalGallons!) 
           ] );
           
           if (i > 0)
-            this.chartOptions.hAxis.ticks.push( fuel[i].week?.weekNumber! );
+            this.chartOptions.hAxis.ticks.push( this._fuel[i].week?.weekNumber! );
         }
       },
       error: (error) => this.showError(error, "Unable to load fuel summary.")
@@ -60,8 +62,8 @@ export class FuelSummaryComponent implements OnInit {
 
   onSelected(event: any) {
     var row = event?.selection[0].row;
-    var week = this.myData[row][0];
-    console.log(week);
+    var fuel = this._fuel[row];
+    console.log(fuel.week?.year, fuel.week?.weekNumber);
 
   }
 
