@@ -3,8 +3,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { combineLatestWith, Observable } from 'rxjs';
 import { SettlementsService } from '../settlements.service';
-import { FuelCharge } from '../settlements.service.types';
+import { DriverSummary, FuelCharge } from '../settlements.service.types';
 
 @Component({
   selector: 'app-fuel',
@@ -22,6 +23,7 @@ export class FuelComponent implements AfterViewInit, OnInit {
     fuelTotal: number = 0;
     dataSource = new MatTableDataSource<FuelCharge>();
     private _fuel: FuelCharge[] = [];
+    Drivers: DriverSummary[] = [];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
@@ -33,10 +35,28 @@ export class FuelComponent implements AfterViewInit, OnInit {
           var week = params['week'];
           var driverPromptId = params['driverPromptId'];
   
-          this.settlementsService.getFuel(year, week, driverPromptId)
-          .subscribe({
-            next: (data: FuelCharge[]) => this.fuel = data,
-            error: (error: any) => console.log(error)
+          var fuel: Observable<FuelCharge[]>;
+          var drivers: Observable<any>;
+
+          fuel = this.settlementsService.getFuel(year, week, driverPromptId);
+
+          if (driverPromptId == null) 
+            drivers = this.settlementsService.getAllDrivers();
+          else 
+            drivers = this.settlementsService.getDriverByPin(driverPromptId);
+
+          fuel.pipe(
+            combineLatestWith(drivers)
+          ).subscribe({
+            next: ([f, d]) => {
+              this.fuel = f;
+
+              if (driverPromptId == null)
+                this.Drivers = d;
+              else
+                this.Drivers.push(d);
+            },
+            error: (error) => console.log(error)
           })
         });
     }
@@ -60,5 +80,4 @@ export class FuelComponent implements AfterViewInit, OnInit {
     constructor(
       private settlementsService: SettlementsService,
       private route: ActivatedRoute) { }
-
 }

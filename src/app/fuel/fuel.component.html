@@ -32,7 +32,9 @@
 
         <ng-container matColumnDef="driverPromptId">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Driver PIN </th>
-            <td mat-cell *matCellDef="let charge"> {{charge.driverPromptId}} </td>
+            <td mat-cell *matCellDef="let charge"> 
+                <app-driver-pin-link [Drivers]="Drivers" [DriverPromptId]="charge.driverPromptId"></app-driver-pin-link> 
+            </td>
             <td mat-footer-cell *matFooterCellDef></td>            
         </ng-container>
 

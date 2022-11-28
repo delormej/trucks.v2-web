@@ -1,0 +1,5 @@
+<div *ngIf="driverLinkParams != null; else elseBlock">
+    <a [routerLink]="driverUrl"
+       [queryParams]="driverLinkParams" >{{DriverPromptId}}</a>
+</div>
+<ng-template #elseBlock>No Driver!</ng-template>

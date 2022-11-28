@@ -34,7 +34,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
-import { MatCardModule } from '@angular/material/card'
+import { MatCardModule } from '@angular/material/card';
+import { DriverPinLinkComponent } from './driver-pin-link/driver-pin-link.component'
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { MatCardModule } from '@angular/material/card'
     TotalsComponent,
     AddManualDialogComponent,
     FuelSummaryComponent,
-    DriverAddressComponent
+    DriverAddressComponent,
+    DriverPinLinkComponent
   ],
   imports: [
     HttpClientModule,

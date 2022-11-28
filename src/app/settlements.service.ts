@@ -81,7 +81,7 @@ export class SettlementsService {
       { driverSettlementId: driverSettlementId, notes: notes } );
   }
 
-  getDriver(name: string) {
+  getDriver(name: string) : Observable<Types.Driver> {
     return this.http.get<Types.Driver>(SettlementsService.baseUrl + "/driver?name=" + name);
   }
 
@@ -99,6 +99,11 @@ export class SettlementsService {
         
         return drivers; 
       }));
+  }
+
+  getDriverByPin(driverPromptId: string) : Observable<Types.DriverSummary> {
+    return this.http.get<Types.DriverSummary>(
+        SettlementsService.baseUrl + "/driver/pin/" + driverPromptId );
   }
 
   // setTeammate(drivers: Observable<Driver[]>) : Observable<Driver[]> {
