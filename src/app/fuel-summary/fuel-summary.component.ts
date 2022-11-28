@@ -18,6 +18,7 @@ export class FuelSummaryComponent implements OnInit {
     private settlementsService: SettlementsService
   ) { }
 
+  public loading: boolean = true;
   public _fuel!: FuelSummary[];
   public myData!: Row[];
   public chartType: ChartType = ChartType.LineChart;
@@ -57,8 +58,13 @@ export class FuelSummaryComponent implements OnInit {
           if (i > 0)
             this.chartOptions.hAxis.ticks.push( this._fuel[i].week?.weekNumber! );
         }
+
+        this.loading = false;
       },
-      error: (error) => this.showError(error, "Unable to load fuel summary.")
+      error: (error) => {
+        this.showError(error, "Unable to load fuel summary.");
+        this.loading = false;
+      }
     });
   }
 

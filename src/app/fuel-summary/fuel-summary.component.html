@@ -1,4 +1,8 @@
-<google-chart style="width: 100%;" [columns]="chartColumns" 
+<div class="centered-spinner">
+    <mat-spinner [hidden]="!loading" mode="indeterminate"></mat-spinner>
+</div>
+
+<google-chart *ngIf="!loading" style="width: 100%;" [columns]="chartColumns" 
     [type]="chartType" [options]="chartOptions" 
     [data]="myData"
     (select)="onSelected($event)">
