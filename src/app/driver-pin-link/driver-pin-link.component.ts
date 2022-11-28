@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { DriverSummary } from '../settlements.service.types';
+import { Component, Input, OnInit } from '@angular/core';
+import { DriverSummary, FuelCharge } from '../settlements.service.types';
 
 @Component({
   selector: 'app-driver-pin-link',
@@ -9,7 +9,7 @@ import { DriverSummary } from '../settlements.service.types';
 export class DriverPinLinkComponent implements OnInit {
 
   @Input() Drivers!: DriverSummary[];
-  @Input() DriverPromptId!: number;
+  @Input() FuelCharge!: FuelCharge;
 
   public driverUrl: string = "/driver";
   public driverLinkParams?: any;
@@ -21,7 +21,8 @@ export class DriverPinLinkComponent implements OnInit {
   }
 
   setDriverLinkParams(): void {
-    var driver = this.Drivers.find(d => d.driverPromptId == this.DriverPromptId);
+    var driver = this.Drivers.find(
+      d => d.driverPromptId == this.FuelCharge.driverPromptId);
     
     if (driver != undefined)
       this.driverLinkParams = { driver: driver!.name! };

@@ -1,5 +1,10 @@
-<div *ngIf="driverLinkParams != null; else elseBlock">
+<div *ngIf="driverLinkParams != null; else missingDriverBlock">
     <a [routerLink]="driverUrl"
-       [queryParams]="driverLinkParams" >{{DriverPromptId}}</a>
+       [queryParams]="driverLinkParams" >{{FuelCharge.driverPromptId}}</a>
 </div>
-<ng-template #elseBlock>No Driver!</ng-template>
+<ng-template #missingDriverBlock>
+    <div matBadge="!" matBadgeOverlap="false" class="noDriverWarn" 
+        matBadgeColor="warn" matTooltip="No driver record for {{FuelCharge.driverFirstName}} {{FuelCharge.driverLastName}}">
+        {{FuelCharge.driverPromptId}}
+    </div>
+</ng-template>
