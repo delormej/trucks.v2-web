@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
@@ -13,6 +14,7 @@ import { DriverSummary, FuelCharge } from '../settlements.service.types';
   styleUrls: ['./fuel.component.css']
 })
 export class FuelComponent implements AfterViewInit, OnInit {
+    loading: boolean = true;
     displayColumns: string[] = [
       "transactionDate", 
       "weekNumber", 
@@ -55,8 +57,14 @@ export class FuelComponent implements AfterViewInit, OnInit {
                 this.Drivers = d;
               else
                 this.Drivers.push(d);
+
+              this.loading = false;
             },
-            error: (error) => console.log(error)
+            error: (error) => { 
+              this.showError(error, "Unable to load fuel.");
+              console.log(error); 
+              this.loading = false;
+            }
           })
         });
     }
@@ -79,5 +87,11 @@ export class FuelComponent implements AfterViewInit, OnInit {
     
     constructor(
       private settlementsService: SettlementsService,
+      private snack: MatSnackBar,
       private route: ActivatedRoute) { }
+
+    showError(error: Error, message: string) {
+      this.snack.open(message, 'CLOSE', { panelClass: 'errorSnack' } );
+      console.log(error);
+    }  
 }
