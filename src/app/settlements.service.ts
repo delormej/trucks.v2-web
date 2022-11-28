@@ -22,6 +22,10 @@ export class SettlementsService {
         "/settlements/summary/" + companyId + "/" + settlementId);
   }  
 
+  getSettlementWeeks(): Observable<Types.Week[]> {
+    return this.http.get<Types.Week[]>(SettlementsService.baseUrl + "/settlements/weeks");
+  }
+
   getDriverSettlements(companyId: string, settlementId: string, 
       forceRecreate: boolean = false): Observable<Types.DriverSettlement[]> {
     return this.http.get<Types.DriverSettlement[]>(

@@ -35,7 +35,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
-import { DriverPinLinkComponent } from './driver-pin-link/driver-pin-link.component'
+import { DriverPinLinkComponent } from './driver-pin-link/driver-pin-link.component';
+import { SettlementCalendarComponent } from './settlement-calendar/settlement-calendar.component'
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { DriverPinLinkComponent } from './driver-pin-link/driver-pin-link.compon
     AddManualDialogComponent,
     FuelSummaryComponent,
     DriverAddressComponent,
-    DriverPinLinkComponent
+    DriverPinLinkComponent,
+    SettlementCalendarComponent
   ],
   imports: [
     HttpClientModule,
