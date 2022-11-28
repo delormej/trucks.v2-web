@@ -36,8 +36,10 @@ export class DriverComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('saving...');
     this.submitted = true;
     this.saveDriver();
+    this.driverForm.form.markAsPristine();
   }
 
   onTeammateChanged(teammate: Teammate) {

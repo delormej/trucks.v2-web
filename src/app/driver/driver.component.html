@@ -218,7 +218,8 @@
 
     <mat-card-actions>
         <button mat-raised-button color="primary" type="submit"
-                [disabled]="!driverForm.dirty || !driverForm.valid">
+                [disabled]="!driverForm.dirty || !driverForm.valid"
+                (click)="driverForm.onSubmit($event)">
             Save
         </button>
     </mat-card-actions>
