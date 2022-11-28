@@ -31,12 +31,12 @@
 
           <ng-container matColumnDef="yearWeek">
             <th mat-header-cell *matHeaderCellDef> Year, Week # </th>
-            <td mat-cell *matCellDef="let summary"> {{summary.year}}, {{summary.weekNumber}} </td>
+            <td mat-cell *matCellDef="let summary"> {{summary.week.year}}, {{summary.week.weekNumber}} </td>
           </ng-container>
 
           <ng-container matColumnDef="settlementDate">
-            <th mat-header-cell *matHeaderCellDef> Settlement Date </th>
-            <td mat-cell *matCellDef="let summary"> {{summary.settlementDate | date:'mediumDate'}} </td>
+            <th mat-header-cell *matHeaderCellDef> Panther Check Date </th>
+            <td mat-cell *matCellDef="let summary"> {{summary.checkDate | date:'mediumDate'}} </td>
           </ng-container>
 
           <ng-container matColumnDef="checkAmount">

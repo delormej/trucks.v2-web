@@ -8,7 +8,7 @@
           Settlement {{settlement.settlementId}}
         </mat-card-title>
         <mat-card-subtitle>
-            Company {{settlement.companyId}} | {{settlement.week?.settlementDate | date}} 
+            Company {{settlement.companyId}} | {{settlement.checkDate | date}} 
         </mat-card-subtitle>
         <mat-card-content>             
           <div *ngIf="settlement.week">
