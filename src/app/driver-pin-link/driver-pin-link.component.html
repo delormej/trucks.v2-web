@@ -4,6 +4,7 @@
 </div>
 <ng-template #missingDriverBlock>
     <div matBadge="!" matBadgeOverlap="false" class="noDriverWarn" 
+        matTooltipClass="tooltip"
         matBadgeColor="warn" matTooltip="No driver record for {{FuelCharge.driverFirstName}} {{FuelCharge.driverLastName}}">
         {{FuelCharge.driverPromptId}}
     </div>
