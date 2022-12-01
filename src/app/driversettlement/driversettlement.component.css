@@ -21,7 +21,7 @@
       color: pink;
   } */
 
-  .custom-mat-card {
+  .mat-card, .mat-expansion-panel {
     margin-bottom: 10px;
   }
 
