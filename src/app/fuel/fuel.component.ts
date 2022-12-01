@@ -18,8 +18,6 @@ export class FuelComponent implements AfterViewInit, OnInit {
     loading: boolean = true;
     displayColumns: string[] = [
       "transactionDate", 
-      "weekNumber", 
-      "driverPromptId", 
       "merchantName", 
       "merchantLocation", 
       "netCost" ];
@@ -71,6 +69,13 @@ export class FuelComponent implements AfterViewInit, OnInit {
             this.driverPromptId = params['driverPromptId'];
           if (params['year']) {
             this.year = params['year'];
+            
+            if (!this.displayColumns.includes("weekNumber"))
+              this.displayColumns.push("weekNumber");
+            
+            if (!this.displayColumns.includes("driverPromptId"))
+              this.displayColumns.push("driverPromptId");             
+            
             this.getFuel();
           }
         });
