@@ -3,6 +3,11 @@
 </div>
 
 <div>
+    <button mat-button>
+        <mat-icon>picture_as_pdf</mat-icon>
+        <a [href]="pdfLink">Export PDF</a>
+    </button>
+
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="transactionDate">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>

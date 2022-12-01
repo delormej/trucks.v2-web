@@ -23,6 +23,7 @@ export class FuelComponent implements AfterViewInit, OnInit {
       "merchantLocation", 
       "netCost" ];
     fuelTotal: number = 0;
+    pdfLink: string = "";
     dataSource = new MatTableDataSource<FuelCharge>();
     private _fuel: FuelCharge[] = [];
     Drivers: DriverSummary[] = [];
@@ -37,6 +38,8 @@ export class FuelComponent implements AfterViewInit, OnInit {
           var week = params['week'];
           var driverPromptId = params['driverPromptId'];
   
+          this.pdfLink = `${ SettlementsService.baseUrl }/fuel/pdf?year=${ year }&week=${ week }&driverPromptId=${ driverPromptId }`
+
           var fuel: Observable<FuelCharge[]>;
           var drivers: Observable<any>;
 
