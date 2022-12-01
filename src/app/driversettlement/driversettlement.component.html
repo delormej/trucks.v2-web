@@ -44,30 +44,44 @@
         </mat-grid-tile>
     </mat-grid-list>
 
-    <div>
-        {{week.startDate | date}} - {{week.endDate | date}},
-        &nbsp;&nbsp;<strong>OTR Settlement Date:</strong> {{week.settlementDate | date}}
-    </div>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Loads</mat-card-title>
+            <mat-card-subtitle>
+                {{week.startDate | date}} - {{week.endDate | date}},
+                &nbsp;&nbsp;<strong>OTR Settlement Date:&nbsp;</strong> {{week.settlementDate | date}}
+            </mat-card-subtitle>
+        </mat-card-header>
+        <app-loads [driverSettlement]="driverSettlement"
+            (onSplitItem)="splitItem($event)">
+        </app-loads>
+    </mat-card>
 
-    <app-loads [driverSettlement]="driverSettlement"
-        (onSplitItem)="splitItem($event)">
-    </app-loads>
+    <mat-expansion-panel *ngIf="driver?.driverPromptId" expanded="true">
+        <mat-expansion-panel-header>
+            <mat-card-title>Fuel</mat-card-title>
+        </mat-expansion-panel-header>
+        <app-fuel [showPagnitor]="false"
+            [week]="week" 
+            [driver]="driver">
+        </app-fuel>
+    </mat-expansion-panel>
 
     <div fxLayoutGap fxLayoutAlign="start stretch" fxLayoutGap="15px">
-        <mat-card fxFlex="33" class="custom-mat-card">
+        <mat-card fxFlex="33" >
             <app-deductions [driver]="driver" 
                 [driverSettlement]="driverSettlement"
                 (deleteManualEntryEvent)="deleteManualEntry($event)"
                 (newDeduction)="addManualEntry($event)">
             </app-deductions>
         </mat-card>
-        <mat-card fxFlex="33" class="custom-mat-card">
+        <mat-card fxFlex="33" >
             <app-credits [driverSettlement]="driverSettlement"
                 (deleteManualEntryEvent)="deleteManualEntry($event)"
                 (newDeduction)="addManualEntry($event)">
             </app-credits>
         </mat-card>
-        <mat-card fxFlex="33" class="custom-mat-card">
+        <mat-card fxFlex="33" >
             <mat-card-title>Driver Income</mat-card-title>
             <table>
                 <tr>
@@ -112,7 +126,7 @@
     
     <app-driver-settlement-notes [driverSettlement]="driverSettlement"></app-driver-settlement-notes>
 
-    <mat-expansion-panel class="custom-mat-card">
+    <mat-expansion-panel>
         <mat-expansion-panel-header>
             <mat-panel-title>
                 Generator Details

@@ -3,10 +3,12 @@
 </div>
 
 <div>
-    <button mat-button>
-        <mat-icon>picture_as_pdf</mat-icon>
-        <a [href]="pdfLink">Export PDF</a>
-    </button>
+    <mat-card-actions>
+        <button mat-button [hidden]="fuel.length == 0">
+            <mat-icon>picture_as_pdf</mat-icon>
+            <a [href]="pdfLink">Export PDF</a>
+        </button>
+    </mat-card-actions>
 
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="transactionDate">
@@ -52,8 +54,10 @@
         <tr mat-footer-row *matFooterRowDef="displayColumns"></tr>
     </table>
 
-    <mat-paginator [pageSizeOptions]="[10, 20, 100]"
-        showFirstLastButtons 
-        aria-label="Select page of fuel">
-    </mat-paginator>    
+    <div *ngIf="showPagnitor">
+        <mat-paginator [pageSizeOptions]="[10, 20, 100]"
+            showFirstLastButtons 
+            aria-label="Select page of fuel">
+        </mat-paginator>  
+    </div>  
 </div>
