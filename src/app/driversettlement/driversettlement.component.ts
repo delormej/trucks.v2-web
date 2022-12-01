@@ -18,6 +18,7 @@ export class DriversettlementComponent implements OnInit, OnChanges {
     new EventEmitter<DriverSettlement>();
   
   driver!: Driver;
+  excelDownloadLink: string = "";
 
   constructor(
     private settlementsService: SettlementsService,
@@ -29,8 +30,10 @@ export class DriversettlementComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.driverSettlement = changes['driverSettlement'].currentValue;
-    if (this.driverSettlement)
+    if (this.driverSettlement) {
       this.getDriver(this.driverSettlement.driver!);
+      this.excelDownloadLink = this.getWorkbookLink(this.driverSettlement);
+    }
   }
 
   public recreate(): void {
