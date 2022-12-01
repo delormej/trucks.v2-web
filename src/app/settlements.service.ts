@@ -66,7 +66,7 @@ export class SettlementsService {
     return this.http.get<Types.DriverSettlement>(url, { params: params });
   }
 
-  getFuel(year: number, week: number, driverPromptId: number) : Observable<Types.FuelCharge[]> {
+  getFuel(year: number, week?: number, driverPromptId?: number) : Observable<Types.FuelCharge[]> {
     var params: HttpParams = new HttpParams();
     if (year != null)
       params = params.set('year', year);
@@ -105,7 +105,7 @@ export class SettlementsService {
       }));
   }
 
-  getDriverByPin(driverPromptId: string) : Observable<Types.DriverSummary> {
+  getDriverByPin(driverPromptId: number) : Observable<Types.DriverSummary> {
     return this.http.get<Types.DriverSummary>(
         SettlementsService.baseUrl + "/driver/pin/" + driverPromptId );
   }
