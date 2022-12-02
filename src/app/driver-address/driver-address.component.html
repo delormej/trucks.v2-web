@@ -38,4 +38,13 @@
       </mat-form-field>
     </div>
   </div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field appearance="fill" class="full-width">
+        <input matInput placeholder="Phone Number" 
+          [(ngModel)]="driver.phoneNumber"
+          (ngModelChange)="onChange($event)">
+      </mat-form-field>
+    </div>
+  </div>
 </div>

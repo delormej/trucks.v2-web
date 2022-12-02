@@ -96,6 +96,11 @@ export interface Driver {
   city?: string;
   state?: string;
   zipCode?: string;
+  phoneNumber?: string;
+  /** @format double */
+  basePercent?: number;
+  /** @format double */
+  accessorialPercent?: number;
   driverPercent?: DriverPercent;
   /** @format double */
   ratePerMile?: number;
@@ -285,6 +290,8 @@ export interface SettlementHistory {
   downloadedTimestamp?: string;
   /** @format date-time */
   convertedTimestamp?: string;
+  /** @format date-time */
+  settlementDate?: string;
   /** @format date-time */
   checkDate?: string;
   /** @format int32 */
