@@ -15,7 +15,6 @@ export class WeekService {
   public weeks: Week[] = [];
   
   constructor(private settlementService: SettlementsService) { 
-    console.log("loading weeks"); // should only happen once per app load.
     settlementService.getSettlementWeeks().subscribe({
       next: (weeks) => this.weeks = weeks 
     })    
@@ -32,6 +31,7 @@ export class WeekService {
   }
 
   private getIndex(week: Week) : number {
-    return this.weeks.indexOf(week);
+    return this.weeks.findIndex(w => 
+      w.year == week.year && w.weekNumber == week.weekNumber);
   }
 }
