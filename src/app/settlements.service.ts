@@ -37,9 +37,7 @@ export class SettlementsService {
       companyId: string, 
       driver: string, 
       force: boolean = false,
-      settlementId?: string, 
-      year?: number,
-      week?: number  
+      settlementId?: string
     ): Observable<Types.DriverSettlement> {
     
     var url = SettlementsService.baseUrl;
@@ -52,13 +50,8 @@ export class SettlementsService {
       url += "/driversettlements";
       params = params.append('settlementId', settlementId);
     }
-    else if (year != null && week != null) {
-      url += "/driversettlements/byweek";
-      params = params.append('year', year)
-        .append('week', week);
-    }
     else {
-      throwError(() => new Error("No settlement id, year or week provided."));
+      throwError(() => new Error("No settlement id provided."));
     }
 
     params = params.append('driverName', driver);
