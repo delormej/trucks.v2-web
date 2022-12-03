@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { SettlementsService } from '../settlements.service';
 import { SettlementSummary, DriverSettlement } from '../settlements.service.types';
+import { WeekService } from '../week.service';
 
 @Component({
   selector: 'app-settlement-detail',
@@ -23,6 +24,7 @@ export class SettlementDetailComponent implements OnInit {
 
   constructor(
     private settlementsService: SettlementsService,
+    private weekService: WeekService,
     private route: ActivatedRoute,
     private snack: MatSnackBar
   ) { }
@@ -75,13 +77,6 @@ export class SettlementDetailComponent implements OnInit {
       });
   }
 
-  getDriverSettlement(driverSettlementId: string): DriverSettlement {
-    var driverSettlement = this.driverSettlements.find(
-      d => d.driverSettlementId === driverSettlementId);
-
-      return driverSettlement!;
-  }
-
   getDriverSettlements(forceRecreate: boolean, selectedDriver?: string): void {
     this.settlementsService.getDriverSettlements(this.companyId, this.settlementId, forceRecreate)
       .subscribe({
@@ -99,6 +94,14 @@ export class SettlementDetailComponent implements OnInit {
           this.showError(error, "Could not load driver settlements."); 
         }
       });
+  }
+
+  getNextSettlement() : void {
+    //this.settlement.week
+  }
+
+  getPreviousSettlement() : void {
+
   }
 
   public getMiles(driverSettlement: DriverSettlement): number {
