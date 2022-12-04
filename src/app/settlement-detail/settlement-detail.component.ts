@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatSelectionListChange } from '@angular/material/list';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { Observer } from 'rxjs';
 import { SettlementsService } from '../settlements.service';
 import { SettlementSummary, DriverSettlement } from '../settlements.service.types';
 import { WeekService } from '../week.service';
@@ -14,13 +15,14 @@ import { WeekService } from '../week.service';
 export class SettlementDetailComponent implements OnInit {
   loading: boolean = true;
   settlement!: SettlementSummary;
+  settlementInfo: string = '';
   driverSettlements: DriverSettlement[] = [];
   selectedDriver?: string;
   showFiller = false;
   companyId!: string;
   settlementId!: string;
-  previousSettlementId!: string;
-  nextSettlementId!: string;
+  previousSettlementLink!: string;
+  nextSettlementLink!: string;
 
   constructor(
     private settlementsService: SettlementsService,
@@ -33,17 +35,20 @@ export class SettlementDetailComponent implements OnInit {
     this.route.queryParams.subscribe(
       params => {
         this.companyId = params['companyId'];
-        this.settlementId = params['settlementId'];
-        this.getSettlement(this.companyId, this.settlementId);
-        this.getDriverSettlements(false, params['driver']); 
+        
+        if (params['settlementId']) 
+          this.getSettlement( 
+            params['settlementId'],
+            params['driver']);
+
+        if (params['year'] && params['week'])
+            this.getSettlementByWeek(
+              params['year'], 
+              params['week'],
+              params['driver']);
       }
     );
   } 
-
-  get settlementInfo(): string {
-    // todo: this requires loading the whole settlement
-    return '';
-  }
 
   selectedDriverChanged(change: MatSelectionListChange) {
     this.selectedDriver = change.options.length > 0 ? 
@@ -69,13 +74,32 @@ export class SettlementDetailComponent implements OnInit {
     this.selectedDriver = driverSettlement.driver;
   }
 
-  getSettlement(companyId: string, settlementId: string): void {
-    this.settlementsService.getSettlementSummary(companyId, settlementId)
-      .subscribe({
-        next: (res) => this.settlement = res,
-        error: (error) => this.showError(error, "Unable to load Settlement")
-      });
+  getSettlement(settlementId: string, selectedDriver?: string): void {
+    if (settlementId) {
+      this.settlementId = settlementId;
+      this.getDriverSettlements(false, selectedDriver); 
+    }
+    
+    this.settlementsService.getSettlementSummary(this.companyId, settlementId)
+      .subscribe(this.settlementObserver);
   }
+
+  getSettlementByWeek(year: number, week: number, selectedDriver?: string) {
+    this.settlementsService.getSettlementSummaryByWeek(
+        this.companyId, year, week)
+      .subscribe(this.settlementObserver);    
+  }
+
+  settlementObserver: Partial<Observer<SettlementSummary>> = {
+    next: (res) => {
+      this.settlement = res; 
+      this.settlementId = res.settlementId!;
+
+      this.getNextSettlement();
+      this.getPreviousSettlement();
+    },
+    error: (error) => this.showError(error, "Unable to load Settlement")
+  };
 
   getDriverSettlements(forceRecreate: boolean, selectedDriver?: string): void {
     this.settlementsService.getDriverSettlements(this.companyId, this.settlementId, forceRecreate)
@@ -97,11 +121,19 @@ export class SettlementDetailComponent implements OnInit {
   }
 
   getNextSettlement() : void {
+    var nextWeek = this.weekService.getNext(this.settlement.week!);
+    if (!nextWeek)
+      return;
     //this.settlement.week
+    console.log('next week is', nextWeek);
   }
 
   getPreviousSettlement() : void {
-
+    var previousWeek = this.weekService.getPrevious(this.settlement.week!);
+    if (!previousWeek)
+      return;
+    //this.settlement.week
+    console.log('previous week is', previousWeek);
   }
 
   public getMiles(driverSettlement: DriverSettlement): number {

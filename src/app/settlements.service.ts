@@ -22,6 +22,15 @@ export class SettlementsService {
         "/settlements/summary/" + companyId + "/" + settlementId);
   }  
 
+  getSettlementSummaryByWeek(companyId: string, year: number, week: number): Observable<Types.SettlementSummary> {
+    return this.http.get<Types.SettlementSummary>(
+      SettlementsService.baseUrl + "/settlements/summary/" + companyId,
+        { params: new HttpParams()
+            .set('year', year)
+            .append('week', week) 
+        });
+  }
+
   getSettlementWeeks(): Observable<Types.Week[]> {
     return this.http.get<Types.Week[]>(SettlementsService.baseUrl + "/settlements/weeks");
   }
