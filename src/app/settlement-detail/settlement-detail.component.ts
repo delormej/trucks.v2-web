@@ -109,7 +109,13 @@ export class SettlementDetailComponent implements OnInit {
       this.settlement = res; 
       this.settlementId = res.settlementId!;
     },
-    error: (error) => this.showError(error, "Unable to load Settlement")
+    error: (error) => {
+      this.loading = false;
+      if (error.status == 404)
+        this.showError(error, "No Settlement found.");
+      else
+        this.showError(error, "Unable to load Settlement");
+    }
   };
 
   getDriverSettlements(forceRecreate: boolean, selectedDriver?: string): void {
