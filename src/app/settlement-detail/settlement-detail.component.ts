@@ -117,11 +117,13 @@ export class SettlementDetailComponent implements OnInit {
       .subscribe({
         next: (res) => {
           this.driverSettlements = res.sort( (a, b) => (a.driver! < b.driver!) ? -1 : 1 );
-          this.loading = false;
-          
-          this.selectedDriver = selectedDriver;
+
+          if (this.driverSettlements.find(d => d.driver == this.selectedDriver) != undefined) 
+            this.selectedDriver = selectedDriver;
 
           this.setSettlementLinks();
+
+          this.loading = false;
 
           if (forceRecreate)
             this.snack.open("Succesfully recreated all.", "CLOSE", {duration:3000}); 
@@ -143,8 +145,9 @@ export class SettlementDetailComponent implements OnInit {
 
   getSettlementLink(week: Week) {
     var url = `/settlement-detail?companyId=${this.companyId}&year=${week.year}&week=${week.weekNumber}`;
+    
     if (this.selectedDriver != null)
-      url += `&driver=${this.selectedDriver}`
+        url += `&driver=${this.selectedDriver}`
 
     return url;
   }
