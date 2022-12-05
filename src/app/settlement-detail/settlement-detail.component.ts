@@ -124,7 +124,7 @@ export class SettlementDetailComponent implements OnInit {
         next: (res) => {
           this.driverSettlements = res.sort( (a, b) => (a.driver! < b.driver!) ? -1 : 1 );
 
-          if (this.driverSettlements.find(d => d.driver == this.selectedDriver) != undefined) 
+          if (this.driverSettlements.find(d => d.driver == selectedDriver) != undefined) 
             this.selectedDriver = selectedDriver;
 
           this.setSettlementLinks();
