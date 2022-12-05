@@ -1,4 +1,8 @@
 <mat-card *ngIf="driver != null">
+    <div class="centered-spinner">
+        <mat-spinner [hidden]="!loading" mode="indeterminate"></mat-spinner>
+    </div>
+
     <mat-card-title>{{driver.name}}</mat-card-title>
 
     <div class="driver-container">

@@ -11,6 +11,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./driver.component.css']
 })
 export class DriverComponent implements OnInit {
+  loading: boolean = true;
   driver!: DriverAndTeammate;
   teamChanged: boolean = false;
   submitted: boolean = false;
@@ -87,8 +88,8 @@ export class DriverComponent implements OnInit {
   getDriver(name: string): void {
     this.settlementsService.getDriver(name)
       .subscribe({
-        next: (driver) => this.driver = driver,
-        error: (error) => this.showError(error, "Unable to load driver")
+        next: (driver) => { this.driver = driver; this.loading = false; },
+        error: (error) => { this.showError(error, "Unable to load driver"); this.loading = false; }
       });
   }
 
