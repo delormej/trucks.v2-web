@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Observer } from 'rxjs';
 import { SettlementsService } from '../settlements.service';
-import { SettlementSummary, DriverSettlement } from '../settlements.service.types';
+import { SettlementSummary, DriverSettlement, Week } from '../settlements.service.types';
 import { WeekService } from '../week.service';
 
 @Component({
@@ -35,7 +35,13 @@ export class SettlementDetailComponent implements OnInit {
     this.route.queryParams.subscribe(
       params => {
         this.companyId = params['companyId'];
-        
+
+        // TODO: Debug this... to clean up code in getSettlementXXX(...)
+        // for some reason, which requires more time to investigate than I have at the moment
+        // I cannot set selectedDriver = params['driver'] here
+        // There is some complicated timing/sequencing that isn't written correctly where
+        // the driver settlements need to be populated first.  
+
         if (params['settlementId']) 
           this.getSettlement( 
             params['settlementId'],
@@ -52,7 +58,9 @@ export class SettlementDetailComponent implements OnInit {
 
   selectedDriverChanged(change: MatSelectionListChange) {
     this.selectedDriver = change.options.length > 0 ? 
-      change.options[0]?.value : null;
+      change.options[0]?.value.driver : null;
+
+    this.setSettlementLinks();      
   }
 
   driverSettlementChange(driverSettlement: DriverSettlement) {
@@ -85,18 +93,21 @@ export class SettlementDetailComponent implements OnInit {
   }
 
   getSettlementByWeek(year: number, week: number, selectedDriver?: string) {
-    this.settlementsService.getSettlementSummaryByWeek(
-        this.companyId, year, week)
-      .subscribe(this.settlementObserver);    
+    var observable = this.settlementsService.getSettlementSummaryByWeek(
+        this.companyId, year, week);
+    observable.subscribe(this.settlementObserver);
+    observable.subscribe({
+      next: (settlementSummary) => {
+        this.settlementId = settlementSummary.settlementId!;
+        this.getDriverSettlements(false, selectedDriver);
+      }
+    });
   }
 
   settlementObserver: Partial<Observer<SettlementSummary>> = {
     next: (res) => {
       this.settlement = res; 
       this.settlementId = res.settlementId!;
-
-      this.getNextSettlement();
-      this.getPreviousSettlement();
     },
     error: (error) => this.showError(error, "Unable to load Settlement")
   };
@@ -110,6 +121,8 @@ export class SettlementDetailComponent implements OnInit {
           
           this.selectedDriver = selectedDriver;
 
+          this.setSettlementLinks();
+
           if (forceRecreate)
             this.snack.open("Succesfully recreated all.", "CLOSE", {duration:3000}); 
         },
@@ -120,20 +133,20 @@ export class SettlementDetailComponent implements OnInit {
       });
   }
 
-  getNextSettlement() : void {
+  setSettlementLinks(): void {
     var nextWeek = this.weekService.getNext(this.settlement.week!);
-    if (!nextWeek)
-      return;
-    //this.settlement.week
-    console.log('next week is', nextWeek);
+    var previousWeek = this.weekService.getPrevious(this.settlement.week!);
+
+    this.previousSettlementLink = this.getSettlementLink(previousWeek);
+    this.nextSettlementLink = this.getSettlementLink(nextWeek);
   }
 
-  getPreviousSettlement() : void {
-    var previousWeek = this.weekService.getPrevious(this.settlement.week!);
-    if (!previousWeek)
-      return;
-    //this.settlement.week
-    console.log('previous week is', previousWeek);
+  getSettlementLink(week: Week) {
+    var url = `/settlement-detail?companyId=${this.companyId}&year=${week.year}&week=${week.weekNumber}`;
+    if (this.selectedDriver != null)
+      url += `&driver=${this.selectedDriver}`
+
+    return url;
   }
 
   public getMiles(driverSettlement: DriverSettlement): number {
