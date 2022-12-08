@@ -5,9 +5,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { combineLatestWith, Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { SettlementsService } from '../settlements.service';
-import { Driver, DriverSettlement, DriverSummary, FuelCharge, Week } from '../settlements.service.types';
+import { Driver, DriverSummary, FuelCharge, Week } from '../settlements.service.types';
 
 @Component({
   selector: 'app-fuel',
@@ -61,25 +61,6 @@ export class FuelComponent implements AfterViewInit, OnInit {
     public get fuel() { return this._fuel; }
 
     ngOnInit() {
-      this.route.queryParams.subscribe(
-        params => {
-          if (params['week'])
-            this.weekNumber = params['week'];
-          if (params['driverPromptId'])
-            this.driverPromptId = params['driverPromptId'];
-          if (params['year']) {
-            this.year = params['year'];
-            
-            if (!this.displayColumns.includes("weekNumber"))
-              this.displayColumns.push("weekNumber");
-            
-            if (!this.displayColumns.includes("driverPromptId"))
-              this.displayColumns.push("driverPromptId");             
-            
-            this.getFuel();
-          }
-        });
-
       if (this.driver?.driverPromptId && this.week) {
         this.year = this.week.year!;
         this.weekNumber = this.week.weekNumber!;
@@ -88,9 +69,26 @@ export class FuelComponent implements AfterViewInit, OnInit {
         this.getFuel();
       }
       else {
-        // No driver prompt, no fuel
-        this.loading = false;
+        this.route.queryParams.subscribe(
+          params => {
+            if (params['week'])
+              this.weekNumber = params['week'];
+            if (params['driverPromptId'])
+              this.driverPromptId = params['driverPromptId'];
+            if (params['year'])
+              this.year = params['year'];
+                          
+            this.getFuel();
+          });
       }
+
+      if (this.weekNumber == null && 
+          !this.displayColumns.includes("weekNumber"))
+        this.displayColumns.push("weekNumber");
+    
+      if (this.driverPromptId == null && 
+          !this.displayColumns.includes("driverPromptId"))
+        this.displayColumns.push("driverPromptId");             
     }
 
     ngAfterViewInit() {
@@ -118,9 +116,7 @@ export class FuelComponent implements AfterViewInit, OnInit {
       else 
         drivers = this.settlementsService.getDriverByPin(this.driverPromptId);
 
-      fuel.pipe(
-        combineLatestWith(drivers)
-      ).subscribe({
+      combineLatest([fuel,drivers]).subscribe({
         next: ([f, d]) => {
           this.fuel = f;
 

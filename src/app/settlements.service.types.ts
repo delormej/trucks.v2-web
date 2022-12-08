@@ -223,8 +223,8 @@ export interface FuelCharge {
   year?: number;
   /** @format int32 */
   driverPromptId?: number;
+  /** @format date-time */
   transactionDate?: string;
-  transactionTime?: string;
   transactionTicketNumber?: string;
   /** @format double */
   netCost?: number;
@@ -239,6 +239,8 @@ export interface FuelCharge {
   merchantCity?: string;
   merchantState?: string;
   merchantPostal?: string;
+  /** @format int32 */
+  odometer?: number;
   driverFirstName?: string;
   driverLastName?: string;
 }
