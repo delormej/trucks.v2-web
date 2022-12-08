@@ -86,10 +86,15 @@ export class DriverComponent implements OnInit {
   }
 
   getDriver(name: string): void {
+    this.loading = true;
+
     this.settlementsService.getDriver(name)
       .subscribe({
-        next: (driver) => { this.driver = driver; this.loading = false; },
-        error: (error) => { this.showError(error, "Unable to load driver"); this.loading = false; }
+        next: (driver) => { 
+          this.driver = driver; 
+          this.loading = false;
+        },
+        error: (error) => { this.showError(error, "Unable to load driver"); /*this.loading = false;*/ }
       });
   }
 
