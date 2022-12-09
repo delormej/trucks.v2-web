@@ -1,0 +1,14 @@
+.file-input {
+    display: none;
+}
+
+.upload-btn {
+    margin-top: 20px;
+}
+
+mat-card.fuel-upload {
+    width: fit-content;
+    justify-content: center;
+    align-items: center;    
+    margin-top: 20px;
+}

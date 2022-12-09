@@ -1,22 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ChartType, Row } from 'angular-google-charts'
 import { SettlementsService } from '../settlements.service';
-import { FuelSummary } from '../settlements.service.types';
+import { FuelCharge, FuelSummary } from '../settlements.service.types';
 
 @Component({
   selector: 'app-fuel-summary',
   templateUrl: './fuel-summary.component.html',
   styleUrls: ['./fuel-summary.component.css']
 })
-export class FuelSummaryComponent implements OnInit {
+export class FuelSummaryComponent implements OnInit, OnChanges {
 
   constructor(
     private router: Router,
     private snack: MatSnackBar,
     private settlementsService: SettlementsService
   ) { }
+
+  // TODO: When new fuel is sent, highlight the week(s) that were effected.
+  @Input()
+  public fuelHighlights!: FuelCharge[];
 
   public loading: boolean = true;
   public _fuel!: FuelSummary[];
@@ -39,6 +43,23 @@ export class FuelSummaryComponent implements OnInit {
   };  
 
   ngOnInit(): void {
+    this.getFuelSummary();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes["fuelHighlights"] && changes["fuelHighlights"].firstChange == false) {
+      this.getFuelSummary();
+    }
+  }
+
+  onSelected(event: any) {
+    var row = event?.selection[0].row;
+    var fuel = this._fuel[row];
+    console.log(fuel.week?.year, fuel.week?.weekNumber);
+    this.router.navigateByUrl("/fuel?year=" + fuel.week?.year + "&week=" + fuel.week?.weekNumber);
+  }
+
+  getFuelSummary() {
     this.settlementsService.getFuelSummary().subscribe( {
       next: (data) => {
         this._fuel = data.sort( (a, b) => 
@@ -66,13 +87,6 @@ export class FuelSummaryComponent implements OnInit {
         this.loading = false;
       }
     });
-  }
-
-  onSelected(event: any) {
-    var row = event?.selection[0].row;
-    var fuel = this._fuel[row];
-    console.log(fuel.week?.year, fuel.week?.weekNumber);
-    this.router.navigateByUrl("/fuel?year=" + fuel.week?.year + "&week=" + fuel.week?.weekNumber);
   }
 
   showError(error: Error, message: string) {

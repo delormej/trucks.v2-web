@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProgressBarMode } from '@angular/material/progress-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SettlementsService } from '../settlements.service';
@@ -11,9 +11,7 @@ import { FuelCharge } from '../settlements.service.types';
 })
 export class FuelUploadComponent implements OnInit {
   fileName = '';
-  message = '';
   fuel!: FuelCharge[];
-  saved: boolean = false;
   saving: boolean = false;
   uploadProgress: ProgressBarMode = "determinate";
 
@@ -27,6 +25,13 @@ export class FuelUploadComponent implements OnInit {
   showError(error: Error, message: string) {
     this.snack.open(message, 'CLOSE', { panelClass: 'errorSnack' } );
     console.log(error);
+  }
+
+  onUploadSuccess() {
+    this.saving = false; 
+    this.fileName = '';
+    this.snack.open( `Succesfully saved ${this.fuel.length} fuel entries.`, 
+      "CLOSE", {duration:3000}); 
   }
 
   onFileSelected(event: any) {
@@ -43,8 +48,7 @@ export class FuelUploadComponent implements OnInit {
           .subscribe({
             next: (fuel) => { 
               this.fuel = fuel;
-              this.saved = true; 
-              this.snack.open("Succesfully saved fuel.", "CLOSE", {duration:3000}); 
+              this.onUploadSuccess();
             },
             error: (error) => this.showError(error, "Error saving CSV.")
           });
