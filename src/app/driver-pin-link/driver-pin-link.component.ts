@@ -8,7 +8,12 @@ import { DriverSummary, FuelCharge } from '../settlements.service.types';
 })
 export class DriverPinLinkComponent implements OnInit {
 
-  @Input() Drivers!: DriverSummary[];
+  private _drivers!: DriverSummary[];
+
+  @Input() public set Drivers (value: DriverSummary[]) {
+    this._drivers = value;
+    this.setDriverLinkParams();
+  }
   @Input() FuelCharge!: FuelCharge;
 
   public driverUrl: string = "/driver";
@@ -17,11 +22,10 @@ export class DriverPinLinkComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.setDriverLinkParams();
   }
 
   setDriverLinkParams(): void {
-    var driver = this.Drivers.find(
+    var driver = this._drivers.find(
       d => d.driverPromptId == this.FuelCharge.driverPromptId);
     
     if (driver != undefined)

@@ -5,7 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, Observable } from 'rxjs';
+import { catchError, combineLatest, Observable, of, tap } from 'rxjs';
 import { SettlementsService } from '../settlements.service';
 import { Driver, DriverSummary, FuelCharge, Week } from '../settlements.service.types';
 
@@ -81,14 +81,9 @@ export class FuelComponent implements AfterViewInit, OnInit {
             this.getFuel();
           });
       }
-
-      if (this.weekNumber == null && 
-          !this.displayColumns.includes("weekNumber"))
-        this.displayColumns.push("weekNumber");
-    
-      if (this.driverPromptId == null && 
-          !this.displayColumns.includes("driverPromptId"))
-        this.displayColumns.push("driverPromptId");             
+        
+      this.pdfLink = SettlementsService.baseUrl +
+        `/fuel/pdf?year=${ this.year }&week=${ this.weekNumber }&driverPromptId=${ this.driverPromptId }`;        
     }
 
     ngAfterViewInit() {
@@ -103,40 +98,38 @@ export class FuelComponent implements AfterViewInit, OnInit {
       private route: ActivatedRoute) { }
 
     getFuel() {
-      var fuel: Observable<FuelCharge[]>;
-      var drivers: Observable<any>;
-
-      this.pdfLink = SettlementsService.baseUrl +
-        `/fuel/pdf?year=${ this.year }&week=${ this.weekNumber }&driverPromptId=${ this.driverPromptId }`;        
-
-      fuel = this.settlementsService.getFuel(this.year!, this.weekNumber, this.driverPromptId);
-
-      if (this.driverPromptId == null) 
-        drivers = this.settlementsService.getAllDrivers();
-      else 
-        drivers = this.settlementsService.getDriverByPin(this.driverPromptId);
-
-      combineLatest([fuel,drivers]).subscribe({
-        next: ([f, d]) => {
-          this.fuel = f;
-
-          if (this.driverPromptId == null)
-            this.Drivers = d;
-          else
-            this.Drivers.push(d);
-
-          this.loading = false;
-        },
-        error: (error) => { 
-          this.showError(error, "Unable to load fuel.");
-          console.log(error); 
-          this.loading = false;
-        }
-      })      
+      if (this.weekNumber == null && 
+        !this.displayColumns.includes("weekNumber"))
+      this.displayColumns.push("weekNumber");
+  
+    if (this.driverPromptId == null) {
+        if (!this.displayColumns.includes("driverPromptId"))
+          this.displayColumns.push("driverPromptId");       
+        this.getDrivers();
     }
-      
-    showError(error: Error, message: string) {
-      this.snack.open(message, 'CLOSE', { panelClass: 'errorSnack' } );
-      console.log(error);
-    }  
+
+    this.settlementsService.getFuel(
+      this.year!, this.weekNumber, this.driverPromptId).subscribe({
+      next: (f) => {
+        this.fuel = f;
+        this.loading = false;
+      },
+      error: (error) => { 
+        this.showError(error, "Unable to load fuel.");
+        this.loading = false;
+      }
+    })      
+  };
+
+  getDrivers() {
+    this.settlementsService.getAllDrivers().subscribe({
+      next: (data) => this.Drivers = data,
+      error: (err) => this.showError(err, "Unable to load drivers.")
+    });
+  }
+
+  showError(error: Error, message: string) {
+    this.snack.open(message, 'CLOSE', { panelClass: 'errorSnack' } );
+    console.log(error);
+  }  
 }
