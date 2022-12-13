@@ -81,6 +81,11 @@ export class SettlementsService {
       { params: params });
   }
 
+  getFuelByTruck(year: number, week: number, truckId: string) : Observable<Types.FuelCharge[]> {
+    return this.http.get<Types.FuelCharge[]>(SettlementsService.baseUrl + 
+      `/fuel/${year}/${week}/${truckId}`);
+  }
+
   saveDriverSettlementNotes(driverSettlementId: string, notes: string) {
     console.log('saving notes for driverSettlement:', driverSettlementId);
     return this.http.post<Types.Driver>(SettlementsService.baseUrl + "/driversettlements/notes", 
