@@ -36,7 +36,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
 import { DriverPinLinkComponent } from './driver-pin-link/driver-pin-link.component';
-import { SettlementCalendarComponent } from './settlement-calendar/settlement-calendar.component'
+import { SettlementCalendarComponent } from './settlement-calendar/settlement-calendar.component';
+import { FuelReportComponent } from './fuel-report/fuel-report.component'
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import { SettlementCalendarComponent } from './settlement-calendar/settlement-ca
     FuelSummaryComponent,
     DriverAddressComponent,
     DriverPinLinkComponent,
-    SettlementCalendarComponent
+    SettlementCalendarComponent,
+    FuelReportComponent
   ],
   imports: [
     HttpClientModule,

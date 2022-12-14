@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
+import { FuelComponent } from '../fuel/fuel.component';
 import { SettlementsService, Teammate } from '../settlements.service';
 import { DriverSettlement, ManualEntryRequest, Driver, Credit, Week } from '../settlements.service.types';
 
@@ -16,6 +17,8 @@ export class DriversettlementComponent implements OnInit, OnChanges {
   @Output() 
   driverSettlementChange: EventEmitter<DriverSettlement> = 
     new EventEmitter<DriverSettlement>();
+
+  @ViewChild('fuel') fuelComponent! : FuelComponent;
   
   driver!: Driver;
   excelDownloadLink: string = "";
@@ -29,7 +32,15 @@ export class DriversettlementComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (!changes['driverSettlement']) {
+      return;
+    }
+
+    // Technically this.driverSettlement is already equal to this value, however
+    // this call is required to invoke the setter which sets additional properties.
     this.driverSettlement = changes['driverSettlement'].currentValue;
+    
+    // extra check to make sure the change wasn't to remove the current driverSettlement
     if (this.driverSettlement) {
       this.getDriver(this.driverSettlement.driver!);
       this.excelDownloadLink = this.getWorkbookLink(this.driverSettlement);
@@ -74,6 +85,26 @@ export class DriversettlementComponent implements OnInit, OnChanges {
           isTeamLeader: this.driverSettlement.isTeamLeader,
           isSplit: this.driverSettlement.isSplit
         };
+
+        if (this.fuelComponent) {
+          // TEMPORARY HACK, read this from the driver.
+          if (this.driverSettlement.companyId == "49809") {
+            var truckId = this.driverSettlement.trucks?.length! > 0 ?
+              this.driverSettlement.trucks![0] : null;
+            this.fuelComponent.updateFuel(
+              this.driverSettlement.year!,
+              this.driverSettlement.weekNumber!,
+              undefined,
+              truckId!, name);
+          }
+          else {
+            this.fuelComponent.updateFuel(
+              this.driverSettlement.year!,
+              this.driverSettlement.weekNumber!,
+              this.driver.driverPromptId!
+            );
+          }
+        }  
       });
   }
 

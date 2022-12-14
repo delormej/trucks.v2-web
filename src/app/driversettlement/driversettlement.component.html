@@ -57,14 +57,11 @@
         </app-loads>
     </mat-card>
 
-    <mat-expansion-panel *ngIf="driver?.driverPromptId" expanded="true">
+    <mat-expansion-panel *ngIf="driverSettlement.fuel! > 0" expanded="true">
         <mat-expansion-panel-header>
             <mat-card-title>Fuel</mat-card-title>
         </mat-expansion-panel-header>
-        <app-fuel [showPagnitor]="false"
-            [week]="week" 
-            [driver]="driver">
-        </app-fuel>
+        <app-fuel #fuel [showPagnitor]="false"></app-fuel>
     </mat-expansion-panel>
 
     <div fxLayoutGap fxLayoutAlign="start stretch" fxLayoutGap="15px">

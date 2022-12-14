@@ -41,10 +41,16 @@
             <td mat-footer-cell *matFooterCellDef> <strong>{{fuelTotal > 0 ? (fuelTotal | number:'0.2-2') : ''}}</strong> </td>
         </ng-container>
 
+        <ng-container matColumnDef="truck">
+            <th mat-header-cell *matHeaderCellDef> Truck </th>
+            <td mat-cell *matCellDef="let charge"> {{charge.truckId}} </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
         <ng-container matColumnDef="driverPromptId">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Driver PIN </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Driver PIN</th>
             <td mat-cell *matCellDef="let charge"> 
-                <app-driver-pin-link [Drivers]="Drivers" [FuelCharge]="charge"></app-driver-pin-link> 
+                <app-driver-pin-link [Drivers]="drivers" [FuelCharge]="charge"></app-driver-pin-link> 
             </td>
             <td mat-footer-cell *matFooterCellDef></td>            
         </ng-container>
