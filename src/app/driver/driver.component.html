@@ -1,6 +1,5 @@
-<div class="centered-spinner">
-    <mat-spinner [hidden]="!loading" mode="indeterminate"></mat-spinner>
-</div>
+<app-progress [loading]="loading" (onTimeout)="onProgressTimeout($event)">
+</app-progress>
 
 <mat-card *ngIf="driver != null">
     <mat-card-title>{{driver.name}}</mat-card-title>

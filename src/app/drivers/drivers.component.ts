@@ -35,6 +35,10 @@ export class DriversComponent implements OnInit {
     this.drivers.filter = filterValue.trim().toLowerCase();
   }
 
+  onProgressTimeout(value: string): void {
+    this.loading = false;
+  }  
+
   showError(error: Error, message: string) {
     this.snack.open(message, 'CLOSE', { panelClass: 'errorSnack' } );
     console.log(error);

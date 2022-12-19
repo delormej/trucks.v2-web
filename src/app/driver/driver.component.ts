@@ -60,11 +60,6 @@ export class DriverComponent implements OnInit {
       this.driverForm.control.markAsDirty();
   }
 
-  showError(error: Error, message: string) {
-    this.snack.open(message, 'CLOSE', { panelClass: 'errorSnack' } );
-    console.log(error);
-  }
-
   saveDriver() {
     if (this.isSplit) {
       this.settlementsService.createDriverSplit(this.driver)
@@ -109,4 +104,13 @@ export class DriverComponent implements OnInit {
         error: (error) => { this.showError(error, 'No pin found') }
       });
   }
+
+  onProgressTimeout(value: string): void {
+    this.loading = false;
+  }  
+
+  showError(error: Error, message: string) {
+    this.snack.open(message, 'CLOSE', { panelClass: 'errorSnack' } );
+    console.log(error);
+  }  
 }

@@ -1,6 +1,5 @@
-<div class="centered-spinner">
-    <mat-spinner [hidden]="!loading" mode="indeterminate"></mat-spinner>
-</div>
+<app-progress [loading]="loading" (onTimeout)="onProgressTimeout($event)">
+</app-progress>
 
 <google-chart *ngIf="!loading" style="width: 100%;" [columns]="chartColumns" 
     [type]="chartType" [options]="chartOptions" 
