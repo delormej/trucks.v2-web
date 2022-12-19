@@ -1,0 +1,17 @@
+<div class="centered-spinner">
+    <mat-spinner [hidden]="!loading" [mode]="loadingProgressMode"></mat-spinner>
+    <div *ngIf="timeoutExpired">
+        <div class="warning">
+            <p>
+            An error may have occured and the request timed out.  
+            Try clicking the refresh button.
+            <br/>&nbsp;<br/>
+            <button mat-raised-button color="warn" 
+                onclick="window.location.reload()">
+                <mat-icon fontIcon="refresh"></mat-icon>
+                Refresh
+            </button>
+            </p>
+        </div>
+    </div>
+</div>

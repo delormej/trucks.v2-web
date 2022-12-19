@@ -12,7 +12,6 @@ import { SettlementSummary } from '../settlements.service.types';
   styleUrls: ['./settlements.component.css']
 })
 export class SettlementsComponent implements OnInit, AfterViewInit {
-  loadingProgressMode!: ProgressSpinnerMode;
   loading: boolean = false;
   dataSource = new MatTableDataSource<SettlementSummary>();
   displayedColumns: string[] = [
@@ -39,17 +38,14 @@ export class SettlementsComponent implements OnInit, AfterViewInit {
 
   getSummaries(): void {
     this.loading = true;
-    this.loadingProgressMode = "indeterminate";
     this.settlementsService.getSettlementSummaries()
     .subscribe({
       next: (data) => {
         this.dataSource.data = data;
-        this.loadingProgressMode = "determinate"; 
         this.loading = false;
       },
       error: (error) => {
         this.showError(error, "Unable to load settlements.");
-        this.loadingProgressMode = "determinate";
         this.loading = false;
       }
     });
@@ -76,6 +72,11 @@ export class SettlementsComponent implements OnInit, AfterViewInit {
       return settlements[currentIndex - 1].settlementId!;
     else
       return "";    
+  }
+  
+  onProgressTimeout(value: string): void {
+    this.loading = false;
+    this.showError(new Error(value), "Timeout loading settlements.");
   }
   
   showError(error: Error, message: string) {

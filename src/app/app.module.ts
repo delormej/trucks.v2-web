@@ -37,7 +37,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
 import { DriverPinLinkComponent } from './driver-pin-link/driver-pin-link.component';
 import { SettlementCalendarComponent } from './settlement-calendar/settlement-calendar.component';
-import { FuelReportComponent } from './fuel-report/fuel-report.component'
+import { FuelReportComponent } from './fuel-report/fuel-report.component';
+import { ProgressComponent } from './progress/progress.component'
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { FuelReportComponent } from './fuel-report/fuel-report.component'
     DriverAddressComponent,
     DriverPinLinkComponent,
     SettlementCalendarComponent,
-    FuelReportComponent
+    FuelReportComponent,
+    ProgressComponent
   ],
   imports: [
     HttpClientModule,

@@ -1,9 +1,9 @@
 <mat-card>    
     <mat-card-title>Settlement History</mat-card-title>
 
-    <div class="centered-spinner">
-      <mat-spinner [hidden]="!loading" [mode]="loadingProgressMode"></mat-spinner>
-    </div>
+    <app-progress [loading]="loading" (onTimeout)="onProgressTimeout($event)">
+      
+    </app-progress>
 
     <mat-card-actions>
       <button mat-button disabled>
