@@ -1,7 +1,6 @@
 <mat-card>
-    <div class="centered-spinner">
-      <mat-spinner [hidden]="!loading" mode="indeterminate"></mat-spinner>
-    </div>
+    <app-progress [loading]="loading" (onTimeout)="onProgressTimeout($event)">
+    </app-progress>
 
     <div *ngIf="settlement != null" [hidden]="loading">
         <mat-card-title [matTooltip]="settlementInfo" matTooltipPosition="left">

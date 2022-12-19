@@ -76,7 +76,6 @@ export class SettlementsComponent implements OnInit, AfterViewInit {
   
   onProgressTimeout(value: string): void {
     this.loading = false;
-    this.showError(new Error(value), "Timeout loading settlements.");
   }
   
   showError(error: Error, message: string) {

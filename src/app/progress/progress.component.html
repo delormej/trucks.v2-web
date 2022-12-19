@@ -1,17 +1,17 @@
 <div class="centered-spinner">
     <mat-spinner [hidden]="!loading" [mode]="loadingProgressMode"></mat-spinner>
     <div *ngIf="timeoutExpired">
-        <div class="warning">
-            <p>
+        <h1 mat-dialog-title>Timeout Error</h1>
+        <div mat-dialog-content>
             An error may have occured and the request timed out.  
             Try clicking the refresh button.
-            <br/>&nbsp;<br/>
-            <button mat-raised-button color="warn" 
-                onclick="window.location.reload()">
-                <mat-icon fontIcon="refresh"></mat-icon>
-                Refresh
-            </button>
-            </p>
         </div>
+        <div mat-dialog-actions align="center">
+          <button mat-raised-button color="warn" 
+                mat-dialog-close cdkFocusInitial
+                onclick="window.location.reload()">
+            <mat-icon fontIcon="refresh"></mat-icon>
+            Refresh
+        </button>
     </div>
 </div>
