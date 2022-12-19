@@ -2,7 +2,6 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { SettlementsService } from '../settlements.service'; 
 import { SettlementSummary } from '../settlements.service.types';
 
