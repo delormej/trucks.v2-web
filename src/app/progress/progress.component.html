@@ -1,6 +1,6 @@
 <div class="centered-spinner">
-    <mat-spinner [hidden]="!loading" [mode]="loadingProgressMode"></mat-spinner>
-    <div *ngIf="timeoutExpired">
+    <mat-spinner [hidden]="state != 'loading'" [mode]="loadingProgressMode"></mat-spinner>
+    <div *ngIf="state == 'timeoutExpired'">
         <h1 mat-dialog-title>Timeout Error</h1>
         <div mat-dialog-content>
             An error may have occured and the request timed out.  

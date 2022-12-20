@@ -4,14 +4,20 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SettlementsService } from '../settlements.service'; 
 import { SettlementSummary } from '../settlements.service.types';
+import { DataLoadingComponent } from '../DataLoadingComponent';
 
 @Component({
   selector: 'settlements',
   templateUrl: './settlements.component.html',
   styleUrls: ['./settlements.component.css']
 })
-export class SettlementsComponent implements OnInit, AfterViewInit {
-  loading: boolean = false;
+export class SettlementsComponent extends DataLoadingComponent 
+    implements OnInit, AfterViewInit {
+  
+  constructor(
+    private settlementsService: SettlementsService,
+    snack: MatSnackBar) { super(snack); }
+
   dataSource = new MatTableDataSource<SettlementSummary>();
   displayedColumns: string[] = [
     "companyId",
@@ -30,10 +36,6 @@ export class SettlementsComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.getSummaries();
   }
-
-  constructor(
-    private settlementsService: SettlementsService,
-    private snack: MatSnackBar) { }
 
   getSummaries(): void {
     this.loading = true;
@@ -59,7 +61,6 @@ export class SettlementsComponent implements OnInit, AfterViewInit {
       return settlements[currentIndex + 1].settlementId!;
     else
       return "";
-
   }
 
   getPreviousSettlementId(settlementId: string): string {
@@ -72,13 +73,4 @@ export class SettlementsComponent implements OnInit, AfterViewInit {
     else
       return "";    
   }
-  
-  onProgressTimeout(value: string): void {
-    this.loading = false;
-  }
-  
-  showError(error: Error, message: string) {
-    this.snack.open(message, 'CLOSE', { panelClass: 'errorSnack' } );
-    console.log(error);
-  }  
 }
