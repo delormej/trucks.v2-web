@@ -1,8 +1,7 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 export abstract class DataLoadingComponent {
-    constructor(
-        private snack: MatSnackBar) {}
+    constructor(protected snack: MatSnackBar) {}
 
     protected loading: boolean = false;
 

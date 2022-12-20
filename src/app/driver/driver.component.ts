@@ -4,14 +4,19 @@ import { DriverAndTeammate, SettlementsService, Teammate } from '../settlements.
 import { Driver } from '../settlements.service.types';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgForm } from '@angular/forms';
+import { DataLoadingComponent } from '../DataLoadingComponent';
 
 @Component({
   selector: 'app-driver',
   templateUrl: './driver.component.html',
   styleUrls: ['./driver.component.css']
 })
-export class DriverComponent implements OnInit {
-  loading: boolean = true;
+export class DriverComponent extends DataLoadingComponent implements OnInit {
+  constructor(
+    private settlementsService: SettlementsService,
+    private route: ActivatedRoute,
+    snack: MatSnackBar) { super(snack); }
+
   driver!: DriverAndTeammate;
   teamChanged: boolean = false;
   submitted: boolean = false;
@@ -19,11 +24,6 @@ export class DriverComponent implements OnInit {
   @ViewChild('driverForm') driverForm!: NgForm;
 
   readonly snackLength: number = 3000;
-
-  constructor(
-    private settlementsService: SettlementsService,
-    private route: ActivatedRoute,
-    private snack: MatSnackBar) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(
@@ -89,7 +89,7 @@ export class DriverComponent implements OnInit {
           this.driver = driver; 
           this.loading = false;
         },
-        error: (error) => { this.showError(error, "Unable to load driver"); /*this.loading = false;*/ }
+        error: (error) => this.showError(error, "Unable to load driver")
       });
   }
 
@@ -101,16 +101,7 @@ export class DriverComponent implements OnInit {
           this.driverForm.control.markAsDirty();
           this.snack.open("Found pin suggestion", "CLOSE", { duration: 1500 }); 
         },
-        error: (error) => { this.showError(error, 'No pin found') }
+        error: (error) => this.showError(error, 'No pin found')
       });
   }
-
-  onProgressTimeout(value: string): void {
-    this.loading = false;
-  }  
-
-  showError(error: Error, message: string) {
-    this.snack.open(message, 'CLOSE', { panelClass: 'errorSnack' } );
-    console.log(error);
-  }  
 }
